@@ -39,9 +39,9 @@ export default {
 	},
 
 	readOnly() {
-		return this.readOnly === null ?
-			this.instance.readOnly :
-			this.readOnly;
+		return this.readOnly === null
+			? this.instance.readOnly
+			: this.readOnly;
 	},
 
 	beforeCreate() {
@@ -94,7 +94,7 @@ export default {
 
 	watch: {
 		value( val ) {
-			if ( this.instance.getData() !== val ) {
+			if ( this.instance && this.instance.getData() !== val ) {
 				this.instance.setData( val );
 			}
 		},
