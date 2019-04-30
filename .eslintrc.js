@@ -5,5 +5,8 @@
 
 // Note: The ESLint configuration is mandatory for vue-cli.
 module.exports = {
-    "extends": "ckeditor5"
+	'extends': 'ckeditor5',
+	'rules': {
+		'operator-linebreak': 0
+	}
 };
