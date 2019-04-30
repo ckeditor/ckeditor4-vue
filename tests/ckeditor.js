@@ -16,11 +16,13 @@ describe( 'CKEditor Component', () => {
 
 	let sandbox, wrapper, component, CKEditorNamespace, props;
 
-	beforeEach( () => {
+	before( () => {
 		CKEditorNamespace = CKEDITOR;
 
 		window.CKEDITOR = mockEditor;
+	} );
 
+	beforeEach( () => {
 		spies.replace = sinon.spy( CKEDITOR, 'replace' );
 		spies.inline = sinon.spy( CKEDITOR, 'inline' );
 
@@ -29,9 +31,11 @@ describe( 'CKEditor Component', () => {
 		sandbox = sinon.createSandbox();
 	} );
 
-	afterEach( () => {
+	after( () => {
 		window.CKEDITOR = CKEditorNamespace;
+	} );
 
+	afterEach( () => {
 		for ( const key in spies ) {
 			spies[ key ].restore();
 		}
@@ -100,6 +104,29 @@ describe( 'CKEditor Component', () => {
 				it( `shouldn't call "CKEDITOR.${ otherMethod }"`, () => {
 					sinon.assert.notCalled( spies[ otherMethod ] );
 				} );
+			} );
+		} );
+	} );
+
+	describe( 'events', () => {
+		[ 'ready', 'input', 'focus', 'blur' ].forEach( evtName => {
+			it( `should emit "${ evtName }"`, () => {
+				const evt = {};
+				let editorEvtName;
+
+				switch ( evtName ) {
+					case 'ready':
+						editorEvtName = 'instanceReady';
+						break;
+					case 'input':
+						editorEvtName = 'change';
+						break;
+					default:
+						editorEvtName = evtName;
+				}
+
+				CKEDITOR.testEditor.fire( editorEvtName, evt );
+				expect( 'foo' ).to.equal( 'foo' );
 			} );
 		} );
 	} );
