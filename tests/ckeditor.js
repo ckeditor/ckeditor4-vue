@@ -85,15 +85,8 @@ describe( 'CKEditor Component', () => {
 		} );
 
 		describe( 'explicitly set to "classic"', () => {
-			// "before" is executed before "beforeEach", so we can setup props now.
-			before( () => {
-				props = {
-					type: 'classic'
-				};
-			} );
-
-			after( () => {
-				props = null;
+			setPropsForTestGroup( {
+				type: 'classic'
 			} );
 
 			it( 'should call "CKEDITOR.replace"', () => {
@@ -106,15 +99,8 @@ describe( 'CKEditor Component', () => {
 		} );
 
 		describe( 'set to "inline"', () => {
-			// "before" is executed before "beforeEach", so we can setup props now.
-			before( () => {
-				props = {
-					type: 'inline'
-				};
-			} );
-
-			after( () => {
-				props = null;
+			setPropsForTestGroup( {
+				type: 'inline'
 			} );
 
 			it( 'should call "CKEDITOR.inline"', () => {
@@ -129,9 +115,20 @@ describe( 'CKEditor Component', () => {
 
 	function createComponent( props ) {
 		const wrapper = mount( CKEditorComponent, {
-			propsData: Object.assign( {}, props )
+			propsData: { ...props }
 		} );
 
 		return { wrapper, vm: wrapper.vm };
+	}
+
+	function setPropsForTestGroup( newProps ) {
+		// "before" is executed before "beforeEach", so we can setup props now.
+		before( () => {
+			props = { ...newProps };
+		} );
+
+		after( () => {
+			props = null;
+		} );
 	}
 } );
