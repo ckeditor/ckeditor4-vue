@@ -13,68 +13,116 @@ import mockEditor from './_utils/mockeditor';
 
 describe( 'CKEditor Component', () => {
 	const spies = {};
-	let sandbox, wrapper, component, CKEditorNamespace;
 
-	before( () => {
+	let sandbox, wrapper, component, CKEditorNamespace, props;
+
+	beforeEach( () => {
 		CKEditorNamespace = CKEDITOR;
 
 		window.CKEDITOR = mockEditor;
 
 		spies.replace = sinon.spy( CKEDITOR, 'replace' );
-		spies.replace = sinon.spy( CKEDITOR, 'inline' );
+		spies.inline = sinon.spy( CKEDITOR, 'inline' );
 
-		( { wrapper } = createComponent() );
-
+		( { wrapper } = createComponent( props ) );
 		component = wrapper.vm;
-
 		sandbox = sinon.createSandbox();
 	} );
 
-	after( () => {
+	afterEach( () => {
 		window.CKEDITOR = CKEditorNamespace;
+
+		for ( const key in spies ) {
+			spies[ key ].restore();
+		}
+
 		wrapper.destroy();
 		sandbox.restore();
 	} );
 
-	it( 'component should have a name', () => {
-		expect( CKEditorComponent.name ).to.equal( 'ckeditor' );
-	} );
+	describe( 'initialization', () => {
+		it( 'component should have a name', () => {
+			expect( CKEditorComponent.name ).to.equal( 'ckeditor' );
+		} );
 
-	it( 'should render', () => {
-		expect( wrapper.html() ).to.equal( '<div><textarea></textarea></div>' );
-	} );
+		it( 'should render', () => {
+			expect( wrapper.html() ).to.equal( '<div><textarea></textarea></div>' );
+		} );
 
-	[
-		{
-			name: 'value',
-			default: ''
-		}, {
-			name: 'type',
-			default: 'classic',
-		}, {
-			name: 'config',
-			default: undefined
-		}, {
-			name: 'tagName',
-			default: 'textarea'
-		}, {
-			name: 'readOnly',
-			default: null
-		}
-	].forEach( prop => {
-		it( `property "${ prop.name }" should have default value`, () => {
-			expect( component[ prop.name ] ).to.equal( prop.default );
+		[
+			{
+				name: 'value',
+				default: ''
+			}, {
+				name: 'type',
+				default: 'classic',
+			}, {
+				name: 'config',
+				default: undefined
+			}, {
+				name: 'tagName',
+				default: 'textarea'
+			}, {
+				name: 'readOnly',
+				default: null
+			}
+		].forEach( prop => {
+			it( `property "${ prop.name }" should have default value`, () => {
+				expect( component[ prop.name ] ).to.equal( prop.default );
+			} );
 		} );
 	} );
 
 	describe( 'when editor type', () => {
-		it( 'unset should call "CKEDITOR.replace"', () => {
-			sinon.assert.calledOnce( spies.replace );
+		describe( 'unset', () => {
+			it( 'unset should call "CKEDITOR.replace"', () => {
+				sinon.assert.calledOnce( spies.replace );
+			} );
+
+			it( 'shouldn\'t call "CKEDITOR.inline"', () => {
+				sinon.assert.notCalled( spies.inline );
+			} );
 		} );
 
-		describe( 'set to inline', () => {
+		describe( 'explicitly set to "classic"', () => {
+			// "before" is executed before "beforeEach", so we can setup props now.
 			before( () => {
+				props = {
+					type: 'classic'
+				};
+			} );
 
+			after( () => {
+				props = null;
+			} );
+
+			it( 'should call "CKEDITOR.replace"', () => {
+				sinon.assert.calledOnce( spies.replace );
+			} );
+
+			it( 'shouldn\'t call "CKEDITOR.inline"', () => {
+				sinon.assert.notCalled( spies.inline );
+			} );
+		} );
+
+		describe( 'set to "inline"', () => {
+			// "before" is executed before "beforeEach", so we can setup props now.
+			before( () => {
+				props = {
+					type: 'inline'
+				};
+			} );
+
+			after( () => {
+				props = null;
+			} );
+
+			it( 'should call "CKEDITOR.inline"', () => {
+				sinon.assert.calledOnce( spies.inline );
+			} );
+
+			it( 'shouldn\'t call "CKEDITOR.replace"', () => {
+				sinon.assert.notCalled( spies.replace );
 			} );
 		} );
 	} );
