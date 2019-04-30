@@ -8,5 +8,8 @@ module.exports = {
 	'extends': 'ckeditor5',
 	'rules': {
 		'operator-linebreak': 0
+	},
+	'parserOptions': {
+		'ecmaVersion': 2018
 	}
 };
