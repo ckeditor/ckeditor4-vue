@@ -2,13 +2,25 @@ const testEditor = {
 	on: addListener(),
 	once: addListener( true ),
 	fire( evtName, evt ) {
-		this._listeners = this._listeners[ evtName ].filter( ( { listener, once } ) => {
-			listener( evt );
+		const listeners = this._listeners[ evtName ];
+
+		if ( !listeners ) {
+			return;
+		}
+
+		this._listeners[ evtName ] = listeners.filter( ( { callback, once } ) => {
+			callback( evt );
 			return !once;
 		} );
-},
+	},
+	setData() {},
+	getData() {
+		return '';
+	},
 	_listeners: {},
-	destroy() {}
+	destroy() {
+		this._listeners = {};
+	}
 };
 
 export default {
