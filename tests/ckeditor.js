@@ -74,41 +74,32 @@ describe( 'CKEditor Component', () => {
 	} );
 
 	describe( 'when editor type', () => {
-		describe( 'unset', () => {
-			it( 'unset should call "CKEDITOR.replace"', () => {
-				sinon.assert.calledOnce( spies.replace );
-			} );
+		[
+			{
+				type: 'unset',
+				method: 'replace'
+			}, {
+				type: 'classic',
+				method: 'replace'
+			}, {
+				type: 'inline',
+				method: 'inline'
+			}
+		].forEach( ( { type, method } ) => {
+			const otherMethod = method === 'inline' ? 'replace' : 'inline';
 
-			it( 'shouldn\'t call "CKEDITOR.inline"', () => {
-				sinon.assert.notCalled( spies.inline );
-			} );
-		} );
+			describe( type === 'unset' ? 'unset' : `set to "${ type }"`, () => {
+				if ( type !== 'unset' ) {
+					setPropsForTestGroup( { type } );
+				}
 
-		describe( 'explicitly set to "classic"', () => {
-			setPropsForTestGroup( {
-				type: 'classic'
-			} );
+				it( `should call "CKEDITOR.${ method }"`, () => {
+					sinon.assert.calledOnce( spies[ method ] );
+				} );
 
-			it( 'should call "CKEDITOR.replace"', () => {
-				sinon.assert.calledOnce( spies.replace );
-			} );
-
-			it( 'shouldn\'t call "CKEDITOR.inline"', () => {
-				sinon.assert.notCalled( spies.inline );
-			} );
-		} );
-
-		describe( 'set to "inline"', () => {
-			setPropsForTestGroup( {
-				type: 'inline'
-			} );
-
-			it( 'should call "CKEDITOR.inline"', () => {
-				sinon.assert.calledOnce( spies.inline );
-			} );
-
-			it( 'shouldn\'t call "CKEDITOR.replace"', () => {
-				sinon.assert.notCalled( spies.replace );
+				it( `shouldn't call "CKEDITOR.${ otherMethod }"`, () => {
+					sinon.assert.notCalled( spies[ otherMethod ] );
+				} );
 			} );
 		} );
 	} );
