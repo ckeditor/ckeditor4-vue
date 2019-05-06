@@ -109,7 +109,12 @@ describe( 'CKEditor Component', () => {
 	} );
 
 	describe( 'events', () => {
-		[ 'ready', 'input', 'focus', 'blur' ].forEach( evtName => {
+		[
+			'ready',
+			'input',
+			'focus',
+			'blur'
+		].forEach( evtName => {
 			it( `should emit "${ evtName }"`, () => {
 				const evt = {};
 				let editorEvtName;
