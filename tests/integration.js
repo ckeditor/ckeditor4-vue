@@ -13,16 +13,19 @@ describe( 'CKEditor plugin', () => {
 	describe( 'Vue.use()', () => {
 		it( 'works with an actual editor build', done => {
 			const wrapper = mount( {
-				template: '<ckeditor :editor="editor" @ready="onReady()" v-model="editorData"></ckeditor>',
+				template: '<ckeditor @ready="onReady()" v-model="editorData"></ckeditor>',
 				methods: {
 					onReady: () => {
-						const instance = wrapper.vm.$children[ 0 ].instance;
+						const component = wrapper.vm.$children[ 0 ];
+						const editor = component.instance;
 
-						expect( instance ).to.be.instanceOf( CKEDITOR.editor );
-						expect( instance.getData() ).to.equal( '<p>foo</p>' );
+						expect( editor ).to.be.instanceOf( CKEDITOR.editor );
+						expect( editor.getData() ).to.equal( '<p>foo</p>\n' );
 
-						wrapper.destroy();
-						done();
+						component.destroyEditor().then( () => {
+							wrapper.destroy();
+							done();
+						} );
 					}
 				}
 			}, {
