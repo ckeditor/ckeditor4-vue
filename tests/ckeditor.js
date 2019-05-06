@@ -132,7 +132,7 @@ describe( 'CKEditor Component', () => {
 						editorEvtName = evtName;
 				}
 
-				CKEDITOR.testEditor.fire( editorEvtName, evt );
+				component.instance.fire( editorEvtName, evt );
 				expect( 'foo' ).to.equal( 'foo' );
 			} );
 		} );
