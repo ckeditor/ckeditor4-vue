@@ -165,6 +165,38 @@ describe( 'CKEditor Component', () => {
 		} );
 	} );
 
+	[ {
+		property: 'value',
+		value: 'foo',
+		spyOn: [ 'setData', true ]
+	}, {
+		property: 'value',
+		value: '',
+		spyOn: [ 'setData', false ]
+	}, {
+		property: 'readOnly',
+		value: true,
+		spyOn: [ 'setReadOnly', true ]
+	}, {
+		property: 'readOnly',
+		value: false,
+		spyOn: [ 'setReadOnly', true ]
+	}
+	].forEach( ( { property, value, spyOn: [ method, spyCalled ] } ) => {
+		describe( `when "component.${ property }" changes`, () => {
+			let spy;
+			beforeEach( () => {
+				spy = spies[ method ] = sinon.spy( component.instance, method );
+				wrapper.setProps( { [ property ]: value } );
+			} );
+
+			it( `should call "instance.${ method }"`, () => {
+				sinon.assert[ spyCalled ? 'calledOnce' : 'notCalled' ]( spy );
+				spyCalled && sinon.assert.calledWith( spy, value );
+			} );
+		} );
+	} );
+
 	function createComponent( props ) {
 		const wrapper = mount( CKEditorComponent, {
 			propsData: { ...props }
