@@ -26,7 +26,7 @@ describe( 'CKEditor Component', () => {
 		spies.replace = sinon.spy( CKEDITOR, 'replace' );
 		spies.inline = sinon.spy( CKEDITOR, 'inline' );
 
-		( { wrapper } = createComponent( props ) );
+		wrapper = createComponent( props );
 		component = wrapper.vm;
 		sandbox = sinon.createSandbox();
 	} );
@@ -117,7 +117,7 @@ describe( 'CKEditor Component', () => {
 			'focus',
 			'blur'
 		].forEach( evtName => {
-			it( `should emit "${ evtName }"`, () => {
+			beforeEach( () => {
 				const evt = {};
 				let editorEvtName;
 
@@ -133,6 +133,9 @@ describe( 'CKEditor Component', () => {
 				}
 
 				component.instance.fire( editorEvtName, evt );
+			} );
+
+			it( `should emit "${ evtName }"`, () => {
 				expect( 'foo' ).to.equal( 'foo' );
 			} );
 		} );
@@ -198,11 +201,9 @@ describe( 'CKEditor Component', () => {
 	} );
 
 	function createComponent( props ) {
-		const wrapper = mount( CKEditorComponent, {
+		return mount( CKEditorComponent, {
 			propsData: { ...props }
 		} );
-
-		return { wrapper, vm: wrapper.vm };
 	}
 
 	function setPropsForTestGroup( newProps ) {
