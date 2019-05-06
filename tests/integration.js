@@ -5,11 +5,15 @@
 
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import CKEditor from '../../src/plugin';
+import CKEditor from '../src/plugin';
 
-Vue.use( CKEditor );
+/* global CKEDITOR */
 
-describe( 'CKEditor plugin', () => {
+describe( 'Integration of CKEditor plugin', () => {
+	before( () => {
+		Vue.use( CKEditor );
+	} );
+
 	describe( 'Vue.use()', () => {
 		it( 'works with an actual editor build', done => {
 			const wrapper = mount( {
