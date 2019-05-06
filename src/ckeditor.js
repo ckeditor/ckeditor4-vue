@@ -99,7 +99,6 @@ export default {
 			}
 		},
 
-		// Synchronize changes of #disabled.
 		readOnly( val ) {
 			this.instance.setReadOnly( val );
 		}
