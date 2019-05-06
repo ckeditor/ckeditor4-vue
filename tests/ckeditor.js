@@ -58,53 +58,80 @@ describe( 'CKEditor Component', () => {
 		[
 			{
 				name: 'value',
-				default: ''
+				defaultValue: ''
 			}, {
 				name: 'type',
-				default: 'classic',
+				defaultValue: 'classic',
 			}, {
 				name: 'config',
-				default: undefined
+				defaultValue: undefined
 			}, {
 				name: 'tagName',
-				default: 'textarea'
+				defaultValue: 'textarea'
 			}, {
 				name: 'readOnly',
-				default: null
+				defaultValue: null
 			}
-		].forEach( prop => {
-			it( `property "${ prop.name }" should have default value`, () => {
-				expect( component[ prop.name ] ).to.equal( prop.default );
+		].forEach( ( { name, defaultValue } ) => {
+			it( `property "${ name }" should have default value`, () => {
+				expect( component[ name ] ).to.equal( defaultValue );
 			} );
 		} );
-	} );
 
-	describe( 'when editor type', () => {
-		[
-			{
-				type: 'unset',
-				method: 'replace'
-			}, {
-				type: 'classic',
-				method: 'replace'
-			}, {
-				type: 'inline',
-				method: 'inline'
-			}
-		].forEach( ( { type, method } ) => {
-			const otherMethod = method === 'inline' ? 'replace' : 'inline';
-
-			describe( type === 'unset' ? 'unset' : `set to "${ type }"`, () => {
-				if ( type !== 'unset' ) {
-					setPropsForTestGroup( { type } );
+		describe( 'property', () => {
+			[
+				{
+					name: 'value',
+					value: 'foo'
+				}, {
+					name: 'type',
+					value: 'inline'
+				}, {
+					name: 'config',
+					value: {}
+				}, {
+					name: 'tagName',
+					value: 'div'
+				}, {
+					name: 'readOnly',
+					value: true
 				}
+			].forEach( ( { name, value } ) => {
+				setPropsForTestGroup( { [ name ]: value } );
 
-				it( `should call "CKEDITOR.${ method }"`, () => {
-					sinon.assert.calledOnce( spies[ method ] );
+				it( `"${ name }" should be configurable`, () => {
+					expect( component[ name ] ).to.equal( value );
 				} );
+			} );
+		} );
 
-				it( `shouldn't call "CKEDITOR.${ otherMethod }"`, () => {
-					sinon.assert.notCalled( spies[ otherMethod ] );
+		describe( 'when editor type', () => {
+			[
+				{
+					type: 'unset',
+					method: 'replace'
+				}, {
+					type: 'classic',
+					method: 'replace'
+				}, {
+					type: 'inline',
+					method: 'inline'
+				}
+			].forEach( ( { type, method } ) => {
+				const otherMethod = method === 'inline' ? 'replace' : 'inline';
+
+				describe( type === 'unset' ? 'unset' : `set to "${ type }"`, () => {
+					if ( type !== 'unset' ) {
+						setPropsForTestGroup( { type } );
+					}
+
+					it( `should call "CKEDITOR.${ method }"`, () => {
+						sinon.assert.calledOnce( spies[ method ] );
+					} );
+
+					it( `shouldn't call "CKEDITOR.${ otherMethod }"`, () => {
+						sinon.assert.notCalled( spies[ otherMethod ] );
+					} );
 				} );
 			} );
 		} );
@@ -210,7 +237,7 @@ describe( 'CKEditor Component', () => {
 	function setPropsForTestGroup( newProps ) {
 		// "before" is executed before "beforeEach", so we can setup props now.
 		before( () => {
-			props = { ...newProps };
+			props = { ...props, ...newProps };
 		} );
 
 		after( () => {
