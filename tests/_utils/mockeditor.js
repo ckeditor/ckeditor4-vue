@@ -1,6 +1,8 @@
 const testEditor = {
 	on: addListener(),
+
 	once: addListener( true ),
+
 	fire( evtName, evt ) {
 		const listeners = this._listeners[ evtName ];
 
@@ -13,20 +15,29 @@ const testEditor = {
 			return !once;
 		} );
 	},
+
 	setData() {},
+
 	getData() {
 		return '';
 	},
-	_listeners: {},
+
+	setReadOnly() {
+	},
+
 	destroy() {
 		this.fire( 'destroy' );
 		this._listeners = {};
-	}
+	},
+
+	_listeners: {}
 };
 
 export default {
 	replace: createEditor,
+
 	inline: createEditor,
+
 	testEditor
 };
 
