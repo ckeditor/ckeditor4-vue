@@ -188,6 +188,7 @@ describe( 'CKEditor Component', () => {
 	].forEach( ( { property, value, spyOn: [ method, spyCalled ] } ) => {
 		describe( `when "component.${ property }" changes`, () => {
 			let spy;
+
 			beforeEach( () => {
 				spy = spies[ method ] = sinon.spy( component.instance, method );
 				wrapper.setProps( { [ property ]: value } );
