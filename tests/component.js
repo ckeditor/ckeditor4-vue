@@ -54,29 +54,32 @@ describe( 'CKEditor Component', () => {
 			expect( wrapper.html() ).to.equal( '<div><textarea></textarea></div>' );
 		} );
 
-		[
-			{
-				name: 'value',
-				defaultValue: ''
-			}, {
-				name: 'type',
-				defaultValue: 'classic',
-			}, {
-				name: 'config',
-				defaultValue: undefined
-			}, {
-				name: 'tagName',
-				defaultValue: 'textarea'
-			}, {
-				name: 'readOnly',
-				defaultValue: null
-			}
-		].forEach( ( { name, defaultValue } ) => {
-			it( `property "${ name }" should have default value`, () => {
-				expect( component[ name ] ).to.equal( defaultValue );
+		describe( 'property', () => {
+			[
+				{
+					name: 'value',
+					defaultValue: ''
+				}, {
+					name: 'type',
+					defaultValue: 'classic',
+				}, {
+					name: 'config',
+					defaultValue: undefined
+				}, {
+					name: 'tagName',
+					defaultValue: 'textarea'
+				}, {
+					name: 'readOnly',
+					defaultValue: null
+				}
+			].forEach( ( { name, defaultValue } ) => {
+				it( `"${ name }" should have default value`, () => {
+					expect( component[ name ] ).to.equal( defaultValue );
+				} );
 			} );
 		} );
 
+		// Repeat description, so test are nicely grouped in the output, but keep them separate in code, because they need different setup.
 		describe( 'property', () => {
 			[
 				{
@@ -102,10 +105,6 @@ describe( 'CKEditor Component', () => {
 					expect( component[ name ] ).to.equal( value );
 				} );
 			} );
-		} );
-
-		it( 'should not allow invalid editor type', () => {
-			expect( component.$options.props.type.validator( 'foo' ) ).to.be.false;
 		} );
 
 		describe( 'when editor type', () => {
@@ -141,6 +140,14 @@ describe( 'CKEditor Component', () => {
 					it( `shouldn't call "CKEDITOR.${ otherMethod }"`, () => {
 						sinon.assert.notCalled( spies[ otherMethod ] );
 					} );
+				} );
+			} );
+		} );
+
+		describe( 'when editor type', () => {
+			describe( 'set to invalid value', () => {
+				it( 'should be disallowed by validator', () => {
+					expect( component.$options.props.type.validator( 'foo' ) ).to.be.false;
 				} );
 			} );
 		} );
