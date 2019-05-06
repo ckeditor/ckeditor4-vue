@@ -19,6 +19,7 @@ const testEditor = {
 	},
 	_listeners: {},
 	destroy() {
+		this.fire( 'destroy' );
 		this._listeners = {};
 	}
 };
