@@ -41,6 +41,8 @@ describe( 'CKEditor Component', () => {
 		}
 
 		wrapper.destroy();
+		component.instance.destroy(); // 'instance.destroy' is fired only after 'instanceReady',
+		// but mocked editor wont fire it by itself, so manualy call destroy to clean listeners.
 		sandbox.restore();
 	} );
 
@@ -133,6 +135,21 @@ describe( 'CKEditor Component', () => {
 				CKEDITOR.testEditor.fire( editorEvtName, evt );
 				expect( 'foo' ).to.equal( 'foo' );
 			} );
+		} );
+	} );
+
+	describe( 'when component destroyed', () => {
+		beforeEach( () => {
+			spies.destroy = sinon.spy( component, 'destroyEditor' );
+			wrapper.destroy();
+		} );
+
+		it( 'should call "component.destroyEditor"', () => {
+			sinon.assert.calledOnce( spies.destroy );
+		} );
+
+		it( 'should emit "destroy"', () => {
+			expect( wrapper.emitted().destroy.length ).to.equal( 1 );
 		} );
 	} );
 
