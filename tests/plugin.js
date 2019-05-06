@@ -5,41 +5,32 @@
 
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import CKEditor from '../../src/plugin';
+import CKEditor from '../src/plugin';
+import mockEditor from './_utils/mockeditor';
+
+/* global window CKEDITOR */
 
 describe( 'CKEditor plugin', () => {
-	it( 'works when the component is used locally', done => {
-		const wrapperFoo = mount( {
-			template: '<ckeditor :editor="editorType"></ckeditor>',
-			components: {
-				ckeditor: CKEditor.component
-			},
+	const CKEditorComponent = Vue.use( CKEditor );
+	let CKEditorNamespace, wrapper;
+
+	before( () => {
+		CKEditorNamespace = CKEDITOR;
+
+		window.CKEDITOR = mockEditor;
+
+		wrapper = mount( {
+			template: '<ckeditor></ckeditor>'
 		}, {
-			data: () => {
-				return {
-					editorType: 'classic'
-				};
-			}
+			data: () => ( {} )
 		} );
+	} );
 
-		const wrapperBar = mount( {
-			template: '<ckeditor :editor="editorType"></ckeditor>',
-			components: {
-				ckeditor: CKEditor.component
-			},
-		}, {
-			data: () => {
-				return {
-					editorType: 'classic'
-				};
-			}
-		} );
+	after( () => {
+		window.CKEDITOR = CKEditorNamespace;
+	} );
 
-		Vue.nextTick( () => {
-			expect( wrapperFoo.vm.$children[ 0 ] ).to.be.instanceOf( CKEditor );
-			expect( wrapperBar.vm.$children[ 0 ] ).to.be.instanceOf( CKEditor );
-
-			done();
-		} );
+	it( 'works when the component is used locally', () => {
+		expect( wrapper.vm.$children[ 0 ] ).to.be.instanceOf( CKEditorComponent );
 	} );
 } );
