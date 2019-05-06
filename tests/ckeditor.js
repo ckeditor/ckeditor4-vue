@@ -140,16 +140,28 @@ describe( 'CKEditor Component', () => {
 
 	describe( 'when component destroyed', () => {
 		beforeEach( () => {
-			spies.destroy = sinon.spy( component, 'destroyEditor' );
+			spies.destroyEditor = sinon.spy( component, 'destroyEditor' );
 			wrapper.destroy();
 		} );
 
 		it( 'should call "component.destroyEditor"', () => {
-			sinon.assert.calledOnce( spies.destroy );
+			sinon.assert.calledOnce( spies.destroyEditor );
 		} );
 
 		it( 'should emit "destroy"', () => {
 			expect( wrapper.emitted().destroy.length ).to.equal( 1 );
+		} );
+	} );
+
+	describe( 'when "component.destroyEditor" called', () => {
+		beforeEach( () => {
+			spies.destroy = sinon.spy( component, 'destroyEditor' );
+			component.$_ready = Promise.resolve();
+			component.destroyEditor();
+		} );
+
+		it( 'should call "instance.destroy"', () => {
+			sinon.assert.calledOnce( spies.destroy );
 		} );
 	} );
 
