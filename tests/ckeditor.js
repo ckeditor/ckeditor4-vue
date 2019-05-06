@@ -105,6 +105,10 @@ describe( 'CKEditor Component', () => {
 			} );
 		} );
 
+		it( 'should not allow invalid editor type', () => {
+			expect( component.$options.props.type.validator( 'foo' ) ).to.be.false;
+		} );
+
 		describe( 'when editor type', () => {
 			[
 				{
@@ -123,7 +127,13 @@ describe( 'CKEditor Component', () => {
 				describe( type === 'unset' ? 'unset' : `set to "${ type }"`, () => {
 					if ( type !== 'unset' ) {
 						setPropsForTestGroup( { type } );
+					} else {
+						type = 'classic';
 					}
+
+					it( `"component.type" should be "${ type }"`, () => {
+						expect( component.type ).to.equal( type );
+					} );
 
 					it( `should call "CKEDITOR.${ method }"`, () => {
 						sinon.assert.calledOnce( spies[ method ] );
