@@ -5,6 +5,8 @@
 
 /* global CKEDITOR */
 
+import { getEditorNamespace } from './helpers.js';
+
 export default {
 	name: 'ckeditor',
 
@@ -23,6 +25,10 @@ export default {
 			type: String,
 			default: 'classic',
 			validator: type => type in { classic: 1, inline: 1 }
+		},
+		editorUrl: {
+			type: String,
+			default: 'https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js'
 		},
 		config: {
 			type: Object,
@@ -51,36 +57,39 @@ export default {
 	},
 
 	mounted() {
-		const editor = this.instance = CKEDITOR[ this.type === 'inline' ? 'inline' : 'replace' ]( this.$el.firstElementChild, this.config );
+		getEditorNamespace( this.editorUrl ).then( () => {
+			const editor = this.instance =
+				CKEDITOR[ this.type === 'inline' ? 'inline' : 'replace' ]( this.$el.firstElementChild, this.config );
 
-		editor.on( 'instanceReady', () => {
-			if ( this.readOnly !== null ) {
-				this.instance.setReadOnly( this.readOnly );
-			}
+			editor.on( 'instanceReady', () => {
+				if ( this.readOnly !== null ) {
+					this.instance.setReadOnly( this.readOnly );
+				}
 
-			const undo = editor.undoManager;
-			const data = this.value;
+				const undo = editor.undoManager;
+				const data = this.value;
 
-			if ( data !== null ) {
-				undo && undo.lock();
+				if ( data !== null ) {
+					undo && undo.lock();
 
-				editor.once( 'dataReady', () => {
+					editor.once( 'dataReady', () => {
+						this.$_setUpEditorEvents();
+						this.$emit( 'ready', editor );
+
+						// Locking undoManager prevents 'change' event.
+						// Trigger it manually to update bound data.
+						if ( data !== editor.getData() ) {
+							editor.fire( 'change' );
+						}
+						undo && undo.unlock();
+					} );
+
+					editor.setData( data );
+				} else {
 					this.$_setUpEditorEvents();
 					this.$emit( 'ready', editor );
-
-					// Locking undoManager prevents 'change' event.
-					// Trigger it manually to update bound data.
-					if ( data !== editor.getData() ) {
-						editor.fire( 'change' );
-					}
-					undo && undo.unlock();
-				} );
-
-				editor.setData( data );
-			} else {
-				this.$_setUpEditorEvents();
-				this.$emit( 'ready', editor );
-			}
+				}
+			} );
 		} );
 	},
 
