@@ -17,7 +17,6 @@ describe( 'CKEditor Component', () => {
 
 	before( () => {
 		CKEditorNamespace = CKEDITOR;
-
 		window.CKEDITOR = mockEditor;
 	} );
 
@@ -40,8 +39,11 @@ describe( 'CKEditor Component', () => {
 		}
 
 		wrapper.destroy();
-		component.instance.destroy(); // 'instance.destroy' is fired only after 'instanceReady',
+
+		// 'instance.destroy' is fired only after 'instanceReady',
 		// but mocked editor wont fire it by itself, so manualy call destroy to clean listeners.
+		component.instance.destroy();
+
 		sandbox.restore();
 	} );
 
@@ -79,7 +81,8 @@ describe( 'CKEditor Component', () => {
 			} );
 		} );
 
-		// Repeat description, so test are nicely grouped in the output, but keep them separate in code, because they need different setup.
+		// Repeat description, so test are nicely grouped in the output,
+		// but keep them separate in code, because they need different setup.
 		describe( 'property', () => {
 			[
 				{
