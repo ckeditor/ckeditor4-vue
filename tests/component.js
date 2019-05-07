@@ -75,6 +75,9 @@ describe( 'CKEditor Component', () => {
 					name: 'type',
 					defaultValue: 'classic',
 				}, {
+					name: 'editorUrl',
+					defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
+				}, {
 					name: 'config',
 					defaultValue: undefined
 				}, {
@@ -84,9 +87,14 @@ describe( 'CKEditor Component', () => {
 					name: 'readOnly',
 					defaultValue: null
 				}
-			].forEach( ( { name, defaultValue } ) => {
+			].forEach( ( { name, defaultValue, defaultValueRegex } ) => {
 				it( `"${ name }" should have default value`, () => {
-					expect( component[ name ] ).to.equal( defaultValue );
+					if ( defaultValue ) {
+						expect( component[ name ] ).to.equal( defaultValue );
+					}
+					if ( defaultValueRegex ) {
+						expect( component[ name ] ).to.match( defaultValueRegex );
+					}
 				} );
 			} );
 		} );
