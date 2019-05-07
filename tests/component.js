@@ -110,6 +110,9 @@ describe( 'CKEditor Component', () => {
 					name: 'type',
 					value: 'inline'
 				}, {
+					name: 'editorUrl',
+					value: 'https://cdn.ckeditor.com/4.10.0/basic-all/ckeditor.js'
+				}, {
 					name: 'config',
 					value: {}
 				}, {
