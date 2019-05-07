@@ -1,6 +1,4 @@
-import CKEditor from '../src/plugin.js';
-
-/* global Vue VueRouter */
+/* global Vue VueRouter CKEditor */
 
 Vue.use( CKEditor );
 
