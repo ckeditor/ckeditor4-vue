@@ -214,23 +214,24 @@ describe( 'CKEditor Component', () => {
 		} );
 	} );
 
-	[ {
-		property: 'value',
-		value: 'foo',
-		spyOn: [ 'setData', true ]
-	}, {
-		property: 'value',
-		value: '',
-		spyOn: [ 'setData', false ]
-	}, {
-		property: 'readOnly',
-		value: true,
-		spyOn: [ 'setReadOnly', true ]
-	}, {
-		property: 'readOnly',
-		value: false,
-		spyOn: [ 'setReadOnly', true ]
-	}
+	[
+		{
+			property: 'value',
+			value: 'foo',
+			spyOn: [ 'setData', true ]
+		}, {
+			property: 'value',
+			value: '',
+			spyOn: [ 'setData', false ]
+		}, {
+			property: 'readOnly',
+			value: true,
+			spyOn: [ 'setReadOnly', true ]
+		}, {
+			property: 'readOnly',
+			value: false,
+			spyOn: [ 'setReadOnly', true ]
+		}
 	].forEach( ( { property, value, spyOn: [ method, spyCalled ] } ) => {
 		describe( `when "component.${ property }" changes`, () => {
 			let spy;
