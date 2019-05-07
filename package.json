@@ -53,5 +53,8 @@
   "bugs": {
     "url": "https://github.com/ckeditor/ckeditor4-vue/issues"
   },
-  "homepage": "https://github.com/ckeditor/ckeditor4-vue"
+  "homepage": "https://github.com/ckeditor/ckeditor4-vue",
+  "dependencies": {
+    "load-script": "^1.0.0"
+  }
 }
