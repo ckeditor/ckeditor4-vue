@@ -7,7 +7,7 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/plugin';
 
-/* global CKEDITOR */
+/* global CKEDITOR window */
 
 describe( 'Integration of CKEditor component', () => {
 	let methods = {};
@@ -99,6 +99,30 @@ describe( 'Integration of CKEditor component', () => {
 			it( `divarea plugin ${ extraPlugins ? 'should' : 'shouldn\'t' } be loaded`, () => {
 				expect( editor.plugins.divarea ).to.be[ extraPlugins ? 'ok' : 'undefined' ];
 			} );
+		} );
+	} );
+
+	describe( 'with editorURl specified', () => {
+		const basePath = 'https://cdn.ckeditor.com/4.10.1/basic/';
+		let CKEditorNamespace;
+
+		before( () => {
+			CKEditorNamespace = window.CKEDITOR;
+			delete window.CKEDITOR;
+		} );
+
+		after( () => {
+			window.CKEDITOR = CKEditorNamespace;
+		} );
+
+		setOptionsForTestGroup( {
+			props: [
+				`editorUrl="${ basePath }ckeditor.js"`
+			]
+		} );
+
+		it( 'should use correct build', () => {
+			expect( CKEDITOR.basePath ).to.equal( basePath );
 		} );
 	} );
 
