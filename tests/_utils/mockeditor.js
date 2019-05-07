@@ -35,10 +35,7 @@ const testEditor = {
 
 export default {
 	replace: createEditor,
-
-	inline: createEditor,
-
-	testEditor
+	inline: createEditor
 };
 
 function createEditor() {

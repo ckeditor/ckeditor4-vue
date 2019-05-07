@@ -3,6 +3,7 @@
  * For licensing, see LICENSE.md.
  */
 
+import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
@@ -13,20 +14,29 @@ import mockEditor from './_utils/mockeditor';
 describe( 'CKEditor Component', () => {
 	const spies = {};
 
-	let sandbox, wrapper, component, CKEditorNamespace, props;
+	let sandbox, wrapper, component, props, CKEditorNamespace;
 
 	before( () => {
-		CKEditorNamespace = CKEDITOR;
+		CKEditorNamespace = window.CKEDITOR;
 		window.CKEDITOR = mockEditor;
 	} );
 
-	beforeEach( () => {
+	beforeEach( done => {
 		spies.replace = sinon.spy( CKEDITOR, 'replace' );
 		spies.inline = sinon.spy( CKEDITOR, 'inline' );
 
 		wrapper = createComponent( props );
 		component = wrapper.vm;
 		sandbox = sinon.createSandbox();
+
+		component.$once( 'ready', () => {
+			done();
+		} );
+
+		Vue.nextTick( () => {
+			component.instance.fire( 'instanceReady' );
+			component.instance.fire( 'dataReady' );
+		} );
 	} );
 
 	after( () => {
@@ -42,7 +52,7 @@ describe( 'CKEditor Component', () => {
 
 		// 'instance.destroy' is fired only after 'instanceReady',
 		// but mocked editor wont fire it by itself, so manualy call destroy to clean listeners.
-		component.instance.destroy();
+		component.instance && component.instance.destroy();
 
 		sandbox.restore();
 	} );

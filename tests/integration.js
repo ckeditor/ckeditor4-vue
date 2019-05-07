@@ -105,7 +105,7 @@ describe( 'Integration of CKEditor component', () => {
 	function setOptionsForTestGroup( { props: newProps, methods: newMethods, data: newData } ) {
 		// "before" is executed before "beforeEach", so we can setup component now.
 		before( () => {
-			props = newProps;
+			props = [ ...props, ...newProps ];
 			data = { ...data, ...newData };
 			methods = { ...methods, ...newMethods };
 		} );
