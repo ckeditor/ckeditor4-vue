@@ -29,13 +29,8 @@ describe( 'CKEditor Component', () => {
 		component = wrapper.vm;
 		sandbox = sinon.createSandbox();
 
-		component.$once( 'ready', () => {
+		component.$_ready.then( () => {
 			done();
-		} );
-
-		Vue.nextTick( () => {
-			component.instance.fire( 'instanceReady' );
-			component.instance.fire( 'dataReady' );
 		} );
 	} );
 
@@ -49,11 +44,6 @@ describe( 'CKEditor Component', () => {
 		}
 
 		wrapper.destroy();
-
-		// 'instance.destroy' is fired only after 'instanceReady',
-		// but mocked editor wont fire it by itself, so manualy call destroy to clean listeners.
-		component.instance && component.instance.destroy();
-
 		sandbox.restore();
 	} );
 

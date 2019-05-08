@@ -1,3 +1,5 @@
+/* global setTimeout */
+
 const testEditor = {
 	on: addListener(),
 
@@ -28,9 +30,7 @@ const testEditor = {
 	destroy() {
 		this.fire( 'destroy' );
 		this._listeners = {};
-	},
-
-	_listeners: {}
+	}
 };
 
 export default {
@@ -39,7 +39,18 @@ export default {
 };
 
 function createEditor() {
-	return testEditor;
+	const instance = {
+		...testEditor,
+		_listeners: {}
+	};
+
+	// Make it async, otherwise listeners can't be added before returning editor isntance.
+	setTimeout( () => {
+		instance.fire( 'instanceReady' );
+		instance.fire( 'dataReady' );
+	} );
+
+	return instance;
 }
 
 function addListener( once ) {

@@ -12,9 +12,9 @@ import mockEditor from './_utils/mockeditor';
 
 describe( 'CKEditor plugin', () => {
 	const CKEditorComponent = Vue.use( CKEditor );
-	let CKEditorNamespace, wrapper;
+	let CKEditorNamespace, wrapper, component;
 
-	before( () => {
+	before( done => {
 		CKEditorNamespace = CKEDITOR;
 
 		window.CKEDITOR = mockEditor;
@@ -24,10 +24,18 @@ describe( 'CKEditor plugin', () => {
 		}, {
 			data: () => ( {} )
 		} );
+
+		component = wrapper.vm.$children[ 0 ];
+
+		component.$_ready.then( () => {
+			done();
+		} );
 	} );
 
 	after( () => {
 		window.CKEDITOR = CKEditorNamespace;
+
+		wrapper.destroy();
 	} );
 
 	it( 'works when the component is used locally', () => {
