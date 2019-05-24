@@ -67,7 +67,7 @@ const events = {
 						message = 'Editor is focused';
 						break;
 					case 'blur':
-						message = 'Editor is ready';
+						message = 'Editor is blurred';
 						break;
 					case 'input':
 						message = 'Editor has changed';
