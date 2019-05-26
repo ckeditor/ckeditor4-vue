@@ -133,17 +133,21 @@ export default {
 		},
 
 		destroyEditor() {
-			if ( this.instance ) {
+			const editor = this.instance;
+
+			if ( editor ) {
+				this.instance = null;
+
 				return this.$_ready.then( () => new Promise( res => {
-					if ( this.instance ) {
-						this.instance.on( 'destroy', res );
-						this.instance.destroy();
-						this.instance = null;
+					if ( editor ) {
+						editor.on( 'destroy', res );
+						editor.destroy();
 					} else {
 						res();
 					}
 				} ) );
 			}
+
 			return Promise.resolve();
 		}
 	}
