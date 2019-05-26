@@ -69,32 +69,27 @@ export default {
 				const undo = editor.undoManager;
 				const data = this.value;
 
-				if ( data !== null ) {
-					undo && undo.lock();
+				undo && undo.lock();
 
-					editor.once( 'dataReady', () => {
-						this.$_setUpEditorEvents();
-
-						// Locking undoManager prevents 'change' event.
-						// Trigger it manually to update bound data.
-						if ( data !== editor.getData() ) {
-							editor.once( 'change', () => {
-								this.$emit( 'ready', editor );
-							} );
-
-							editor.fire( 'change' );
-						} else {
-							this.$emit( 'ready', editor );
-						}
-
-						undo && undo.unlock();
-					} );
-
-					editor.setData( data );
-				} else {
+				editor.once( 'dataReady', () => {
 					this.$_setUpEditorEvents();
-					this.$emit( 'ready', editor );
-				}
+
+					// Locking undoManager prevents 'change' event.
+					// Trigger it manually to update bound data.
+					if ( data !== editor.getData() ) {
+						editor.once( 'change', () => {
+							this.$emit( 'ready', editor );
+						} );
+
+						editor.fire( 'change' );
+					} else {
+						this.$emit( 'ready', editor );
+					}
+
+					undo && undo.unlock();
+				} );
+
+				editor.setData( data );
 			} );
 		} );
 	},
