@@ -108,7 +108,9 @@ export default {
 		},
 
 		readOnly( val ) {
-			this.instance.setReadOnly( val );
+			if ( this.instance ) {
+				this.instance.setReadOnly( val );
+			}
 		}
 	},
 
