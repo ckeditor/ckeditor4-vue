@@ -71,7 +71,7 @@ export default {
 
 				undo && undo.lock();
 
-				editor.once( 'dataReady', () => {
+				editor.setData( data, { callback: () => {
 					this.$_setUpEditorEvents();
 
 					// Locking undoManager prevents 'change' event.
@@ -87,9 +87,7 @@ export default {
 					}
 
 					undo && undo.unlock();
-				} );
-
-				editor.setData( data );
+				} } );
 			} );
 		} );
 	},
