@@ -139,12 +139,8 @@ export default {
 				this.instance = null;
 
 				return this.$_ready.then( () => new Promise( res => {
-					if ( editor ) {
-						editor.on( 'destroy', res );
-						editor.destroy();
-					} else {
-						res();
-					}
+					editor.on( 'destroy', res );
+					editor.destroy();
 				} ) );
 			}
 
