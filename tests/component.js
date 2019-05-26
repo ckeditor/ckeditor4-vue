@@ -3,7 +3,6 @@
  * For licensing, see LICENSE.md.
  */
 
-import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
