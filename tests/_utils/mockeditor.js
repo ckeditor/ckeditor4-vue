@@ -18,7 +18,9 @@ const testEditor = {
 		} );
 	},
 
-	setData() {},
+	setData( data, { callback } = {} ) {
+		callback && callback();
+	},
 
 	getData() {
 		return '';
