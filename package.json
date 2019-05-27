@@ -49,7 +49,7 @@
     "url": "https://github.com/ckeditor/ckeditor4-vue.git"
   },
   "author": "CKSource (http://cksource.com/)",
-  "license": "GPL-2.0-or-later",
+  "license": "(GPL-2.0-or-later OR LGPL-2.1-or-later OR MPL-1.1-or-later)",
   "bugs": {
     "url": "https://github.com/ckeditor/ckeditor4-vue/issues"
   },
