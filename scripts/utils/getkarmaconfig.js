@@ -39,7 +39,7 @@ module.exports = function getKarmaConfig() {
 		frameworks: [ 'mocha', 'chai', 'sinon' ],
 
 		files: [
-			'https://cdn.ckeditor.com/4.11.4/standard-all/ckeditor.js',
+			options.url,
 			'tests/**/*.js'
 		],
 
@@ -252,6 +252,7 @@ function parseArguments( args ) {
 			r: 'reporter',
 			s: 'source-map',
 			w: 'watch',
+			u: 'url'
 		},
 
 		default: {
@@ -260,6 +261,7 @@ function parseArguments( args ) {
 			watch: false,
 			coverage: false,
 			'source-map': false,
+			'url': 'https://cdn.ckeditor.com/4.11.4/standard-all/ckeditor.js'
 		}
 	};
 
