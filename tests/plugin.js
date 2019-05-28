@@ -5,8 +5,8 @@
 
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import CKEditor from '../src/plugin';
-import mockEditor from './_utils/mockeditor';
+import CKEditor from '../src/index';
+import mockEditor from './_test-utils/mockeditor';
 
 /* global window CKEDITOR */
 

@@ -5,7 +5,7 @@
 
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import CKEditor from '../src/plugin';
+import CKEditor from '../src/index';
 
 /* global CKEDITOR window */
 

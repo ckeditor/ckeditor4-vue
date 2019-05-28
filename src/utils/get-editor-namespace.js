@@ -9,7 +9,7 @@ import loadScript from 'load-script';
 
 let promise;
 
-export function getEditorNamespace( editorURL ) {
+export default function getEditorNamespace( editorURL ) {
 	if ( 'CKEDITOR' in window ) {
 		return Promise.resolve( CKEDITOR );
 	}

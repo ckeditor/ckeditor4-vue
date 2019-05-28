@@ -6,7 +6,7 @@
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
-import mockEditor from './_utils/mockeditor';
+import mockEditor from './_test-utils/mockeditor';
 
 /* global window CKEDITOR */
 
