@@ -50,12 +50,6 @@ export default {
 			: this.readOnly;
 	},
 
-	beforeCreate() {
-		this.$_ready = new Promise( res => {
-			this.$once( 'ready', res );
-		} );
-	},
-
 	mounted() {
 		getEditorNamespace( this.editorUrl ).then( () => {
 			const editor = this.instance =
@@ -93,7 +87,9 @@ export default {
 	},
 
 	beforeDestroy() {
-		this.destroyEditor();
+		if ( this.instance ) {
+			this.instance.destroy();
+		}
 
 		// Note: By the time the editor is destroyed (editor.on( 'destroy' ) called)
 		// the Vue component will not be able to emit any longer. So emitting #destroy a bit earlier.
@@ -132,21 +128,6 @@ export default {
 			editor.on( 'blur', evt => {
 				this.$emit( 'blur', evt, editor );
 			} );
-		},
-
-		destroyEditor() {
-			const editor = this.instance;
-
-			if ( editor ) {
-				this.instance = null;
-
-				return this.$_ready.then( () => new Promise( res => {
-					editor.on( 'destroy', res );
-					editor.destroy();
-				} ) );
-			}
-
-			return Promise.resolve();
 		}
 	}
 };
