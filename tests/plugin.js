@@ -10,13 +10,13 @@ import mockEditor from './_utils/mockeditor';
 
 /* global window CKEDITOR */
 
+const CKEditorNamespace = CKEDITOR;
+
 describe( 'CKEditor plugin', () => {
 	const CKEditorComponent = Vue.use( CKEditor );
-	let CKEditorNamespace, wrapper, component;
+	let wrapper, component;
 
 	before( done => {
-		CKEditorNamespace = CKEDITOR;
-
 		window.CKEDITOR = mockEditor;
 
 		wrapper = mount( {
@@ -27,7 +27,7 @@ describe( 'CKEditor plugin', () => {
 
 		component = wrapper.vm.$children[ 0 ];
 
-		component.$_ready.then( () => {
+		component.$once( 'ready', () => {
 			done();
 		} );
 	} );

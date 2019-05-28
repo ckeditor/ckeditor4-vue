@@ -10,13 +10,14 @@ import mockEditor from './_utils/mockeditor';
 
 /* global window CKEDITOR */
 
+const CKEditorNamespace = window.CKEDITOR;
+
 describe( 'CKEditor Component', () => {
 	const spies = {};
 
-	let sandbox, wrapper, component, props, CKEditorNamespace;
+	let sandbox, wrapper, component, props;
 
 	before( () => {
-		CKEditorNamespace = window.CKEDITOR;
 		window.CKEDITOR = mockEditor;
 	} );
 
@@ -28,7 +29,7 @@ describe( 'CKEditor Component', () => {
 		component = wrapper.vm;
 		sandbox = sinon.createSandbox();
 
-		component.$_ready.then( () => {
+		component.$once( 'ready', () => {
 			done();
 		} );
 	} );
@@ -199,28 +200,16 @@ describe( 'CKEditor Component', () => {
 
 	describe( 'when component destroyed', () => {
 		beforeEach( () => {
-			spies.destroyEditor = sinon.spy( component, 'destroyEditor' );
+			spies.destroy = sinon.spy( component.instance, 'destroy' );
 			wrapper.destroy();
-		} );
-
-		it( 'should call "component.destroyEditor"', () => {
-			sinon.assert.calledOnce( spies.destroyEditor );
-		} );
-
-		it( 'should emit "destroy"', () => {
-			expect( wrapper.emitted().destroy.length ).to.equal( 1 );
-		} );
-	} );
-
-	describe( 'when "component.destroyEditor" called', () => {
-		beforeEach( () => {
-			spies.destroy = sinon.spy( component, 'destroyEditor' );
-			component.$_ready = Promise.resolve();
-			component.destroyEditor();
 		} );
 
 		it( 'should call "instance.destroy"', () => {
 			sinon.assert.calledOnce( spies.destroy );
+		} );
+
+		it( 'should emit "destroy"', () => {
+			expect( wrapper.emitted().destroy.length ).to.equal( 1 );
 		} );
 	} );
 

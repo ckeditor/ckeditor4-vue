@@ -9,6 +9,8 @@ import CKEditor from '../src/plugin';
 
 /* global CKEDITOR window */
 
+const CKEditorNamespace = window.CKEDITOR;
+
 describe( 'Integration of CKEditor component', () => {
 	let methods = {};
 	let props = [];
@@ -29,7 +31,6 @@ describe( 'Integration of CKEditor component', () => {
 			methods: {
 				...methods,
 				onReady: () => {
-					component = wrapper.vm.$children[ 0 ];
 					editor = component.instance;
 
 					methods.onReady && methods.onReady();
@@ -45,13 +46,23 @@ describe( 'Integration of CKEditor component', () => {
 				};
 			}
 		} );
+
+		component = wrapper.vm.$children[ 0 ];
 	} );
 
 	afterEach( done => {
-		component.destroyEditor().then( () => {
-			wrapper.destroy();
+		const editor = component.instance;
+
+		if ( editor ) {
+			editor.once( 'destroy', () => {
+				done();
+			} );
+
+			editor.destroy();
+		} else {
 			done();
-		} );
+		}
+		wrapper.destroy();
 	} );
 
 	[ {
@@ -104,10 +115,8 @@ describe( 'Integration of CKEditor component', () => {
 
 	describe( 'with editorURl specified', () => {
 		const basePath = 'https://cdn.ckeditor.com/4.10.1/basic/';
-		let CKEditorNamespace;
 
 		before( () => {
-			CKEditorNamespace = window.CKEDITOR;
 			delete window.CKEDITOR;
 		} );
 

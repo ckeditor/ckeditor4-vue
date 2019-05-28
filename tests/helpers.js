@@ -7,16 +7,13 @@ import { getEditorNamespace } from '../src/helpers';
 
 /* global window */
 
+const CKEditorNamespace = window.CKEDITOR;
+
 describe( 'getEditorNamespace', () => {
 	const fakeScriptWithNamespace = 'data:text/javascript;base64,d2luZG93LkNLRURJVE9SID0ge307';
 	const fakeScriptWithoutNamespace = 'data:text/javascript;base64,';
-	let CKEditorNamespace;
 
 	before( () => {
-		CKEditorNamespace = window.CKEDITOR;
-	} );
-
-	beforeEach( () => {
 		delete window.CKEDITOR;
 	} );
 
@@ -59,8 +56,11 @@ describe( 'getEditorNamespace', () => {
 	describe( 'when namespace is present', () => {
 		let namespacePromise;
 
-		beforeEach( () => {
+		before( () => {
 			window.CKEDITOR = {};
+		} );
+
+		beforeEach( () => {
 			namespacePromise = getEditorNamespace( 'test' );
 		} );
 
