@@ -44,22 +44,19 @@ export default {
 		}
 	},
 
-	readOnly() {
-		return this.readOnly === null
-			? this.instance.readOnly
-			: this.readOnly;
-	},
-
 	mounted() {
 		getEditorNamespace( this.editorUrl ).then( () => {
-			const editor = this.instance =
-				CKEDITOR[ this.type === 'inline' ? 'inline' : 'replace' ]( this.$el.firstElementChild, this.config );
+			const config = { ...this.config };
+
+			// Overwrite config only if `component.readOnly` is set.
+			if ( this.readOnly !== null ) {
+				config.readOnly = this.readOnly;
+			}
+
+			const method = this.type === 'inline' ? 'inline' : 'replace';
+			const editor = this.instance = CKEDITOR[ method ]( this.$el.firstElementChild, config );
 
 			editor.on( 'instanceReady', () => {
-				if ( this.readOnly !== null ) {
-					this.instance.setReadOnly( this.readOnly );
-				}
-
 				const undo = editor.undoManager;
 				const data = this.value;
 
