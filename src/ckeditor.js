@@ -54,7 +54,8 @@ export default {
 			}
 
 			const method = this.type === 'inline' ? 'inline' : 'replace';
-			const editor = this.instance = CKEDITOR[ method ]( this.$el.firstElementChild, config );
+			const element = this.$el.firstElementChild;
+			const editor = this.instance = CKEDITOR[ method ]( element, config );
 
 			editor.on( 'instanceReady', () => {
 				const undo = editor.undoManager;
