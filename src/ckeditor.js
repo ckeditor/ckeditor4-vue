@@ -66,14 +66,16 @@ export default {
 				editor.setData( data, { callback: () => {
 					this.$_setUpEditorEvents();
 
+					const newData = editor.getData();
+
 					// Locking undoManager prevents 'change' event.
 					// Trigger it manually to update bound data.
-					if ( data !== editor.getData() ) {
-						editor.once( 'change', () => {
+					if ( data !== newData ) {
+						this.$once( 'input', () => {
 							this.$emit( 'ready', editor );
 						} );
 
-						editor.fire( 'change' );
+						this.$emit( 'input', newData );
 					} else {
 						this.$emit( 'ready', editor );
 					}
@@ -96,15 +98,13 @@ export default {
 
 	watch: {
 		value( val ) {
-			if ( this.instance && this.instance.getData() !== val ) {
+			if ( this.instance.getData() !== val ) {
 				this.instance.setData( val );
 			}
 		},
 
 		readOnly( val ) {
-			if ( this.instance ) {
-				this.instance.setReadOnly( val );
-			}
+			this.instance.setReadOnly( val );
 		}
 	},
 
