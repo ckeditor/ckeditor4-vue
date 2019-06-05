@@ -13,7 +13,7 @@ const UglifyJsWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 module.exports = {
 	mode: 'production',
 	devtool: 'source-map',
-	entry: path.join( __dirname, 'src', 'plugin.js' ),
+	entry: path.join( __dirname, 'src', 'index.js' ),
 
 	output: {
 		library: 'CKEditor',
