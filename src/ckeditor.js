@@ -115,8 +115,11 @@ export default {
 			editor.on( 'change', evt => {
 				const data = editor.getData();
 
-				// The compatibility with the v-model and general Vue.js concept of input–like components.
-				this.$emit( 'input', data, evt, editor );
+				// Editor#change event might be fired without actual data change.
+				if ( this.value !== data ) {
+					// The compatibility with the v-model and general Vue.js concept of input–like components.
+					this.$emit( 'input', data, evt, editor );
+				}
 			} );
 
 			editor.on( 'focus', evt => {
