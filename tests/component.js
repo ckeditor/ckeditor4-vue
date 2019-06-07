@@ -150,9 +150,7 @@ describe( 'CKEditor Component', () => {
 					} );
 				} );
 			} );
-		} );
 
-		describe( 'when editor type', () => {
 			describe( 'set to invalid value', () => {
 				it( 'should be disallowed by validator', () => {
 					expect( component.$options.props.type.validator( 'foo' ) ).to.be.false;
