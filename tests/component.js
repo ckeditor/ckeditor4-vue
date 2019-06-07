@@ -169,32 +169,43 @@ describe( 'CKEditor Component', () => {
 
 	describe( 'events', () => {
 		[
-			'ready',
-			'input',
-			'focus',
-			'blur'
-		].forEach( evtName => {
-			beforeEach( () => {
-				const evt = {};
-				let editorEvtName;
+			[ 'ready', 'instanceReady' ],
+			[ 'input', 'change' ],
+			[ 'focus' ],
+			[ 'blur' ]
+		].forEach( ( [ evtName, alias ] ) => {
+			let getDataMock, spy, editorEvtName;
 
-				switch ( evtName ) {
-					case 'ready':
-						editorEvtName = 'instanceReady';
-						break;
-					case 'input':
-						editorEvtName = 'change';
-						break;
-					default:
-						editorEvtName = evtName;
+			beforeEach( () => {
+				editorEvtName = alias || evtName;
+				spy = sinon.spy();
+
+				if ( evtName === 'input' ) {
+					getDataMock = sinon.stub( component.instance, 'getData' ).returns( 'foo' );
 				}
 
-				component.instance.fire( editorEvtName, evt );
+				component.$once( evtName, spy );
+				component.instance.fire( editorEvtName );
+			} );
+
+			afterEach( () => {
+				if ( getDataMock ) {
+					getDataMock.restore();
+					getDataMock = null;
+				}
 			} );
 
 			it( `should emit "${ evtName }"`, () => {
-				expect( 'foo' ).to.equal( 'foo' );
+				sinon.assert.calledOnce( spy );
 			} );
+
+			if ( evtName === 'input' ) {
+				it( 'when data didn\'t change shouldn\'t emit input', () => {
+					component.instance.fire( editorEvtName );
+
+					sinon.assert.calledOnce( spy );
+				} );
+			}
 		} );
 	} );
 
