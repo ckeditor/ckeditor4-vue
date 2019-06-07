@@ -103,7 +103,7 @@ module.exports = function getKarmaConfig() {
 			username: process.env.BROWSER_STACK_USERNAME,
 			accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
 			build: getBuildName(),
-			project: 'ckeditor5'
+			project: 'ckeditor4'
 		};
 
 		karmaConfig.reporters = [ 'dots', 'BrowserStack' ];
