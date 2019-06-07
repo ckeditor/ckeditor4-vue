@@ -70,30 +70,16 @@ describe( 'Integration of CKEditor component', () => {
 	}, {
 		name: 'inline',
 		type: 'inline'
-	}, {
-		name: 'divarea',
-		extraPlugins: 'divarea'
-	} ].forEach( ( { name, type, extraPlugins } ) => {
+	} ].forEach( ( { name, type } ) => {
 		describe( `when using ${ name } editor`, () => {
-			const isInline = name === 'inline' || !!extraPlugins;
+			const isInline = name === 'inline';
 			const props = [];
 
 			if ( type ) {
 				props.push( 'type="inline"' );
 			}
 
-			if ( extraPlugins ) {
-				props.push( ':config="config"' );
-			}
-
-			setOptionsForTestGroup( {
-				props,
-				data: {
-					config: {
-						extraPlugins
-					}
-				}
-			} );
+			setOptionsForTestGroup( { props } );
 
 			it( 'should create an actual CKEditor instance', () => {
 				expect( editor ).to.be.instanceOf( CKEDITOR.editor );
@@ -105,10 +91,6 @@ describe( 'Integration of CKEditor component', () => {
 
 			it( '"editable.isInline()" should be ' + String( isInline ), () => {
 				expect( editor.editable().isInline() ).to.be[ String( isInline ) ];
-			} );
-
-			it( `divarea plugin ${ extraPlugins ? 'should' : 'shouldn\'t' } be loaded`, () => {
-				expect( editor.plugins.divarea ).to.be[ extraPlugins ? 'ok' : 'undefined' ];
 			} );
 		} );
 	} );
