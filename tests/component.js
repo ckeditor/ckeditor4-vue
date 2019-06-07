@@ -135,18 +135,26 @@ describe( 'CKEditor Component', () => {
 				}
 			].forEach( ( { type, method } ) => {
 				describe( type === 'unset' ? 'unset' : `set to "${ type }"`, () => {
+					const config = { foo: 'bar' };
+
 					if ( type !== 'unset' ) {
-						setPropsForTestGroup( { type } );
+						setPropsForTestGroup( {
+							type
+						} );
 					} else {
 						type = 'classic';
 					}
+
+					setPropsForTestGroup( { config } );
 
 					it( `"component.type" should be "${ type }"`, () => {
 						expect( component.type ).to.equal( type );
 					} );
 
-					it( `should call "CKEDITOR.${ method }"`, () => {
+					it( `should call "CKEDITOR.${ method }" with given config`, () => {
 						sinon.assert.calledOnce( spies[ method ] );
+
+						expect( spies[ method ].lastCall.args[ 1 ] ).to.include( config );
 					} );
 				} );
 			} );
