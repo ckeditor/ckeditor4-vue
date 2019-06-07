@@ -89,9 +89,7 @@ const routes = [
 	}
 ];
 
-const router = new VueRouter( {
-	routes
-} );
+const router = new VueRouter( { routes } );
 
 /* eslint no-new: 0 */
 
