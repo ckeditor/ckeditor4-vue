@@ -134,8 +134,6 @@ describe( 'CKEditor Component', () => {
 					method: 'inline'
 				}
 			].forEach( ( { type, method } ) => {
-				const otherMethod = method === 'inline' ? 'replace' : 'inline';
-
 				describe( type === 'unset' ? 'unset' : `set to "${ type }"`, () => {
 					if ( type !== 'unset' ) {
 						setPropsForTestGroup( { type } );
@@ -149,10 +147,6 @@ describe( 'CKEditor Component', () => {
 
 					it( `should call "CKEDITOR.${ method }"`, () => {
 						sinon.assert.calledOnce( spies[ method ] );
-					} );
-
-					it( `shouldn't call "CKEDITOR.${ otherMethod }"`, () => {
-						sinon.assert.notCalled( spies[ otherMethod ] );
 					} );
 				} );
 			} );
