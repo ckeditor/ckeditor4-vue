@@ -90,7 +90,7 @@ const routes = [
 ];
 
 const router = new VueRouter( {
-	routes,
+	routes
 } );
 
 /* eslint no-new: 0 */
