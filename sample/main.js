@@ -30,21 +30,14 @@ const events = {
 			if ( previous && event === previous.name ) {
 				previous.counter++;
 			} else {
-				let message;
+				const messages = {
+					ready: 'Editor is ready',
+					focus: 'Editor is focused',
+					blur: 'Editor is blurred',
+					input: 'Editor has changed'
+				};
 
-				switch ( event ) {
-					case 'ready':
-						message = 'Editor is ready';
-						break;
-					case 'focus':
-						message = 'Editor is focused';
-						break;
-					case 'blur':
-						message = 'Editor is blurred';
-						break;
-					case 'input':
-						message = 'Editor has changed';
-				}
+				const message = messages[ event ];
 
 				if ( this.events.length > 19 ) {
 					this.events.pop();
