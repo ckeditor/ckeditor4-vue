@@ -241,6 +241,10 @@ describe( 'CKEditor Component', () => {
 			property: 'readOnly',
 			value: false,
 			spyOn: [ 'setReadOnly', true ]
+		}, {
+			property: 'readOnly',
+			value: null,
+			spyOn: [ 'setReadOnly', false ]
 		}
 	].forEach( ( { property, value, spyOn: [ method, spyCalled ] } ) => {
 		describe( `when "component.${ property }" changes`, () => {
