@@ -6,20 +6,13 @@
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
-import mockEditor from './_test-utils/mockeditor';
 
-/* global window CKEDITOR */
-
-const CKEditorNamespace = window.CKEDITOR;
+/* global CKEDITOR */
 
 describe( 'CKEditor Component', () => {
 	const spies = {};
 
 	let sandbox, wrapper, component, props;
-
-	before( () => {
-		window.CKEDITOR = mockEditor;
-	} );
 
 	beforeEach( done => {
 		spies.replace = sinon.spy( CKEDITOR, 'replace' );
@@ -32,10 +25,6 @@ describe( 'CKEditor Component', () => {
 		component.$once( 'ready', () => {
 			done();
 		} );
-	} );
-
-	after( () => {
-		window.CKEDITOR = CKEditorNamespace;
 	} );
 
 	afterEach( () => {
@@ -53,7 +42,7 @@ describe( 'CKEditor Component', () => {
 		} );
 
 		it( 'should render', () => {
-			expect( wrapper.html() ).to.equal( '<div><textarea></textarea></div>' );
+			expect( wrapper.html() ).to.not.be.empty;
 		} );
 
 		describe( 'property', () => {
@@ -132,7 +121,6 @@ describe( 'CKEditor Component', () => {
 					expect( spies.replace.lastCall.args[ 1 ] ).to.include( { readOnly } );
 				} );
 			} );
-
 		} );
 
 		describe( 'when editor type', () => {
@@ -179,15 +167,14 @@ describe( 'CKEditor Component', () => {
 
 	describe( 'events', () => {
 		[
-			[ 'ready', 'instanceReady' ],
-			[ 'input', 'change' ],
-			[ 'focus' ],
-			[ 'blur' ]
-		].forEach( ( [ evtName, alias ] ) => {
+			'input',
+			'focus',
+			'blur'
+		].forEach( evtName => {
 			let getDataMock, spy, editorEvtName;
 
 			beforeEach( () => {
-				editorEvtName = alias || evtName;
+				editorEvtName = evtName === 'input' ? 'change' : evtName;
 				spy = sinon.spy();
 
 				if ( evtName === 'input' ) {
@@ -255,7 +242,7 @@ describe( 'CKEditor Component', () => {
 		value: null,
 		spyOn: [ 'setReadOnly', false ]
 	} ].forEach( ( { property, value, spyOn: [ method, spyCalled ] } ) => {
-		describe( `when "component.${ property }" changes`, () => {
+		describe( `when "component.${ property }" changes to "${ value }"`, () => {
 			let spy;
 
 			beforeEach( () => {
@@ -263,16 +250,20 @@ describe( 'CKEditor Component', () => {
 				wrapper.setProps( { [ property ]: value } );
 			} );
 
-			it( `should call "instance.${ method }"`, () => {
-				sinon.assert[ spyCalled ? 'calledOnce' : 'notCalled' ]( spy );
-				spyCalled && sinon.assert.calledWith( spy, value );
+			it( `${ spyCalled ? 'should' : 'shouldn\'t' } call "instance.${ method }"`, () => {
+				if ( spyCalled ) {
+					sinon.assert.calledWith( spy, value );
+				} else {
+					sinon.assert.notCalled( spy );
+				}
 			} );
 		} );
 	} );
 
 	function createComponent( props ) {
 		return mount( CKEditorComponent, {
-			propsData: { ...props }
+			propsData: { ...props },
+			attachToDocument: true
 		} );
 	}
 
