@@ -121,6 +121,23 @@ describe( 'CKEditor Component', () => {
 			} );
 		} );
 
+		[ {
+			readOnly: true,
+			config: { readOnly: false }
+		}, {
+			readOnly: false,
+			config: { readOnly: true }
+		} ].forEach( ( { readOnly, config } ) => {
+			describe( `when component.readOnly = ${ readOnly } and config.readOnly = ${ config.readOnly }`, () => {
+				setPropsForTestGroup( { readOnly, config } );
+
+				it( 'should use component.readOnly', () => {
+					expect( spies.replace.lastCall.args[ 1 ] ).to.include( { readOnly } );
+				} );
+			} );
+
+		} );
+
 		describe( 'when editor type', () => {
 			[
 				{
