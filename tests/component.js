@@ -59,31 +59,31 @@ describe( 'CKEditor Component', () => {
 		describe( 'property', () => {
 			[
 				{
-					name: 'value',
+					property: 'value',
 					defaultValue: ''
 				}, {
-					name: 'type',
+					property: 'type',
 					defaultValue: 'classic',
 				}, {
-					name: 'editorUrl',
+					property: 'editorUrl',
 					defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
 				}, {
-					name: 'config',
+					property: 'config',
 					defaultValue: undefined
 				}, {
-					name: 'tagName',
+					property: 'tagName',
 					defaultValue: 'textarea'
 				}, {
-					name: 'readOnly',
+					property: 'readOnly',
 					defaultValue: null
 				}
-			].forEach( ( { name, defaultValue, defaultValueRegex } ) => {
-				it( `"${ name }" should have default value`, () => {
+			].forEach( ( { property, defaultValue, defaultValueRegex } ) => {
+				it( `"${ property }" should have default value`, () => {
 					if ( defaultValue ) {
-						expect( component[ name ] ).to.equal( defaultValue );
+						expect( component[ property ] ).to.equal( defaultValue );
 					}
 					if ( defaultValueRegex ) {
-						expect( component[ name ] ).to.match( defaultValueRegex );
+						expect( component[ property ] ).to.match( defaultValueRegex );
 					}
 				} );
 			} );
@@ -94,29 +94,29 @@ describe( 'CKEditor Component', () => {
 		describe( 'property', () => {
 			[
 				{
-					name: 'value',
+					property: 'value',
 					value: 'foo'
 				}, {
-					name: 'type',
+					property: 'type',
 					value: 'inline'
 				}, {
-					name: 'editorUrl',
+					property: 'editorUrl',
 					value: 'https://cdn.ckeditor.com/4.10.0/basic-all/ckeditor.js'
 				}, {
-					name: 'config',
+					property: 'config',
 					value: {}
 				}, {
-					name: 'tagName',
+					property: 'tagName',
 					value: 'div'
 				}, {
-					name: 'readOnly',
+					property: 'readOnly',
 					value: true
 				}
-			].forEach( ( { name, value } ) => {
-				setPropsForTestGroup( { [ name ]: value } );
+			].forEach( ( { property, value } ) => {
+				setPropsForTestGroup( { [ property ]: value } );
 
-				it( `"${ name }" should be configurable`, () => {
-					expect( component[ name ] ).to.equal( value );
+				it( `"${ property }" should be configurable`, () => {
+					expect( component[ property ] ).to.equal( value );
 				} );
 			} );
 		} );
