@@ -117,6 +117,10 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
+	it( 'when component has initial data shouldn\'t produce undo steps', () => {
+		expect( component.instance.undoManager.hasUndo ).to.be.false;
+	} );
+
 	function setOptionsForTestGroup( { props: newProps, methods: newMethods, data: newData } ) {
 		// "before" is executed before "beforeEach", so we can setup component now.
 		before( () => {
