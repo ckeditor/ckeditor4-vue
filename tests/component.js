@@ -57,27 +57,25 @@ describe( 'CKEditor Component', () => {
 		} );
 
 		describe( 'property', () => {
-			[
-				{
-					property: 'value',
-					defaultValue: ''
-				}, {
-					property: 'type',
-					defaultValue: 'classic',
-				}, {
-					property: 'editorUrl',
-					defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
-				}, {
-					property: 'config',
-					defaultValue: undefined
-				}, {
-					property: 'tagName',
-					defaultValue: 'textarea'
-				}, {
-					property: 'readOnly',
-					defaultValue: null
-				}
-			].forEach( ( { property, defaultValue, defaultValueRegex } ) => {
+			[ {
+				property: 'value',
+				defaultValue: ''
+			}, {
+				property: 'type',
+				defaultValue: 'classic',
+			}, {
+				property: 'editorUrl',
+				defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
+			}, {
+				property: 'config',
+				defaultValue: undefined
+			}, {
+				property: 'tagName',
+				defaultValue: 'textarea'
+			}, {
+				property: 'readOnly',
+				defaultValue: null
+			} ].forEach( ( { property, defaultValue, defaultValueRegex } ) => {
 				it( `"${ property }" should have default value`, () => {
 					if ( defaultValue ) {
 						expect( component[ property ] ).to.equal( defaultValue );
@@ -92,27 +90,25 @@ describe( 'CKEditor Component', () => {
 		// Repeat description, so test are nicely grouped in the output,
 		// but keep them separate in code, because they need different setup.
 		describe( 'property', () => {
-			[
-				{
-					property: 'value',
-					value: 'foo'
-				}, {
-					property: 'type',
-					value: 'inline'
-				}, {
-					property: 'editorUrl',
-					value: 'https://cdn.ckeditor.com/4.10.0/basic-all/ckeditor.js'
-				}, {
-					property: 'config',
-					value: {}
-				}, {
-					property: 'tagName',
-					value: 'div'
-				}, {
-					property: 'readOnly',
-					value: true
-				}
-			].forEach( ( { property, value } ) => {
+			[ {
+				property: 'value',
+				value: 'foo'
+			}, {
+				property: 'type',
+				value: 'inline'
+			}, {
+				property: 'editorUrl',
+				value: 'https://cdn.ckeditor.com/4.10.0/basic-all/ckeditor.js'
+			}, {
+				property: 'config',
+				value: {}
+			}, {
+				property: 'tagName',
+				value: 'div'
+			}, {
+				property: 'readOnly',
+				value: true
+			} ].forEach( ( { property, value } ) => {
 				setPropsForTestGroup( { [ property ]: value } );
 
 				it( `"${ property }" should be configurable`, () => {
@@ -139,18 +135,16 @@ describe( 'CKEditor Component', () => {
 		} );
 
 		describe( 'when editor type', () => {
-			[
-				{
-					type: 'unset',
-					method: 'replace'
-				}, {
-					type: 'classic',
-					method: 'replace'
-				}, {
-					type: 'inline',
-					method: 'inline'
-				}
-			].forEach( ( { type, method } ) => {
+			[ {
+				type: 'unset',
+				method: 'replace'
+			}, {
+				type: 'classic',
+				method: 'replace'
+			}, {
+				type: 'inline',
+				method: 'inline'
+			} ].forEach( ( { type, method } ) => {
 				describe( type === 'unset' ? 'unset' : `set to "${ type }"`, () => {
 					const config = { foo: 'bar' };
 
@@ -241,29 +235,27 @@ describe( 'CKEditor Component', () => {
 		} );
 	} );
 
-	[
-		{
-			property: 'value',
-			value: 'foo',
-			spyOn: [ 'setData', true ]
-		}, {
-			property: 'value',
-			value: '',
-			spyOn: [ 'setData', false ]
-		}, {
-			property: 'readOnly',
-			value: true,
-			spyOn: [ 'setReadOnly', true ]
-		}, {
-			property: 'readOnly',
-			value: false,
-			spyOn: [ 'setReadOnly', true ]
-		}, {
-			property: 'readOnly',
-			value: null,
-			spyOn: [ 'setReadOnly', false ]
-		}
-	].forEach( ( { property, value, spyOn: [ method, spyCalled ] } ) => {
+	[ {
+		property: 'value',
+		value: 'foo',
+		spyOn: [ 'setData', true ]
+	}, {
+		property: 'value',
+		value: '',
+		spyOn: [ 'setData', false ]
+	}, {
+		property: 'readOnly',
+		value: true,
+		spyOn: [ 'setReadOnly', true ]
+	}, {
+		property: 'readOnly',
+		value: false,
+		spyOn: [ 'setReadOnly', true ]
+	}, {
+		property: 'readOnly',
+		value: null,
+		spyOn: [ 'setReadOnly', false ]
+	} ].forEach( ( { property, value, spyOn: [ method, spyCalled ] } ) => {
 		describe( `when "component.${ property }" changes`, () => {
 			let spy;
 
