@@ -174,10 +174,11 @@ describe( 'CKEditor Component', () => {
 			let getDataMock, spy, editorEvtName;
 
 			beforeEach( () => {
-				editorEvtName = evtName === 'input' ? 'change' : evtName;
+				editorEvtName = evtName;
 				spy = sinon.spy();
 
 				if ( evtName === 'input' ) {
+					editorEvtName = 'change';
 					getDataMock = sinon.stub( component.instance, 'getData' ).returns( 'foo' );
 				}
 
