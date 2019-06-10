@@ -80,6 +80,7 @@ describe( 'CKEditor Component', () => {
 					if ( defaultValue ) {
 						expect( component[ property ] ).to.equal( defaultValue );
 					}
+
 					if ( defaultValueRegex ) {
 						expect( component[ property ] ).to.match( defaultValueRegex );
 					}
@@ -149,9 +150,7 @@ describe( 'CKEditor Component', () => {
 					const config = { foo: 'bar' };
 
 					if ( type !== 'unset' ) {
-						setPropsForTestGroup( {
-							type
-						} );
+						setPropsForTestGroup( { type } );
 					} else {
 						type = 'classic';
 					}
