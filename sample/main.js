@@ -26,19 +26,21 @@ const events = {
 	methods: {
 		logEvent( event ) {
 			const previous = this.events[ 0 ];
+			const messages = {
+				ready: 'Editor is ready',
+				focus: 'Editor is focused',
+				blur: 'Editor is blurred',
+				input: 'Editor has changed'
+			};
+			const message = messages[ event ];
 
 			if ( previous && event === previous.name ) {
 				previous.counter++;
+
+				const count = previous.counter > 1 ? ` (${ previous.counter })` : '';
+
+				previous.message = message + count;
 			} else {
-				const messages = {
-					ready: 'Editor is ready',
-					focus: 'Editor is focused',
-					blur: 'Editor is blurred',
-					input: 'Editor has changed'
-				};
-
-				const message = messages[ event ];
-
 				if ( this.events.length > 19 ) {
 					this.events.pop();
 				}
