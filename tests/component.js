@@ -3,15 +3,18 @@
  * For licensing, see LICENSE.md.
  */
 
+import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
+import { mockMethod, restoreMock } from '../src/utils/geteditornamespace';
 
 /* global CKEDITOR */
 
 describe( 'CKEditor Component', () => {
 	const spies = {};
 
+	let skipReady = false;
 	let sandbox, wrapper, component, props;
 
 	beforeEach( done => {
@@ -22,12 +25,19 @@ describe( 'CKEditor Component', () => {
 		component = wrapper.vm;
 		sandbox = sinon.createSandbox();
 
-		component.$once( 'ready', () => {
+		if ( skipReady ) {
 			done();
-		} );
+		} else {
+			component.$once( 'ready', () => {
+				done();
+			} );
+		}
 	} );
 
 	afterEach( () => {
+		restoreMock();
+		skipReady = false;
+
 		for ( const key in spies ) {
 			spies[ key ].restore();
 		}
@@ -215,6 +225,50 @@ describe( 'CKEditor Component', () => {
 
 		it( 'should call "instance.destroy"', () => {
 			sinon.assert.calledOnce( spies.destroy );
+		} );
+	} );
+
+	// This test might look a bit strange, but it's crucial to run things in proper order.
+	describe( 'when component destroyed before getEditorNamespace resolves', () => {
+		let resolveMockReturnedPromise,
+			resolveMockCalled;
+
+		const whenMockCalled = new Promise( res => {
+			resolveMockCalled = res;
+		} );
+
+		const mockReturnedPromise = new Promise( res => {
+			resolveMockReturnedPromise = res;
+		} );
+
+		// Mock `getEditorNamespace` before component is created.
+		before( () => {
+			skipReady = true;
+
+			mockMethod( () => {
+				resolveMockCalled();
+				return mockReturnedPromise;
+			} );
+		} );
+
+		// When component is created.
+		beforeEach( done => {
+			// Wait for the mock to be called so that we are sure that `component.mounted` is called and it awaits for the promise.
+			whenMockCalled.then( () => {
+				wrapper.destroy();
+
+				// Wait for `component.beforeDestroy`.
+				Vue.nextTick().then( () => {
+					resolveMockReturnedPromise();
+
+					// Wait for components callback to `getEditorNamespace`.
+					Vue.nextTick().then( done );
+				} );
+			} );
+		} );
+
+		it( 'editor shouldn\'t be initialized', () => {
+			sinon.assert.notCalled( spies.replace );
 		} );
 	} );
 
