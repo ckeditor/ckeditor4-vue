@@ -46,6 +46,10 @@ export default {
 
 	mounted() {
 		getEditorNamespace( this.editorUrl ).then( () => {
+			if ( this.$_destroyed ) {
+				return;
+			}
+
 			const config = { ...this.config };
 
 			// Overwrite config only if `component.readOnly` is set.
@@ -90,6 +94,8 @@ export default {
 		if ( this.instance ) {
 			this.instance.destroy();
 		}
+
+		this.$_destroyed = true;
 	},
 
 	watch: {
