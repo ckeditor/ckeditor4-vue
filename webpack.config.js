@@ -8,6 +8,8 @@
 /* eslint-env node */
 
 const path = require( 'path' );
+const webpack = require( 'webpack' );
+const { bundler } = require( '@ckeditor/ckeditor5-dev-utils' );
 const UglifyJsWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
 module.exports = {
@@ -30,13 +32,20 @@ module.exports = {
 				sourceMap: true,
 				uglifyOptions: {
 					output: {
-						// Preserve CKEditor 5 license comments.
+						// Preserve CKEditor license comments.
 						comments: /^!/
 					}
 				}
 			} )
 		]
 	},
+
+	plugins: [
+		new webpack.BannerPlugin( {
+			banner: bundler.getLicenseBanner(),
+			raw: true
+		} ),
+	],
 
 	module: {
 		rules: [
