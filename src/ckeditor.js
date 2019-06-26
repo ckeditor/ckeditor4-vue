@@ -5,7 +5,7 @@
 
 /* global CKEDITOR */
 
-import getEditorNamespace from './utils/get-editor-namespace.js';
+import { getEditorNamespace } from './utils/geteditornamespace.js';
 
 export default {
 	name: 'ckeditor',

@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.md.
  */
 
-import getEditorNamespace from '../src/utils/get-editor-namespace';
+import { getEditorNamespace } from '../src/utils/geteditornamespace';
 
 /* global window */
 
