@@ -41,7 +41,7 @@ describe( 'Integration of CKEditor component', () => {
 			attachToDocument: true,
 			data: () => {
 				return {
-					editorData: '<p>foo</p>',
+					editorData: '<p><b>foo</b></p>',
 					...data
 				};
 			}
@@ -86,7 +86,7 @@ describe( 'Integration of CKEditor component', () => {
 			} );
 
 			it( 'should set initial data', () => {
-				expect( editor.getData() ).to.equal( '<p>foo</p>\n' );
+				expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
 			} );
 
 			it( '"editable.isInline()" should be ' + String( isInline ), () => {
@@ -119,6 +119,11 @@ describe( 'Integration of CKEditor component', () => {
 
 	it( 'when component has initial data shouldn\'t produce undo steps', () => {
 		expect( component.instance.undoManager.hasUndo ).to.be.false;
+	} );
+
+	it( 'data updated by ACF propagates', () => {
+		expect( component.value ).to.equal( '<p><strong>foo</strong></p>\n' );
+		expect( wrapper.vm.editorData ).to.equal( '<p><strong>foo</strong></p>\n' );
 	} );
 
 	function setOptionsForTestGroup( { props: newProps, methods: newMethods, data: newData } ) {
