@@ -90,10 +90,6 @@ export default {
 		if ( this.instance ) {
 			this.instance.destroy();
 		}
-
-		// Note: By the time the editor is destroyed (editor.on( 'destroy' ) called)
-		// the Vue component will not be able to emit any longer. So emitting #destroy a bit earlier.
-		this.$emit( 'destroy', this.instance );
 	},
 
 	watch: {

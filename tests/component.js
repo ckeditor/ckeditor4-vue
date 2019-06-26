@@ -216,10 +216,6 @@ describe( 'CKEditor Component', () => {
 		it( 'should call "instance.destroy"', () => {
 			sinon.assert.calledOnce( spies.destroy );
 		} );
-
-		it( 'should emit "destroy"', () => {
-			expect( wrapper.emitted().destroy.length ).to.equal( 1 );
-		} );
 	} );
 
 	[ {
