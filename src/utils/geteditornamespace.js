@@ -37,12 +37,12 @@ export function getEditorNamespace( editorURL ) {
 				loadScript( url, err => {
 					if ( err ) {
 						scriptReject( err );
-					} else if ( !CKEDITOR ) {
-						scriptReject( 'Script loaded from editorUrl doesn\'t provide CKEDITOR namespace.' );
+					} else if ( !window.CKEDITOR ) {
+						scriptReject( new Error( 'Script loaded from editorUrl doesn\'t provide CKEDITOR namespace.' ) );
 					} else {
 						scriptResolve( CKEDITOR );
-						promise = undefined;
 					}
+					promise = undefined;
 				} );
 			} );
 		}
