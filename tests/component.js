@@ -192,7 +192,7 @@ describe( 'CKEditor Component', () => {
 					getDataMock = sinon.stub( component.instance, 'getData' ).returns( 'foo' );
 				}
 
-				component.$once( evtName, spy );
+				component.$on( evtName, spy );
 				component.instance.fire( editorEvtName );
 			} );
 
@@ -208,10 +208,17 @@ describe( 'CKEditor Component', () => {
 			} );
 
 			if ( evtName === 'input' ) {
-				it( 'when data didn\'t change shouldn\'t emit input', () => {
+				it( 'when data didn\'t change shouldn\'t emit input', done => {
+					spy.resetHistory();
+
+					getDataMock.returns( component.value );
+
 					component.instance.fire( editorEvtName );
 
-					sinon.assert.calledOnce( spy );
+					Vue.nextTick().then( () => {
+						sinon.assert.notCalled( spy );
+						done();
+					} );
 				} );
 			}
 		} );
