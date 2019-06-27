@@ -13,11 +13,11 @@ describe( 'getEditorNamespace', () => {
 	const fakeScriptWithNamespace = 'data:text/javascript;base64,d2luZG93LkNLRURJVE9SID0ge307';
 	const fakeScriptWithoutNamespace = 'data:text/javascript;base64,';
 
-	before( () => {
+	beforeEach( () => {
 		delete window.CKEDITOR;
 	} );
 
-	after( () => {
+	afterEach( () => {
 		window.CKEDITOR = CKEditorNamespace;
 	} );
 
@@ -26,19 +26,20 @@ describe( 'getEditorNamespace', () => {
 	} );
 
 	it( 'should load script and resolve with loaded namespace', () => {
-		getEditorNamespace( fakeScriptWithNamespace ).then( namespace => {
+		return getEditorNamespace( fakeScriptWithNamespace ).then( namespace => {
 			expect( namespace ).to.equal( window.CKEDITOR );
 		} );
 	} );
 
 	it( 'when script doesn\'t provide namespace should reject with an error', () => {
-		getEditorNamespace( fakeScriptWithoutNamespace ).catch( err => {
+		return getEditorNamespace( fakeScriptWithoutNamespace ).catch( err => {
 			expect( err ).to.be.a( 'error' );
+			expect( err.message ).to.equal( 'Script loaded from editorUrl doesn\'t provide CKEDITOR namespace.' );
 		} );
 	} );
 
 	it( 'when script cannot be loaded should reject with an error', () => {
-		getEditorNamespace( 'non-existent.js' ).catch( err => {
+		return getEditorNamespace( 'non-existent.js' ).catch( err => {
 			expect( err ).to.be.a( 'error' );
 		} );
 	} );
@@ -49,6 +50,7 @@ describe( 'getEditorNamespace', () => {
 	} );
 
 	it( 'when empty string passed should throw', () => {
+
 		expect( () => getEditorNamespace( '' ) )
 			.to.throw( 'CKEditor URL must be a non-empty string.' );
 	} );
@@ -56,11 +58,8 @@ describe( 'getEditorNamespace', () => {
 	describe( 'when namespace is present', () => {
 		let namespacePromise;
 
-		before( () => {
-			window.CKEDITOR = {};
-		} );
-
 		beforeEach( () => {
+			window.CKEDITOR = {};
 			namespacePromise = getEditorNamespace( 'test' );
 		} );
 
@@ -68,9 +67,11 @@ describe( 'getEditorNamespace', () => {
 			expect( namespacePromise ).to.be.a( 'promise' );
 		} );
 
-		it( 'promise should resolve with CKEditor namespace', () => namespacePromise.then( namespace => {
-			expect( namespace ).to.equal( window.CKEDITOR );
-		} ) );
+		it( 'promise should resolve with CKEditor namespace',
+			() => namespacePromise.then( namespace => {
+				expect( namespace ).to.equal( window.CKEDITOR );
+			} )
+		);
 
 		it( 'and empty string passed shouldn\'t throw', () => {
 			expect( () => getEditorNamespace( '' ) )
