@@ -208,17 +208,14 @@ describe( 'CKEditor Component', () => {
 			} );
 
 			if ( evtName === 'input' ) {
-				it( 'when data didn\'t change shouldn\'t emit input', done => {
+				it( 'when data didn\'t change shouldn\'t emit input', () => {
 					spy.resetHistory();
 
 					getDataMock.returns( component.value );
 
 					component.instance.fire( editorEvtName );
 
-					Vue.nextTick().then( () => {
-						sinon.assert.notCalled( spy );
-						done();
-					} );
+					sinon.assert.notCalled( spy );
 				} );
 			}
 		} );
