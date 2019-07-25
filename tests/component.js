@@ -7,9 +7,10 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
-import { mockMethod, restoreMock } from '../src/utils/geteditornamespace';
+import { getEditorNamespace } from '../src/utils/geteditornamespace';
 
-/* global CKEDITOR */
+/* global window */
+const CKEDITOR = window.CKEDITOR;
 
 describe( 'CKEditor Component', () => {
 	const spies = {};
@@ -35,7 +36,6 @@ describe( 'CKEditor Component', () => {
 	} );
 
 	afterEach( () => {
-		restoreMock();
 		skipReady = false;
 
 		for ( const key in spies ) {
@@ -245,14 +245,18 @@ describe( 'CKEditor Component', () => {
 			resolveMockReturnedPromise = res;
 		} );
 
+		const originalMethod = getEditorNamespace.scriptLoader;
+
 		// Mock `getEditorNamespace` before component is created.
 		before( () => {
 			skipReady = true;
 
-			mockMethod( () => {
+			delete window.CKEDITOR;
+
+			getEditorNamespace.scriptLoader = () => {
 				resolveMockCalled();
 				return mockReturnedPromise;
-			} );
+			};
 		} );
 
 		// When component is created.
@@ -263,12 +267,18 @@ describe( 'CKEditor Component', () => {
 
 				// Wait for `component.beforeDestroy`.
 				Vue.nextTick().then( () => {
-					resolveMockReturnedPromise();
+					window.CKEDITOR = CKEDITOR;
+
+					resolveMockReturnedPromise( CKEDITOR );
 
 					// Wait for components callback to `getEditorNamespace`.
 					Vue.nextTick().then( done );
 				} );
 			} );
+		} );
+
+		after( () => {
+			getEditorNamespace.scriptLoader = originalMethod;
 		} );
 
 		it( 'editor shouldn\'t be initialized', () => {
