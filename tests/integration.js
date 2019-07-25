@@ -96,7 +96,7 @@ describe( 'Integration of CKEditor component', () => {
 	} );
 
 	describe( 'with editorURl specified', () => {
-		const basePath = 'https://cdn.ckeditor.com/4.10.1/basic/';
+		const basePath = 'https://cdn.ckeditor.com/4.12.1/basic/';
 
 		before( () => {
 			delete window.CKEDITOR;
