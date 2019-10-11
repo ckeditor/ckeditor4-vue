@@ -12,7 +12,7 @@ npm install --save ckeditor4-vue
 Include the `<script>` tags for the WYSIWYG editor component and the build:
 
 ```html
-<script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>
+<script src="../node_modules/@ckeditor/ckeditor4-vue/dist/ckeditor.js"></script>
 ```
 
 Enable the component in your application by using the `Vue.use()` method:
