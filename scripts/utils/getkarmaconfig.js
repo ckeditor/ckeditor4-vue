@@ -261,7 +261,7 @@ function parseArguments( args ) {
 			watch: false,
 			coverage: false,
 			'source-map': false,
-			'url': 'https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js'
+			'url': 'https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js'
 		}
 	};
 
