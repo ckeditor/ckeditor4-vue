@@ -50,22 +50,21 @@ export default {
 				return;
 			}
 
-			const config = { ...this.config };
-
-			// Overwrite config only if `component.readOnly` is set.
 			if ( this.readOnly !== null ) {
-				config.readOnly = this.readOnly;
+				this.config.readOnly = this.readOnly;
 			}
 
 			const method = this.type === 'inline' ? 'inline' : 'replace';
 			const element = this.$el.firstElementChild;
-			const editor = this.instance = CKEDITOR[ method ]( element, config );
+			const editor = this.instance = CKEDITOR[ method ]( element, this.config );
 
 			editor.on( 'instanceReady', () => {
 				const undo = editor.undoManager;
 				const data = this.value;
 
-				undo && undo.lock();
+				if ( undo ) {
+					undo.lock();
+				}
 
 				editor.setData( data, { callback: () => {
 					this.$_setUpEditorEvents();
@@ -84,7 +83,9 @@ export default {
 						this.$emit( 'ready', editor );
 					}
 
-					undo && undo.unlock();
+					if ( undo ) {
+						undo.unlock();
+					}
 				} } );
 			} );
 		} );
