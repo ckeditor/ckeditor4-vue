@@ -2,9 +2,9 @@
 
 Vue.use( CKEditor );
 
-const types = {
-	name: 'types',
-	template: '#types',
+const EditorTypesComponent = {
+	name: 'editor-types',
+	template: '#editor-types',
 	data: () => ( {
 		readOnly: false,
 		hide: false,
@@ -16,9 +16,16 @@ const types = {
 	} )
 };
 
-const events = {
-	name: 'events',
-	template: '#events',
+const eventMessages = {
+	ready: 'Editor is ready',
+	focus: 'Editor is focused',
+	blur: 'Editor is blurred',
+	input: 'Editor has changed'
+};
+
+const EventsPropagationComponent = {
+	name: 'component-events',
+	template: '#component-events',
 	data: () => ( {
 		editorData: 'Check out component events.',
 		events: []
@@ -26,13 +33,7 @@ const events = {
 	methods: {
 		logEvent( event ) {
 			const previous = this.events[ 0 ];
-			const messages = {
-				ready: 'Editor is ready',
-				focus: 'Editor is focused',
-				blur: 'Editor is blurred',
-				input: 'Editor has changed'
-			};
-			const message = messages[ event ];
+			const message = eventMessages[ event ];
 
 			if ( previous && event === previous.name ) {
 				previous.counter++;
@@ -55,28 +56,28 @@ const events = {
 	}
 };
 
-const binding = {
-	name: 'binding',
-	template: '#binding',
+const TwoWayBindingComponent = {
+	name: 'data-binding',
+	template: '#data-binding',
 	data: () => ( {
 		editorData: 'Check out how two-way data binding works.'
 	} )
 };
 
-Vue.component( 'types', types );
-Vue.component( 'events', events );
-Vue.component( 'binding', binding );
+Vue.component( 'types', EditorTypesComponent );
+Vue.component( 'events', EventsPropagationComponent );
+Vue.component( 'binding', TwoWayBindingComponent );
 
 const routes = [
 	{
 		path: '/types',
-		component: types
+		component: EditorTypesComponent
 	}, {
 		path: '/events',
-		component: events
+		component: EventsPropagationComponent
 	}, {
 		path: '/binding',
-		component: binding
+		component: TwoWayBindingComponent
 	},
 	{
 		path: '*',
