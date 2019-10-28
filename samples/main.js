@@ -23,7 +23,7 @@ const eventMessages = {
 	input: 'Editor has changed'
 };
 
-const EventsPropagationComponent = {
+const EventLoggerComponent = {
 	name: 'component-events',
 	template: '#component-events',
 	data: () => ( {
@@ -65,7 +65,7 @@ const TwoWayBindingComponent = {
 };
 
 Vue.component( 'types', EditorTypesComponent );
-Vue.component( 'events', EventsPropagationComponent );
+Vue.component( 'events', EventLoggerComponent );
 Vue.component( 'binding', TwoWayBindingComponent );
 
 const routes = [
@@ -74,7 +74,7 @@ const routes = [
 		component: EditorTypesComponent
 	}, {
 		path: '/events',
-		component: EventsPropagationComponent
+		component: EventLoggerComponent
 	}, {
 		path: '/binding',
 		component: TwoWayBindingComponent
