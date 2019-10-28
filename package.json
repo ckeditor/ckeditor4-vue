@@ -42,8 +42,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "develop": "webpack --mode development --watch",
-    "test": "node ./scripts/test.js",
-    "coverage": "node ./scripts/test.js --coverage"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
