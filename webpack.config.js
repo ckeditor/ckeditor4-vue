@@ -9,12 +9,16 @@
 
 const path = require( 'path' );
 const webpack = require( 'webpack' );
-const { bundler } = require( '@ckeditor/ckeditor5-dev-utils' );
 const TerserWebpackPlugin = require( 'terser-webpack-plugin' );
 
 module.exports = {
 	mode: 'production',
 	devtool: 'source-map',
+
+	performance: {
+		hints: false
+	},
+
 	entry: path.join( __dirname, 'src', 'index.js' ),
 
 	output: {
@@ -42,7 +46,10 @@ module.exports = {
 
 	plugins: [
 		new webpack.BannerPlugin( {
-			banner: bundler.getLicenseBanner(),
+			banner: `/*!*
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md.
+ */`,
 			raw: true
 		} ),
 	],
