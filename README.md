@@ -50,7 +50,7 @@ This repository contains the following code:
 
 * `./src/` contains the CKEditor component.
 * `./dist/` your build will go here.
-* `./sample/` is a demo application using the component. It requires build in `./dist/`.
+* `./samples/` is a demo application using the component. It requires build in `./dist/`.
 * `./tests/` tests for the component.
 
 #### Building samples
