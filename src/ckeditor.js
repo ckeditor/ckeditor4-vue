@@ -50,13 +50,15 @@ export default {
 				return;
 			}
 
+			const config = this.config || {};
+
 			if ( this.readOnly !== null ) {
-				this.config.readOnly = this.readOnly;
+				config.readOnly = this.readOnly;
 			}
 
 			const method = this.type === 'inline' ? 'inline' : 'replace';
 			const element = this.$el.firstElementChild;
-			const editor = this.instance = CKEDITOR[ method ]( element, this.config );
+			const editor = this.instance = CKEDITOR[ method ]( element, config );
 
 			editor.on( 'instanceReady', () => {
 				const undo = editor.undoManager;
