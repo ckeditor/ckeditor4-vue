@@ -65,19 +65,15 @@ describe( 'Integration of CKEditor component', () => {
 		wrapper.destroy();
 	} );
 
-	[ {
-		name: 'classic'
-	}, {
-		name: 'inline',
-		type: 'inline'
-	} ].forEach( ( { name, type } ) => {
-		describe( `when using ${ name } editor`, () => {
-			const isInline = name === 'inline';
+	[ 'classic', 'inline' ].forEach( editorType => {
+		describe( `when using ${ editorType } editor`, () => {
 			const props = [];
 
-			if ( type ) {
-				props.push( 'type="inline"' );
-			}
+			const expectedElementMode = editorType === 'inline' ?
+				CKEDITOR.ELEMENT_MODE_INLINE
+				: CKEDITOR.ELEMENT_MODE_REPLACE;
+
+			props.push( `type="${ editorType }"` );
 
 			setOptionsForTestGroup( { props } );
 
@@ -89,8 +85,8 @@ describe( 'Integration of CKEditor component', () => {
 				expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
 			} );
 
-			it( '"editable.isInline()" should be ' + String( isInline ), () => {
-				expect( editor.editable().isInline() ).to.be[ String( isInline ) ];
+			it( 'editable.isInline() should result with correct value', () => {
+				expect( editor.elementMode ).to.equal( expectedElementMode );
 			} );
 		} );
 	} );
@@ -117,7 +113,7 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it( 'when component has initial data shouldn\'t produce undo steps', () => {
+	it( 'when component has initial data it shouldn\'t produce undo steps', () => {
 		expect( component.instance.undoManager.hasUndo ).to.be.false;
 	} );
 

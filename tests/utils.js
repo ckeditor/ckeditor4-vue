@@ -21,10 +21,6 @@ describe( 'getEditorNamespace', () => {
 		window.CKEDITOR = CKEditorNamespace;
 	} );
 
-	it( 'should be a function', () => {
-		expect( getEditorNamespace ).to.be.a( 'function' );
-	} );
-
 	it( 'should load script and resolve with loaded namespace', () => {
 		return getEditorNamespace( fakeScriptWithNamespace ).then( namespace => {
 			expect( namespace ).to.equal( window.CKEDITOR );
