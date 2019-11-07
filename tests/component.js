@@ -13,18 +13,16 @@ import { getEditorNamespace } from '../src/utils/geteditornamespace';
 const CKEDITOR = window.CKEDITOR;
 
 describe( 'CKEditor Component', () => {
-	const spies = {};
-
 	let skipReady = false;
 	let sandbox, wrapper, component, props;
 
 	beforeEach( done => {
-		spies.replace = sinon.spy( CKEDITOR, 'replace' );
-		spies.inline = sinon.spy( CKEDITOR, 'inline' );
-
+		sandbox = sinon.createSandbox();
 		wrapper = createComponent( props );
 		component = wrapper.vm;
-		sandbox = sinon.createSandbox();
+
+		sandbox.spy( CKEDITOR, 'replace' );
+		sandbox.spy( CKEDITOR, 'inline' );
 
 		if ( skipReady ) {
 			done();
@@ -37,10 +35,6 @@ describe( 'CKEditor Component', () => {
 
 	afterEach( () => {
 		skipReady = false;
-
-		for ( const key in spies ) {
-			spies[ key ].restore();
-		}
 
 		wrapper.destroy();
 		sandbox.restore();
@@ -128,7 +122,7 @@ describe( 'CKEditor Component', () => {
 				setPropsForTestGroup( { readOnly, config } );
 
 				it( 'should use component.readOnly', () => {
-					expect( spies.replace.lastCall.args[ 1 ] ).to.include( { readOnly } );
+					expect( CKEDITOR.replace.lastCall.args[ 1 ] ).to.include( { readOnly } );
 				} );
 			} );
 		} );
@@ -160,9 +154,9 @@ describe( 'CKEditor Component', () => {
 					} );
 
 					it( `should call "CKEDITOR.${ method }" with given config`, () => {
-						sinon.assert.calledOnce( spies[ method ] );
+						sinon.assert.calledOnce( CKEDITOR[ method ] );
 
-						expect( spies[ method ].lastCall.args[ 1 ] ).to.include( config );
+						expect( CKEDITOR[ method ].lastCall.args[ 1 ] ).to.include( config );
 					} );
 				} );
 			} );
@@ -223,12 +217,12 @@ describe( 'CKEditor Component', () => {
 
 	describe( 'when component destroyed', () => {
 		beforeEach( () => {
-			spies.destroy = sinon.spy( component.instance, 'destroy' );
+			sandbox.spy( component.instance, 'destroy' );
 			wrapper.destroy();
 		} );
 
 		it( 'should call "instance.destroy"', () => {
-			sinon.assert.calledOnce( spies.destroy );
+			sinon.assert.calledOnce( component.instance.destroy );
 		} );
 	} );
 
@@ -282,7 +276,7 @@ describe( 'CKEditor Component', () => {
 		} );
 
 		it( 'editor shouldn\'t be initialized', () => {
-			sinon.assert.notCalled( spies.replace );
+			sinon.assert.notCalled( CKEDITOR.replace );
 		} );
 	} );
 
@@ -317,7 +311,7 @@ describe( 'CKEditor Component', () => {
 			let spy;
 
 			beforeEach( () => {
-				spy = spies[ method ] = sinon.spy( component.instance, method );
+				spy = sandbox.spy( component.instance, method );
 				wrapper.setProps( { [ property ]: value } );
 			} );
 
