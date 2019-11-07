@@ -34,8 +34,8 @@ getEditorNamespace.scriptLoader = editorURL => new Promise( ( scriptResolve, scr
 			scriptReject( err );
 		} else if ( !window.CKEDITOR ) {
 			scriptReject( new Error( 'Script loaded from editorUrl doesn\'t provide CKEDITOR namespace.' ) );
-		} else {
-			scriptResolve( CKEDITOR );
 		}
+
+		scriptResolve( CKEDITOR );
 	} );
 } );
