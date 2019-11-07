@@ -19,9 +19,9 @@ export function getEditorNamespace( editorURL ) {
 	}
 
 	if ( !promise ) {
-		promise = getEditorNamespace.scriptLoader( editorURL );
-		promise.then( () => {
+		promise = getEditorNamespace.scriptLoader( editorURL ).then( res => {
 			promise = undefined;
+			return res;
 		} );
 	}
 
