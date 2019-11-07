@@ -24,7 +24,7 @@ export default {
 		type: {
 			type: String,
 			default: 'classic',
-			validator: type => type in { classic: 1, inline: 1 }
+			validator: type => [ 'classic', 'inline' ].includes( type )
 		},
 		editorUrl: {
 			type: String,
