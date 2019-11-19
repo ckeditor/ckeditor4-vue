@@ -23,6 +23,7 @@
 		"karma-sinon": "^1.0.5",
 		"karma-sourcemap-loader": "^0.3.7",
 		"karma-webpack": "^3.0.5",
+		"live-server": "^1.2.1",
 		"minimist": "^1.2.0",
 		"mocha": "^5.2.0",
 		"sinon": "^7.5.0",
@@ -41,6 +42,7 @@
 		"npm": ">=5.7.1"
 	},
 	"scripts": {
+		"start": "npm run build && live-server --open=samples/index.html",
 		"build": "webpack --mode production",
 		"develop": "webpack --mode development --watch",
 		"test": "karma start",
