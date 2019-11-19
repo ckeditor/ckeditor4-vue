@@ -31,11 +31,11 @@ export function getEditorNamespace( editorURL ) {
 getEditorNamespace.scriptLoader = editorURL => new Promise( ( scriptResolve, scriptReject ) => {
 	loadScript( editorURL, err => {
 		if ( err ) {
-			scriptReject( err );
+			return scriptReject( err );
 		} else if ( !window.CKEDITOR ) {
-			scriptReject( new Error( 'Script loaded from editorUrl doesn\'t provide CKEDITOR namespace.' ) );
-		} else {
-			scriptResolve( CKEDITOR );
+			return scriptReject( new Error( 'Script loaded from editorUrl doesn\'t provide CKEDITOR namespace.' ) );
 		}
+
+		scriptResolve( CKEDITOR );
 	} );
 } );
