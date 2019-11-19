@@ -87,8 +87,7 @@ const routes = [
 
 const router = new VueRouter( { routes } );
 
-/* eslint no-new: 0 */
-
+/* eslint-disable-next-line no-new */
 new Vue( {
 	el: '#app',
 	router
