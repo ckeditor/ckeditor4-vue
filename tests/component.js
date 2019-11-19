@@ -170,48 +170,30 @@ describe( 'CKEditor Component', () => {
 	} );
 
 	describe( 'events', () => {
-		[
-			'input',
-			'focus',
-			'blur'
-		].forEach( evtName => {
-			let getDataMock, spy, editorEvtName;
-
-			beforeEach( () => {
-				editorEvtName = evtName;
-				spy = sinon.spy();
-
-				if ( evtName === 'input' ) {
-					editorEvtName = 'change';
-					getDataMock = sinon.stub( component.instance, 'getData' ).returns( 'foo' );
-				}
-
-				component.$on( evtName, spy );
-				component.instance.fire( editorEvtName );
-			} );
-
-			afterEach( () => {
-				if ( getDataMock ) {
-					getDataMock.restore();
-					getDataMock = null;
-				}
-			} );
-
+		[ 'focus', 'blur' ].forEach( evtName => {
 			it( `should emit "${ evtName }"`, () => {
+				const spy = sandbox.spy();
+				component.$on( evtName, spy );
+				component.instance.fire( evtName );
 				sinon.assert.calledOnce( spy );
 			} );
+		} );
 
-			if ( evtName === 'input' ) {
-				it( 'when data didn\'t change shouldn\'t emit input', () => {
-					spy.resetHistory();
+		it( 'should emit "input"', () => {
+			const spy = sandbox.spy();
+			const stub = sandbox.stub( component.instance, 'getData' ).returns( '<p>foo</p>' );
 
-					getDataMock.returns( component.value );
+			component.$on( 'input', spy );
 
-					component.instance.fire( editorEvtName );
+			component.instance.fire( 'change' );
 
-					sinon.assert.notCalled( spy );
-				} );
-			}
+			sinon.assert.calledOnce( spy );
+
+			stub.returns( component.value );
+
+			component.instance.fire( 'change' );
+
+			sinon.assert.calledOnce( spy );
 		} );
 	} );
 
