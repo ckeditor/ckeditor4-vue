@@ -40,7 +40,10 @@
   "scripts": {
     "build": "webpack --mode production",
     "develop": "webpack --mode development --watch",
-    "test": "karma start"
+    "test": "karma start",
+	"preversion": "npm test",
+	"version": "npm run build && git add -f dist/",
+	"postversion": "git rm -r --cached dist/ && git commit -m \"Clean after release [ci skip]\" && git push origin && git push origin --tags"
   },
   "repository": {
     "type": "git",
