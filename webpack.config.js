@@ -60,6 +60,24 @@ module.exports = {
 				test: /\.js$/,
 				loader: 'babel-loader',
 				exclude: /node_modules/,
+				query: {
+					compact: false,
+					presets: [
+						[ '@babel/preset-env',
+							{
+								useBuiltIns: 'usage',
+								corejs: 3,
+								targets: {
+									browsers: [
+										'last 2 versions',
+										'ie 11'
+									],
+									node: 10
+								}
+							}
+						]
+					]
+				}
 			}
 		]
 	},

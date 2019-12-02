@@ -38,6 +38,7 @@
 		"vue": "^2.5.17"
 	},
 	"dependencies": {
+		"core-js": "^3.4.5",
 		"load-script": "^1.0.0"
 	},
 	"engines": {
