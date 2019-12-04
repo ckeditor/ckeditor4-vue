@@ -47,6 +47,14 @@ See the [CKEditor 4 WYSIWYG Editor Vue Integration](https://ckeditor.com/docs/ck
 
 You can also check out [CKEditor 4 WYSIWYG Editor Vue Integration example](https://ckeditor.com/docs/ckeditor4/latest/examples/vue.html) in [CKEditor 4 Examples](https://ckeditor.com/docs/ckeditor4/latest/examples/).
 
+## Browser support
+
+The CKEditor 4 Vue component works with all the [supported browsers](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_browsers.html#officially-supported-browsers) except for Internet Explorer.
+
+To enable Internet Explorer 11 support, import specific `dist/legacy.js` file instead of standard import, containing all required polyfills:
+
+`import CKEditor from 'ckeditor4-vue/dist/legacy.js'`
+
 ## Contributing
 
 After cloning this repository, install necessary dependencies:
