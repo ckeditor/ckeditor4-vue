@@ -53,7 +53,9 @@ The CKEditor 4 Vue component works with all the [supported browsers](https://cke
 
 To enable Internet Explorer 11 support, import specific `dist/legacy.js` file instead of standard import, containing all required polyfills:
 
-`import CKEditor from 'ckeditor4-vue/dist/legacy.js'`
+```js
+import CKEditor from 'ckeditor4-vue/dist/legacy.js'
+```
 
 ## Contributing
 
