@@ -8,6 +8,7 @@
 		"@vue/test-utils": "^1.0.0-beta.29",
 		"babel-loader": "^8.0.6",
 		"chai": "^4.1.2",
+		"core-js": "^3.4.5",
 		"eslint": "^5.5.0",
 		"eslint-config-ckeditor5": "^1.0.8",
 		"istanbul-instrumenter-loader": "^3.0.0",
@@ -38,7 +39,6 @@
 		"vue": "^2.5.17"
 	},
 	"dependencies": {
-		"core-js": "^3.4.5",
 		"load-script": "^1.0.0"
 	},
 	"engines": {
@@ -47,7 +47,7 @@
 	},
 	"scripts": {
 		"start": "npm run build && live-server --open=samples/index.html",
-		"build": "webpack --mode production",
+		"build": "webpack --mode production && webpack --mode production --env.legacy='true'",
 		"develop": "webpack --mode development --watch",
 		"test": "karma start",
 		"preversion": "npm test",
