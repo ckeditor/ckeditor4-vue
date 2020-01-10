@@ -11,12 +11,10 @@ const path = require( 'path' );
 const webpack = require( 'webpack' );
 const TerserWebpackPlugin = require( 'terser-webpack-plugin' );
 
-module.exports = env => {
-	const presets = [];
-	let filename = 'ckeditor.js';
-
-	if ( env && env.legacy ) {
-		presets.push( [ '@babel/preset-env',
+module.exports = [
+	createConfig( 'ckeditor.js' ),
+	createConfig( 'legacy.js', [
+		[ '@babel/preset-env',
 			{
 				useBuiltIns: 'usage',
 				corejs: 3,
@@ -28,11 +26,11 @@ module.exports = env => {
 					node: 10
 				}
 			}
-		] );
+		]
+	] )
+];
 
-		filename = 'legacy.js';
-	}
-
+function createConfig( filename, presets = [] ) {
 	return {
 		mode: 'production',
 		devtool: 'source-map',
@@ -89,4 +87,4 @@ module.exports = env => {
 			]
 		}
 	};
-};
+}

@@ -47,7 +47,7 @@
 	},
 	"scripts": {
 		"start": "npm run build && live-server --open=samples/index.html",
-		"build": "webpack --mode production && webpack --mode production --env.legacy='true'",
+		"build": "webpack --mode production",
 		"develop": "webpack --mode development --watch",
 		"test": "karma start",
 		"preversion": "npm test",
