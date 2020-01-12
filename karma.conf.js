@@ -62,7 +62,7 @@ module.exports = function( config ) {
 
 		reporters: getReporters(),
 
-		converageReporter: {
+		coverageReporter: {
 			reporters: [
 				// Prints a table after tests result.
 				{
