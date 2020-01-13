@@ -125,9 +125,7 @@
 			></ckeditor>
 			<h3>Data preview:</h3>
 			<p>
-				Caution: <code class="highlight">setData</code> is not throttled, quick typing might freeze browser.
-				<br>
-				Note: editor will wrap any stray text in paragraphs.
+				Note that <code class="highlight">textarea</code> element is synced after <code class="highlight">change</code> event. Blur to see content updates.
 			</p>
 			<textarea rows="15" cols="50" v-model.lazy="editorData"></textarea>
 		</main>
