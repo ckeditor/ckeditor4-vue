@@ -61,19 +61,16 @@ export default {
 			const editor = this.instance = CKEDITOR[ method ]( element, config );
 
 			editor.on( 'instanceReady', () => {
-				const undo = editor.undoManager;
 				const data = this.value;
 
-				if ( undo ) {
-					undo.lock();
-				}
+				editor.fire( 'lockSnapshot' );
 
 				editor.setData( data, { callback: () => {
 					this.$_setUpEditorEvents();
 
 					const newData = editor.getData();
 
-					// Locking undoManager prevents 'change' event.
+					// Locking snapshot prevents 'change' event.
 					// Trigger it manually to update bound data.
 					if ( data !== newData ) {
 						this.$once( 'input', () => {
@@ -85,9 +82,7 @@ export default {
 						this.$emit( 'ready', editor );
 					}
 
-					if ( undo ) {
-						undo.unlock();
-					}
+					editor.fire( 'unlockSnapshot' );
 				} } );
 			} );
 		} );
