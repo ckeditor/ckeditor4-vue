@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: xenial
 addons:
   chrome: stable
   firefox: latest
