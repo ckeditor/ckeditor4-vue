@@ -69,10 +69,6 @@ var TwoWayBindingComponent = {
 	}
 };
 
-Vue.component( 'types', EditorTypesComponent );
-Vue.component( 'events', EventLoggerComponent );
-Vue.component( 'binding', TwoWayBindingComponent );
-
 var routes = [
 	{
 		path: '/types',
