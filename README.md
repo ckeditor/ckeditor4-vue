@@ -10,7 +10,9 @@
 [![Join newsletter](https://img.shields.io/badge/join-newsletter-00cc99.svg)](http://eepurl.com/c3zRPr)
 [![Follow Twitter](https://img.shields.io/badge/follow-twitter-00cc99.svg)](https://twitter.com/ckeditor)
 
-Official [CKEditor 4](https://ckeditor.com/ckeditor-4/) WYSIWYG editor component for Vue.
+The official [CKEditor 4](https://ckeditor.com/ckeditor-4/) WYSIWYG editor component for Vue.
+
+This is the beta version of the CKEditor 4 Vue integration. We are looking forward to your feedback! You can report any issues, ideas or feature requests on the [integration issues page](https://github.com/ckeditor/ckeditor4-vue/issues/new).
 
 We are looking forward to your feedback! You can report any issues, ideas or feature requests on the [integration issues page](https://github.com/ckeditor/ckeditor4-vue/issues/new).
 
@@ -56,6 +58,8 @@ To enable Internet Explorer 11 support, import specific `dist/legacy.js` file in
 ```js
 import CKEditor from 'ckeditor4-vue/dist/legacy.js'
 ```
+
+**Note** that even though CKEditor 4 is supported for older Internet Explorer versions including 8 to 10, Vue integration is only supported for the latest Internet Explorer 11 via the above script.
 
 ## Contributing
 
