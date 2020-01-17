@@ -1,0 +1,18 @@
+sudo: required
+dist: xenial
+services:
+    - xvfb
+addons:
+  chrome: stable
+  firefox: latest
+language: node_js
+node_js:
+- '12'
+cache:
+- node_modules
+before_install:
+- export DISPLAY=:99.0
+install:
+- npm install
+script:
+- npm run test
