@@ -57,7 +57,7 @@ To enable Internet Explorer 11 support, import specific `dist/legacy.js` file in
 import CKEditor from 'ckeditor4-vue/dist/legacy.js'
 ```
 
-**Note** that even though CKEditor 4 is supported for older Internet Explorer versions including 8 to 10, Vue integration is only supported for the latest Internet Explorer 11 via the above script.
+**Note** that even though CKEditor 4 supports older Internet Explorer versions including IE8, IE9 and IE10, Vue integration is only supported in the latest Internet Explorer 11.
 
 ## Contributing
 
