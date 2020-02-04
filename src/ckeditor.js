@@ -40,7 +40,7 @@ export default {
 		},
 		readOnly: {
 			type: Boolean,
-			default: null // Use the null for default value, so `config.readOnly` can take precedence.
+			default: null // Use null as the default value, so `config.readOnly` can take precedence.
 		}
 	},
 
@@ -70,8 +70,8 @@ export default {
 
 					const newData = editor.getData();
 
-					// Locking snapshot prevents 'change' event.
-					// Trigger it manually to update bound data.
+					// Locking the snapshot prevents the 'change' event.
+					// Trigger it manually to update the bound data.
 					if ( data !== newData ) {
 						this.$once( 'input', () => {
 							this.$emit( 'ready', editor );
@@ -115,7 +115,7 @@ export default {
 			editor.on( 'change', evt => {
 				const data = editor.getData();
 
-				// Editor#change event might be fired without actual data change.
+				// Editor#change event might be fired without an actual data change.
 				if ( this.value !== data ) {
 					// The compatibility with the v-model and general Vue.js concept of input–like components.
 					this.$emit( 'input', data, evt, editor );

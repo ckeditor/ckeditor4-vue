@@ -33,12 +33,12 @@
 	<script src="../dist/legacy.js"></script>
 
 	<div id="app">
-		<h1>CKEditor 4 – Vue.js Component – development sample</h1>
+		<h1>CKEditor 4 – Vue.js Component – Development Sample</h1>
 
 		<ul class="route__list">
 		<li class="route__list-item"><router-link to="/types">Editor types</router-link></li>
 		<li class="route__list-item"><router-link to="/events">Component events</router-link></li>
-		<li class="route__list-item"><router-link to="/binding">Two way binding</router-link></li>
+		<li class="route__list-item"><router-link to="/binding">Two-way binding</router-link></li>
 		</ul>
 
 		<router-view></router-view>
@@ -49,7 +49,7 @@
 			<h2>Editor types</h2>
 
 			<section>
-				<h3>Classic Editor</h3>
+				<h3>Classic editor</h3>
 				<ckeditor
 					type="classic"
 					v-model="editors.classic"
@@ -60,7 +60,7 @@
 			</section>
 
 			<section>
-				<h3>Inline Editor</h3>
+				<h3>Inline editor</h3>
 				<ckeditor
 					type="inline"
 					v-model="editors.inline"
@@ -85,7 +85,7 @@
 						v-model="hide"
 						type="checkbox"
 					>
-					Hide editor with <code class="highlight">v-if</code> directive
+					Hide the editor with the <code class="highlight">v-if</code> directive
 				</label>
 			</p>
 			<p>
@@ -94,7 +94,7 @@
 						v-model="show"
 						type="checkbox"
 					>
-					Show editor with <code class="highlight">v-show</code> directive</label></p>
+					Show the editor with the <code class="highlight">v-show</code> directive</label></p>
 		</main>
 	</script>
 
@@ -125,7 +125,7 @@
 			></ckeditor>
 			<h3>Data preview:</h3>
 			<p>
-				Note that <code class="highlight">textarea</code> element is synced after <code class="highlight">change</code> event. Blur to see content updates.
+				Note that the <code class="highlight">textarea</code> element is synced after the <code class="highlight">change</code> event. Blur to see content updates.
 			</p>
 			<textarea rows="15" cols="50" v-model.lazy="editorData"></textarea>
 		</main>
