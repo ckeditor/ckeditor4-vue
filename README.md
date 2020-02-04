@@ -16,9 +16,15 @@ This is the beta version of the CKEditor 4 Vue integration. We are looking forwa
 
 ![CKEditor 4 screenshot](https://c.cksource.com/a/1/img/npm/ckeditor4.png)
 
-## Usage
+## Installation and usage
 
-Use the CKEditor 4 component for Vue by calling the `Vue.use()` method:
+To install CKEditor 4 component for Vue from npm, simply run:
+
+```
+npm install ckeditor4-vue
+```
+
+Then use it by calling the `Vue.use()` method:
 
 ```js
 import Vue from 'vue';
@@ -31,7 +37,7 @@ new Vue( {
 } )
 ```
 
-and then use the `<ckeditor>` component in your template:
+and use the `<ckeditor>` component in your template:
 
 ```html
 <template>
@@ -40,6 +46,20 @@ and then use the `<ckeditor>` component in your template:
 	</div>
 </template>
 ```
+
+Instead of ES6 imports, the component can be added via a direct script include:
+
+```html
+<script src="../node_modules/ckeditor4-vue/dist/ckeditor.js"></script>
+```
+
+and used in the same way as with ES6 imports:
+
+```js
+Vue.use( CKEditor );
+```
+
+Refer to the offical [CKEditor 4 Vue component documentation](http://ckeditor.com/docs/ckeditor4/latest/guide/dev_vue.html#basic-usage) for more detials on installing the component.
 
 ## Documentation and examples
 
