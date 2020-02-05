@@ -2,6 +2,10 @@
 	"name": "@ckeditor/ckeditor4-vue",
 	"version": "0.0.0",
 	"main": "dist/ckeditor.js",
+	"files": [
+		"dist/",
+		"sample/"
+	],
 	"devDependencies": {
 		"@babel/core": "^7.6.4",
 		"@babel/preset-env": "^7.6.3",
