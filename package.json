@@ -4,7 +4,7 @@
 	"main": "dist/ckeditor.js",
 	"files": [
 		"dist/",
-		"sample/"
+		"samples/"
 	],
 	"devDependencies": {
 		"@babel/core": "^7.6.4",
