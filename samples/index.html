@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor 4 – Vue.js Component – development sample</title>
+	<style>
+		body {
+			max-width: 800px;
+			margin: 20px auto;
+		}
+
+		.cke_editable_inline {
+			border: solid 1px black;
+		}
+
+		.highlight {
+			border-radius: 2px;
+			background: lightgray;
+			border: solid 1px darkgray;
+			padding-left: 4px;
+			padding-right: 4px;
+			color: darkred;
+		}
+
+		.route__list {
+			list-style-type: none;
+		}
+	</style>
+</head>
+<body>
+	<script src="../node_modules/vue/dist/vue.js"></script>
+	<script src="../node_modules/vue-router/dist/vue-router.js"></script>
+	<script src="../dist/legacy.js"></script>
+
+	<div id="app">
+		<h1>CKEditor 4 – Vue.js Component – Development Sample</h1>
+
+		<ul class="route__list">
+		<li class="route__list-item"><router-link to="/types">Editor types</router-link></li>
+		<li class="route__list-item"><router-link to="/events">Component events</router-link></li>
+		<li class="route__list-item"><router-link to="/binding">Two-way binding</router-link></li>
+		</ul>
+
+		<router-view></router-view>
+	</div>
+
+	<script type="text/x-template" id="editor-types">
+		<main>
+			<h2>Editor types</h2>
+
+			<section>
+				<h3>Classic editor</h3>
+				<ckeditor
+					type="classic"
+					v-model="editors.classic"
+					v-if="!hide"
+					v-show="show"
+					:read-only="readOnly"
+				></ckeditor>
+			</section>
+
+			<section>
+				<h3>Inline editor</h3>
+				<ckeditor
+					type="inline"
+					v-model="editors.inline"
+					v-if="!hide"
+					v-show="show"
+					:read-only="readOnly"
+				></ckeditor>
+			</section>
+
+			<p>
+				<label>
+					<input
+						v-model="readOnly"
+						type="checkbox"
+					>
+					Read-only
+				</label>
+			</p>
+			<p>
+				<label>
+					<input
+						v-model="hide"
+						type="checkbox"
+					>
+					Hide the editor with the <code class="highlight">v-if</code> directive
+				</label>
+			</p>
+			<p>
+				<label>
+					<input
+						v-model="show"
+						type="checkbox"
+					>
+					Show the editor with the <code class="highlight">v-show</code> directive</label></p>
+		</main>
+	</script>
+
+	<script type="text/x-template" id="component-events">
+		<main>
+			<h2>Editor events</h2>
+
+			<ckeditor
+				@ready="logEvent( 'ready' )"
+				@focus="logEvent( 'focus' )"
+				@blur="logEvent( 'blur' )"
+				@input="logEvent( 'input' )"
+				value="Click here to focus the Editor!"
+			></ckeditor>
+			<h3>Events log:</h3>
+			<ul>
+				<li v-for="event of events">{{ event.message }}</li>
+			</ul>
+		</main>
+	</script>
+
+	<script type="text/x-template" id="data-binding">
+		<main>
+			<h2>Editor data two-way binding</h2>
+			<ckeditor
+				type="classic"
+				v-model="editorData"
+			></ckeditor>
+			<h3>Data preview:</h3>
+			<p>
+				Note that the <code class="highlight">textarea</code> element is synced after the <code class="highlight">change</code> event. Blur to see content updates.
+			</p>
+			<textarea rows="15" cols="50" v-model.lazy="editorData"></textarea>
+		</main>
+	</script>
+
+	<script src="./main.js"></script>
+</body>
+</html>
