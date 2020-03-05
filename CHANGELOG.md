@@ -4,7 +4,7 @@
 
 Other Changes:
 
-* Updated default CDN CKEditor 4 dependency to [4.14.0](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-414).
+* Updated the default CKEditor 4 CDN dependency to [4.14.0](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-414).
 
 ## ckeditor4-vue 0.1.0
 
