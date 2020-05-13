@@ -98,13 +98,15 @@ export default {
 
 	watch: {
 		value( val ) {
-			if ( this.instance.getData() !== val ) {
+			if ( this.instance && this.instance.getData() !== val ) {
 				this.instance.setData( val );
 			}
 		},
 
 		readOnly( val ) {
-			this.instance.setReadOnly( val );
+			if ( this.instance ) {
+				this.instance.setReadOnly( val );
+			}
 		}
 	},
 
