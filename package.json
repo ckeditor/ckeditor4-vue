@@ -62,6 +62,20 @@
 		"type": "git",
 		"url": "https://github.com/ckeditor/ckeditor4-vue.git"
 	},
+	"keywords": [
+		"wysiwyg",
+		"rich text",
+		"editor",
+		"rte",
+		"html",
+		"contentEditable",
+		"editing",
+		"vue",
+		"component",
+		"ckeditor",
+		"ckeditor4",
+		"ckeditor 4"
+	],
 	"author": "CKSource (http://cksource.com/)",
 	"license": "(GPL-2.0-or-later OR LGPL-2.1-or-later OR MPL-1.1-or-later)",
 	"bugs": {
