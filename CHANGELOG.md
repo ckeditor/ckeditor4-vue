@@ -1,5 +1,11 @@
 # CKEditor 4 WYSIWYG Editor Vue Integration Changelog
 
+## ckeditor4-vue 1.0.0
+
+Fixed issues:
+
+* [#32](https://github.com/ckeditor/ckeditor4-vue/issues/32): Fixed: Watchers may interrupt editor initialization. Thanks to [Michael Babker](https://github.com/mbabker)!
+
 ## ckeditor4-vue 0.2.0
 
 Other Changes:

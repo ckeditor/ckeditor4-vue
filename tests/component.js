@@ -208,6 +208,34 @@ describe( 'CKEditor Component', () => {
 		} );
 	} );
 
+	describe( 'when watched property changed before editor initialized', () => {
+		beforeEach( () => {
+			skipReady = true;
+			component.instance = null;
+		} );
+
+		describe( 'property', () => {
+			[
+				{
+					property: 'value',
+					value: 'foobar'
+				},
+				{
+					property: 'readOnly',
+					value: true
+				}
+			].forEach( ( { property, value } ) => {
+				it( `"${ property }" should avoid instance operations`, () => {
+					wrapper.setProps( {
+						[ property ]: value
+					} );
+
+					sinon.assert.pass();
+				} );
+			} );
+		} );
+	} );
+
 	// This test might look a bit strange, but it's crucial to run things in proper order.
 	describe( 'when component destroyed before getEditorNamespace resolves', () => {
 		let resolveMockReturnedPromise,
