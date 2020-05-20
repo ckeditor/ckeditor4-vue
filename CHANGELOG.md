@@ -2,6 +2,8 @@
 
 ## ckeditor4-vue 1.0.0
 
+The first stable release of CKEditor 4 WYSIWYG Editor Vue Integration. After few months of beta period, testing and listening to community feedback, the CKEditor 4 Vue Integration is stable and can be used with full confidence. Enjoy!
+
 Fixed issues:
 
 * [#32](https://github.com/ckeditor/ckeditor4-vue/issues/32): Fixed: Watchers may interrupt the editor initialization. Thanks to [Michael Babker](https://github.com/mbabker)!
