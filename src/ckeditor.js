@@ -12,7 +12,7 @@ export default {
 
 	render( createElement ) {
 		return createElement( 'div', {}, [
-			createElement( this.tagName )
+			createElement( this.tagName, this.context )
 		] );
 	},
 
@@ -38,6 +38,10 @@ export default {
 			type: String,
 			default: 'textarea'
 		},
+		context: {
+			type: Object,
+			default: () => {}
+		}
 		readOnly: {
 			type: Boolean,
 			default: null // Use null as the default value, so `config.readOnly` can take precedence.
