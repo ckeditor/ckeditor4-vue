@@ -3,9 +3,10 @@
  * For licensing, see LICENSE.md.
  */
 
-/* global CKEDITOR, clearTimeout, setTimeout */
+/* global CKEDITOR */
 
 import { getEditorNamespace } from './utils/geteditornamespace.js';
+import debounce from './utils/debounce.js';
 
 export default {
 	name: 'ckeditor',
@@ -140,13 +141,3 @@ export default {
 		}
 	}
 };
-
-function debounce( fn, ms ) {
-	const that = this;
-	let cancel;
-
-	return function( ...args ) {
-		clearTimeout( cancel );
-		cancel = setTimeout( fn.bind( that, args ), ms );
-	};
-}
