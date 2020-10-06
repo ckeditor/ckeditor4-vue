@@ -4,7 +4,6 @@
  */
 
 import { getEditorNamespace } from '../src/utils/geteditornamespace';
-import debounce from '../src/utils/debounce';
 
 /* global window */
 
@@ -47,6 +46,7 @@ describe( 'getEditorNamespace', () => {
 	} );
 
 	it( 'when empty string passed should throw', () => {
+
 		expect( () => getEditorNamespace( '' ) )
 			.to.throw( 'CKEditor URL must be a non-empty string.' );
 	} );
@@ -73,26 +73,5 @@ describe( 'getEditorNamespace', () => {
 			expect( () => getEditorNamespace( '' ) )
 				.to.not.throw();
 		} );
-	} );
-} );
-
-describe( 'debounce', () => {
-	it( 'should debounce call', () => {
-		const clock = sinon.useFakeTimers();
-		const spy = sinon.spy();
-		const fn = debounce( spy, 60 );
-
-		fn( 1 );
-		clock.tick( 20 );
-
-		fn( 2 );
-		clock.tick( 40 );
-
-		fn( 3 );
-		clock.tick( 60 );
-
-		expect( spy.calledOnceWithExactly( 3 ) ).to.equal( true );
-
-		clock.restore();
 	} );
 } );
