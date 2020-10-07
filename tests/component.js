@@ -7,7 +7,7 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
-import { getEditorNamespace } from '../src/utils/geteditornamespace';
+import { getEditorNamespace } from 'ckeditor4-integrations-common';
 
 /* global window */
 const CKEDITOR = window.CKEDITOR;

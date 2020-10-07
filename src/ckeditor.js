@@ -5,8 +5,7 @@
 
 /* global CKEDITOR */
 
-import { debounce } from 'ckeditor4-integrations-common';
-import { getEditorNamespace } from './utils/geteditornamespace.js';
+import { debounce, getEditorNamespace } from 'ckeditor4-integrations-common';
 
 export default {
 	name: 'ckeditor',
