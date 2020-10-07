@@ -3,9 +3,18 @@
 
 Vue.use( CKEditor );
 
+var defaultMixin = {
+	methods: {
+		scriptLoaded: function( namespace ) {
+			console.log( 'CKEDITOR version: ', namespace.version );
+		}
+	}
+};
+
 var EditorTypesComponent = {
 	name: 'editor-types',
 	template: '#editor-types',
+	mixins: [ defaultMixin ],
 	data: function(){
 		return {
 			readOnly: false,
@@ -27,6 +36,7 @@ eventMessages = {
 EventLoggerComponent = {
 	name: 'component-events',
 	template: '#component-events',
+	mixins: [ defaultMixin ],
 	data: function() {
 		return {
 			editorData: 'Check out component events.',
@@ -62,6 +72,7 @@ EventLoggerComponent = {
 var TwoWayBindingComponent = {
 	name: 'data-binding',
 	template: '#data-binding',
+	mixins: [ defaultMixin ],
 	data: function() {
 		return {
 			editorData: 'Check out how two-way data binding works.'
@@ -92,3 +103,7 @@ new Vue( {
 	el: '#app',
 	router: router
 } );
+
+function scriptLoaded( namespace ) {
+	console.log( 'CKEDITOR version: ', namespace.version );
+}

@@ -45,11 +45,15 @@ export default {
 		throttle: {
 			type: Number,
 			default: 80
+		},
+		scriptLoaded: {
+			type: Function,
+			default: () => {}
 		}
 	},
 
 	mounted() {
-		getEditorNamespace( this.editorUrl ).then( () => {
+		getEditorNamespace( this.editorUrl, this.scriptLoaded ).then( () => {
 			if ( this.$_destroyed ) {
 				return;
 			}
