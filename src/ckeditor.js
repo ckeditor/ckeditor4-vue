@@ -5,6 +5,7 @@
 
 /* global CKEDITOR */
 
+import { debounce } from 'ckeditor4-integrations-common';
 import { getEditorNamespace } from './utils/geteditornamespace.js';
 
 export default {
@@ -41,6 +42,10 @@ export default {
 		readOnly: {
 			type: Boolean,
 			default: null // Use null as the default value, so `config.readOnly` can take precedence.
+		},
+		throttle: {
+			type: Number,
+			default: 80
 		}
 	},
 
@@ -114,7 +119,7 @@ export default {
 		$_setUpEditorEvents() {
 			const editor = this.instance;
 
-			editor.on( 'change', evt => {
+			const onChange = debounce( evt => {
 				const data = editor.getData();
 
 				// Editor#change event might be fired without an actual data change.
@@ -122,7 +127,9 @@ export default {
 					// The compatibility with the v-model and general Vue.js concept of input–like components.
 					this.$emit( 'input', data, evt, editor );
 				}
-			} );
+			}, this.throttle );
+
+			editor.on( 'change', onChange );
 
 			editor.on( 'focus', evt => {
 				this.$emit( 'focus', evt, editor );

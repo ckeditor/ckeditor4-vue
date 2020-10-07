@@ -63,6 +63,10 @@ describe( 'CKEditor Component', () => {
 				property: 'config',
 				defaultValue: undefined
 			}, {
+				property: 'throttle',
+				defaultValue: 80
+			}, {
+			}, {
 				property: 'tagName',
 				defaultValue: 'textarea'
 			}, {
@@ -96,6 +100,10 @@ describe( 'CKEditor Component', () => {
 			}, {
 				property: 'config',
 				value: {}
+			}, {
+				property: 'throttle',
+				value: 200
+			}, {
 			}, {
 				property: 'tagName',
 				value: 'div'
@@ -182,18 +190,65 @@ describe( 'CKEditor Component', () => {
 		it( 'should emit "input"', () => {
 			const spy = sandbox.spy();
 			const stub = sandbox.stub( component.instance, 'getData' ).returns( '<p>foo</p>' );
+			const clock = sinon.useFakeTimers();
 
 			component.$on( 'input', spy );
 
+			// Change event is throttled for 80ms.
 			component.instance.fire( 'change' );
+			clock.tick( 20 );
+
+			component.instance.fire( 'change' );
+			clock.tick( 40 );
+
+			component.instance.fire( 'change' );
+			clock.tick( 80 );
 
 			sinon.assert.calledOnce( spy );
 
+			// Let's verify what happens when change event occur
+			// without real value change.
 			stub.returns( component.value );
-
 			component.instance.fire( 'change' );
+			clock.tick( 80 );
 
 			sinon.assert.calledOnce( spy );
+
+			clock.restore();
+		} );
+
+		describe( 'with custom throttle value', () => {
+			setPropsForTestGroup( { throttle: 200 } );
+
+			it( 'should throttle "input" for the given timeout', () => {
+				const spy = sandbox.spy();
+				const clock = sinon.useFakeTimers();
+
+				sandbox.stub( component.instance, 'getData' ).returns( '<p>bar</p>' );
+
+				component.$on( 'input', spy );
+
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+
+				clock.tick( 50 );
+
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+
+				clock.tick( 100 );
+
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+
+				clock.tick( 200 );
+
+				sinon.assert.calledOnce( spy );
+				clock.restore();
+			} );
 		} );
 	} );
 

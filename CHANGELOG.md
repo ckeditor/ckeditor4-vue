@@ -1,5 +1,11 @@
 # CKEditor 4 WYSIWYG Editor Vue Integration Changelog
 
+## ckeditor4-vue 1.2.0
+
+New Features:
+
+* [#52](https://github.com/ckeditor/ckeditor4-vue/issues/52) Improved typing performance by adding [customizable throttling option](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_vue.html#throttle).
+
 ## ckeditor4-vue 1.1.0
 
 Other Changes:
