@@ -216,6 +216,40 @@ describe( 'CKEditor Component', () => {
 
 			clock.restore();
 		} );
+
+		describe( 'with custom throttle value', () => {
+			setPropsForTestGroup( { throttle: 200 } );
+
+			it( 'should throttle "input" for the given timeout', () => {
+				const spy = sandbox.spy();
+				const clock = sinon.useFakeTimers();
+
+				sandbox.stub( component.instance, 'getData' ).returns( '<p>bar</p>' );
+
+				component.$on( 'input', spy );
+
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+
+				clock.tick( 50 );
+
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+
+				clock.tick( 100 );
+
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+				component.instance.fire( 'change' );
+
+				clock.tick( 200 );
+
+				sinon.assert.calledOnce( spy );
+				clock.restore();
+			} );
+		} );
 	} );
 
 	describe( 'when component destroyed', () => {
