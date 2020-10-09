@@ -25,6 +25,12 @@ module.exports = function( config ) {
 			'tests/**/*.js': [ 'webpack' ]
 		},
 
+		client: {
+			mocha: {
+				timeout: 3000
+			}
+		},
+
 		webpack: {
 			mode: 'development',
 			devtool: 'inline-source-map',
