@@ -7,7 +7,7 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
-import { getEditorNamespace } from 'ckeditor4-integrations-common';
+import { getEditorNamespace } from '../src/utils/geteditornamespace';
 
 /* global window */
 const CKEDITOR = window.CKEDITOR;
@@ -49,30 +49,6 @@ describe( 'CKEditor Component', () => {
 			expect( wrapper.html() ).to.not.be.empty;
 		} );
 
-		describe( 'when loading CDN script', () => {
-			let spy;
-
-			beforeEach( () => {
-				spy = sandbox.spy();
-
-				delete window.CKEDITOR;
-
-				setPropsForTestGroup( { scriptLoaded: spy } );
-			} );
-
-			afterEach( () => {
-				window.CKEDITOR = CKEDITOR;
-			} );
-
-			it( 'should notify about loaded namespace', () => {
-				expect( spy.calledOnce );
-
-				// We can't stub getEditorNamespace.scriptLoader because the logic
-				// responsible for notifying about loaded CDN is placed there.
-				// Let's just use simple duck typing instead.
-				expect( spy.calledWithMatch( namespace => !!namespace.version ) );
-			} );
-		} );
 		describe( 'property', () => {
 			[ {
 				property: 'value',
@@ -85,9 +61,6 @@ describe( 'CKEditor Component', () => {
 				defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
 			}, {
 				property: 'config',
-				defaultValue: undefined
-			}, {
-				property: 'scriptLoaded',
 				defaultValue: undefined
 			}, {
 				property: 'throttle',
@@ -127,10 +100,6 @@ describe( 'CKEditor Component', () => {
 			}, {
 				property: 'config',
 				value: {}
-			}, {
-			}, {
-				property: 'scriptLoaded',
-				value: noop
 			}, {
 				property: 'throttle',
 				value: 200
@@ -439,5 +408,3 @@ describe( 'CKEditor Component', () => {
 		} );
 	}
 } );
-
-function noop() {}
