@@ -56,7 +56,7 @@
 					v-if="!hide"
 					v-show="show"
 					:read-only="readOnly"
-					:script-loaded="scriptLoaded"
+					:namespace-loaded="namespaceLoaded"
 				></ckeditor>
 			</section>
 
@@ -68,7 +68,7 @@
 					v-if="!hide"
 					v-show="show"
 					:read-only="readOnly"
-					:script-loaded="scriptLoaded"
+					:namespace-loaded="namespaceLoaded"
 				></ckeditor>
 			</section>
 
@@ -110,7 +110,7 @@
 				@blur="logEvent( 'blur' )"
 				@input="logEvent( 'input' )"
 				value="Click here to focus the Editor!"
-				:script-loaded="scriptLoaded"
+				:namespace-loaded="namespaceLoaded"
 			></ckeditor>
 			<h3>Events log:</h3>
 			<ul>
@@ -125,7 +125,7 @@
 			<ckeditor
 				type="classic"
 				v-model="editorData"
-				:script-loaded="scriptLoaded"
+				:namespace-loaded="namespaceLoaded"
 			></ckeditor>
 			<h3>Data preview:</h3>
 			<p>

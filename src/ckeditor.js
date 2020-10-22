@@ -46,14 +46,14 @@ export default {
 			type: Number,
 			default: 80
 		},
-		scriptLoaded: {
+		namespaceLoaded: {
 			type: Function,
 			default: () => {}
 		}
 	},
 
 	mounted() {
-		getEditorNamespace( this.editorUrl, this.scriptLoaded ).then( () => {
+		getEditorNamespace( this.editorUrl, this.namespaceLoaded ).then( () => {
 			if ( this.$_destroyed ) {
 				return;
 			}

@@ -5,7 +5,7 @@ Vue.use( CKEditor );
 
 var defaultMixin = {
 	methods: {
-		scriptLoaded: function( namespace ) {
+		namespaceLoaded: function( namespace ) {
 			console.log( 'CKEDITOR version: ', namespace.version );
 		}
 	}
