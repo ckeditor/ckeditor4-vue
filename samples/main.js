@@ -103,7 +103,3 @@ new Vue( {
 	el: '#app',
 	router: router
 } );
-
-function scriptLoaded( namespace ) {
-	console.log( 'CKEDITOR version: ', namespace.version );
-}
