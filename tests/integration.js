@@ -7,133 +7,133 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/index';
 
-/* global CKEDITOR window */
-
-const CKEditorNamespace = window.CKEDITOR;
+/* global window */
 
 describe( 'Integration of CKEditor component', () => {
-	let methods = {};
-	let props = [];
-	let wrapper, component, editor, data;
+	const CKEditorNamespace = window.CKEDITOR;
+	const wrappers = [];
 
 	before( () => {
 		Vue.use( CKEditor );
 	} );
 
-	beforeEach( done => {
-		wrapper = mount( {
-			template: `
-				<ckeditor
-					@ready="onReady()"
-					v-model="editorData"
-					${ props ? props.join( ' ' ) : '' }
-				></ckeditor>`,
-			methods: {
-				...methods,
-				onReady: () => {
-					editor = component.instance;
+	afterEach( () => {
+		let wrapper;
 
-					methods.onReady && methods.onReady();
-					done();
-				}
-			}
-		}, {
-			attachToDocument: true,
-			data: () => {
-				return {
-					editorData: '<p><b>foo</b></p>',
-					...data
-				};
-			}
-		} );
-
-		component = wrapper.vm.$children[ 0 ];
-	} );
-
-	afterEach( done => {
-		const editor = component.instance;
-
-		if ( editor ) {
-			editor.once( 'destroy', () => {
-				done();
-			} );
-
-			editor.destroy();
-		} else {
-			done();
+		while ( ( wrapper = wrappers.pop() ) ) {
+			wrapper.destroy();
 		}
-		wrapper.destroy();
+
+		window.CKEDITOR = CKEditorNamespace;
 	} );
 
-	[ 'classic', 'inline' ].forEach( editorType => {
-		describe( `when using ${ editorType } editor`, () => {
-			const props = [];
+	it( 'should initialize classic editor', () => {
+		return createComponent( { type: 'classic' } ).then( component => {
+			const editor = component.instance;
 
-			const expectedElementMode = editorType === 'inline' ?
-				CKEDITOR.ELEMENT_MODE_INLINE
-				: CKEDITOR.ELEMENT_MODE_REPLACE;
-
-			props.push( `type="${ editorType }"` );
-
-			setOptionsForTestGroup( { props } );
-
-			it( 'should create an actual CKEditor instance', () => {
-				expect( editor ).to.be.instanceOf( CKEDITOR.editor );
-			} );
-
-			it( 'should set initial data', () => {
-				expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
-			} );
-
-			it( 'editable.isInline() should result with correct value', () => {
-				expect( editor.elementMode ).to.equal( expectedElementMode );
-			} );
+			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+			expect( editor.elementMode ).to.equal( CKEditorNamespace.ELEMENT_MODE_REPLACE );
 		} );
 	} );
 
-	describe( 'with editorURl specified', () => {
-		const basePath = 'https://cdn.ckeditor.com/4.13.0/basic/';
+	it( 'should initialize inline editor', () => {
+		return createComponent( { type: 'inline' } ).then( component => {
+			const editor = component.instance;
 
-		before( () => {
-			delete window.CKEDITOR;
-		} );
-
-		after( () => {
-			window.CKEDITOR = CKEditorNamespace;
-		} );
-
-		setOptionsForTestGroup( {
-			props: [
-				`editorUrl="${ basePath }ckeditor.js"`
-			]
-		} );
-
-		it( 'should use correct build', () => {
-			expect( CKEDITOR.basePath ).to.equal( basePath );
+			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+			expect( editor.elementMode ).to.equal( CKEditorNamespace.ELEMENT_MODE_INLINE );
 		} );
 	} );
 
 	it( 'when component has initial data it shouldn\'t produce undo steps', () => {
-		expect( component.instance.undoManager.hasUndo ).to.be.false;
+		return createComponent( {} ).then( component => {
+			expect( component.instance.undoManager.hasUndo ).to.equal( false );
+		} );
 	} );
 
-	it( 'data updated by ACF propagates', () => {
-		expect( component.value ).to.equal( '<p><strong>foo</strong></p>\n' );
-		expect( wrapper.vm.editorData ).to.equal( '<p><strong>foo</strong></p>\n' );
+	it( 'should use correct CKEDITOR build', () => {
+		const basePath = 'https://cdn.ckeditor.com/4.13.0/basic/';
+
+		delete window.CKEDITOR;
+
+		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( () => {
+			expect( window.CKEDITOR.basePath ).to.equal( basePath );
+		} );
 	} );
 
-	function setOptionsForTestGroup( { props: newProps, methods: newMethods, data: newData } ) {
-		// "before" is executed before "beforeEach", so we can setup component now.
-		before( () => {
-			props = [ ...props, ...newProps ];
-			data = { ...data, ...newData };
-			methods = { ...methods, ...newMethods };
-		} );
+	it( 'should call namespace loaded directive only for the initial script load', () => {
+		const spy = sinon.spy();
 
-		after( () => {
-			props = [];
-			data = {};
-			methods = {};
+		delete window.CKEDITOR;
+
+		return Promise.all( [
+			createComponent( {}, spy ),
+			createComponent( {}, spy ),
+			createComponent( {}, spy )
+		] ).then( () => {
+			expect( spy.calledOnce ).to.equal( true );
 		} );
+	} );
+
+	it( 'should allow modifying global config between editors', () => {
+		const changeLang = lang => {
+			return ( namespace => {
+				namespace.config.language = lang;
+			} );
+		};
+
+		const expectedLang = 'fr';
+
+		delete window.CKEDITOR;
+
+		return createComponent( {}, changeLang( expectedLang ) ).then( component1 => {
+			expect( component1.instance.config.language ).to.equal( expectedLang );
+			return createComponent( {}, changeLang( 'en' ) );
+		} ).then( component2 => {
+			expect( component2.instance.config.language ).to.equal( expectedLang );
+			return createComponent();
+		} ).then( component3 => {
+			expect( component3.instance.config.language ).to.equal( expectedLang );
+		} );
+	} );
+
+	function createComponent( props = {}, namespaceLoaded = ( () => {} ) ) {
+		return new Promise( resolve => {
+			props = propsToString( props );
+
+			const wrapper = mount( {
+				template: `
+				<ckeditor
+					v-model="editorData"
+					:namespace-loaded="namespaceLoaded"
+					${ props }
+				></ckeditor>`
+			}, {
+				attachToDocument: true,
+				methods: {
+					namespaceLoaded
+				},
+				data: () => {
+					return {
+						editorData: '<p><b>foo</b></p>'
+					};
+				}
+			} );
+
+			wrappers.push( wrapper );
+
+			const component = wrapper.vm.$children[ 0 ];
+
+			component.$once( 'ready', () => {
+				resolve( component );
+			} );
+		} );
+	}
+
+	function propsToString( props ) {
+		return Object.entries( props ).reduce( ( acc, [ key, value ] ) => {
+			acc += ` ${ key }="${ value }"`;
+			return acc;
+		}, '' );
 	}
 } );
