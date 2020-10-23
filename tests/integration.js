@@ -52,7 +52,7 @@ describe( 'Integration of CKEditor component', () => {
 	} );
 
 	it( 'should use correct CKEDITOR build', () => {
-		const basePath = 'https://cdn.ckeditor.com/4.13.0/basic/';
+		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
 
 		delete window.CKEDITOR;
 
