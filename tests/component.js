@@ -7,12 +7,13 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
-import { getEditorNamespace } from '../src/utils/geteditornamespace';
+import { getEditorNamespace } from 'ckeditor4-integrations-common';
 
 /* global window */
-const CKEDITOR = window.CKEDITOR;
 
 describe( 'CKEditor Component', () => {
+	const CKEditorNamespace = window.CKEDITOR;
+
 	let skipReady = false;
 	let sandbox, wrapper, component, props;
 
@@ -21,8 +22,8 @@ describe( 'CKEditor Component', () => {
 		wrapper = createComponent( props );
 		component = wrapper.vm;
 
-		sandbox.spy( CKEDITOR, 'replace' );
-		sandbox.spy( CKEDITOR, 'inline' );
+		sandbox.spy( CKEditorNamespace, 'replace' );
+		sandbox.spy( CKEditorNamespace, 'inline' );
 
 		if ( skipReady ) {
 			done();
@@ -38,6 +39,10 @@ describe( 'CKEditor Component', () => {
 
 		wrapper.destroy();
 		sandbox.restore();
+	} );
+
+	after( () => {
+		window.CKEDITOR = CKEditorNamespace;
 	} );
 
 	describe( 'initialization', () => {
@@ -130,7 +135,7 @@ describe( 'CKEditor Component', () => {
 				setPropsForTestGroup( { readOnly, config } );
 
 				it( 'should use component.readOnly', () => {
-					expect( CKEDITOR.replace.lastCall.args[ 1 ] ).to.include( { readOnly } );
+					expect( CKEditorNamespace.replace.lastCall.args[ 1 ] ).to.include( { readOnly } );
 				} );
 			} );
 		} );
@@ -162,9 +167,9 @@ describe( 'CKEditor Component', () => {
 					} );
 
 					it( `should call "CKEDITOR.${ method }" with given config`, () => {
-						sinon.assert.calledOnce( CKEDITOR[ method ] );
+						sinon.assert.calledOnce( CKEditorNamespace[ method ] );
 
-						expect( CKEDITOR[ method ].lastCall.args[ 1 ] ).to.include( config );
+						expect( CKEditorNamespace[ method ].lastCall.args[ 1 ] ).to.include( config );
 					} );
 				} );
 			} );
@@ -326,9 +331,9 @@ describe( 'CKEditor Component', () => {
 
 				// Wait for `component.beforeDestroy`.
 				Vue.nextTick().then( () => {
-					window.CKEDITOR = CKEDITOR;
+					window.CKEDITOR = CKEditorNamespace;
 
-					resolveMockReturnedPromise( CKEDITOR );
+					resolveMockReturnedPromise( CKEditorNamespace );
 
 					// Wait for components callback to `getEditorNamespace`.
 					Vue.nextTick().then( done );
@@ -341,7 +346,7 @@ describe( 'CKEditor Component', () => {
 		} );
 
 		it( 'editor shouldn\'t be initialized', () => {
-			sinon.assert.notCalled( CKEDITOR.replace );
+			sinon.assert.notCalled( CKEditorNamespace.replace );
 		} );
 	} );
 
@@ -349,12 +354,12 @@ describe( 'CKEditor Component', () => {
 		property: 'value',
 		value: 'foo',
 		spyOn: [ 'setData', true ],
-		ignore: !!CKEDITOR.env.ie // (#4)
+		ignore: !!CKEditorNamespace.env.ie // (#4)
 	}, {
 		property: 'value',
 		value: '',
 		spyOn: [ 'setData', false ],
-		ignore: !!CKEDITOR.env.ie // (#4)
+		ignore: !!CKEditorNamespace.env.ie // (#4)
 	}, {
 		property: 'readOnly',
 		value: true,

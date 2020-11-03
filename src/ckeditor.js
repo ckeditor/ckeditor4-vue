@@ -5,8 +5,7 @@
 
 /* global CKEDITOR */
 
-import { debounce } from 'ckeditor4-integrations-common';
-import { getEditorNamespace } from './utils/geteditornamespace.js';
+import { debounce, getEditorNamespace } from 'ckeditor4-integrations-common';
 
 export default {
 	name: 'ckeditor',
@@ -46,11 +45,15 @@ export default {
 		throttle: {
 			type: Number,
 			default: 80
+		},
+		namespaceLoaded: {
+			type: Function,
+			default: () => {}
 		}
 	},
 
 	mounted() {
-		getEditorNamespace( this.editorUrl ).then( () => {
+		getEditorNamespace( this.editorUrl, this.namespaceLoaded ).then( () => {
 			if ( this.$_destroyed ) {
 				return;
 			}
