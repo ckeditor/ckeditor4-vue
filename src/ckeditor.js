@@ -53,7 +53,7 @@ export default {
 	},
 
 	mounted() {
-		getEditorNamespace( this.editorUrl, this.namespaceLoaded ).then( namespace => {
+		getEditorNamespace( this.editorUrl, this.namespaceLoaded ).then( () => {
 			if ( this.$_destroyed ) {
 				return;
 			}
