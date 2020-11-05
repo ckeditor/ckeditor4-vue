@@ -105,7 +105,7 @@ describe( 'Integration of CKEditor component', () => {
 				template: `
 				<ckeditor
 					v-model="editorData"
-					:namespace-loaded="namespaceLoaded"
+					@namespaceloaded="namespaceLoaded"
 					${ props }
 				></ckeditor>`
 			}, {

@@ -45,15 +45,13 @@ export default {
 		throttle: {
 			type: Number,
 			default: 80
-		},
-		namespaceLoaded: {
-			type: Function,
-			default: () => {}
 		}
 	},
 
 	mounted() {
-		getEditorNamespace( this.editorUrl, this.namespaceLoaded ).then( () => {
+		getEditorNamespace( this.editorUrl, namespace => {
+			this.$emit( 'namespaceloaded', namespace );
+		} ).then( () => {
 			if ( this.$_destroyed ) {
 				return;
 			}
