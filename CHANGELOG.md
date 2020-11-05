@@ -4,7 +4,7 @@
 
 New Features:
 
-* [#61](https://github.com/ckeditor/ckeditor4-vue/issues/61) Exposed API notifying when [`CKEDITOR` namespace](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.html) is loaded for easier customization.
+* [#61](https://github.com/ckeditor/ckeditor4-vue/issues/61) Exposed `@namespaceloaded` event fired when [`CKEDITOR` namespace](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.html) is loaded, which can be used for its easier customization.
 * [#52](https://github.com/ckeditor/ckeditor4-vue/issues/52) Improved typing performance by adding [customizable throttling option](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_vue.html#throttle).
 
 ## ckeditor4-vue 1.1.0
