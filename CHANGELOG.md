@@ -4,8 +4,12 @@
 
 New Features:
 
-* [#61](https://github.com/ckeditor/ckeditor4-vue/issues/61) Exposed `@namespaceloaded` event fired when [`CKEDITOR` namespace](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.html) is loaded, which can be used for its easier customization.
-* [#52](https://github.com/ckeditor/ckeditor4-vue/issues/52) Improved typing performance by adding [customizable throttling option](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_vue.html#throttle).
+* [#61](https://github.com/ckeditor/ckeditor4-vue/issues/61): Exposed `@namespaceloaded` event fired when [`CKEDITOR` namespace](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.html) is loaded, which can be used for its easier customization.
+* [#52](https://github.com/ckeditor/ckeditor4-vue/issues/52): Improved typing performance by adding [customizable throttling option](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_vue.html#throttle).
+
+Other Changes:
+
+* Updated default CDN CKEditor 4 dependency to [4.15.1](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-4151).
 
 ## ckeditor4-vue 1.1.0
 
@@ -23,7 +27,7 @@ Other Changes:
 
 The first stable release of the CKEditor 4 WYSIWYG Editor Vue Integration. After a few months of the beta phase, testing and listening to community feedback, the CKEditor 4 Vue Integration is stable and can be used with full confidence. Enjoy!
 
-Fixed issues:
+Fixed Issues:
 
 * [#32](https://github.com/ckeditor/ckeditor4-vue/issues/32): Fixed: Watchers may interrupt the editor initialization. Thanks to [Michael Babker](https://github.com/mbabker)!
 
