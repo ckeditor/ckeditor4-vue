@@ -16,7 +16,7 @@
 		"eslint": "^7.14.0",
 		"eslint-config-ckeditor5": "^3.1.0",
 		"istanbul-instrumenter-loader": "^3.0.0",
-		"karma": "^5.2.3",
+		"karma": "^4.4.1",
 		"karma-browserstack-launcher": "^1.6.0",
 		"karma-chai": "^0.1.0",
 		"karma-chrome-launcher": "^3.1.0",
@@ -27,7 +27,7 @@
 		"karma-mocha-reporter": "^2.2.4",
 		"karma-sinon": "^1.0.5",
 		"karma-sourcemap-loader": "^0.3.8",
-		"karma-webpack": "^4.0.2",
+		"karma-webpack": "^3.0.5",
 		"live-server": "^1.2.1",
 		"minimist": "^1.2.5",
 		"mocha": "^8.2.1",
@@ -36,7 +36,7 @@
 		"vue": "^2.6.12",
 		"vue-router": "^3.4.9",
 		"vue-template-compiler": "^2.6.12",
-		"webpack": "^5.9.0",
+		"webpack": "^4.41.2",
 		"webpack-cli": "^4.2.0"
 	},
 	"peerDependencies": {
