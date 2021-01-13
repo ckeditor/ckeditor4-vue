@@ -43,8 +43,7 @@
 		"vue": "^2.5.17"
 	},
 	"dependencies": {
-		"ckeditor4-integrations-common": "^0.1.0",
-		"load-script": "^1.0.0"
+		"ckeditor4-integrations-common": "^0.1.0"
 	},
 	"engines": {
 		"node": ">=8.0.0",
