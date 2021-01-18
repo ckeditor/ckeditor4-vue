@@ -96,6 +96,13 @@ module.exports = function( config ) {
 		browsers: getBrowsers(),
 
 		customLaunchers: {
+			BrowserStack_IE11: {
+				base: 'BrowserStack',
+				os: 'Windows',
+				os_version: '10',
+				browser: 'ie',
+				browser_version: '11.0'
+			},
 			BrowserStack_Edge: {
 				base: 'BrowserStack',
 				os: 'Windows',
