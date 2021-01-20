@@ -43,7 +43,7 @@
 		"vue": "^2.5.17"
 	},
 	"dependencies": {
-		"ckeditor4-integrations-common": "2a93ddd18b3f0aee0bc73d6a6bf1d29c01841f54"
+		"ckeditor4-integrations-common": "https://github.com/ckeditor/ckeditor4-integrations-common.git#2a93ddd18b3f0aee0bc73d6a6bf1d29c01841f54"
 	},
 	"engines": {
 		"node": ">=8.0.0",
