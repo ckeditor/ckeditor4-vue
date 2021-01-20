@@ -78,7 +78,7 @@ function createConfig( filename, presets = [] ) {
 				{
 					test: /\.js$/,
 					loader: 'babel-loader',
-					exclude: /node_modules\/(?!(ckeditor4-integrations-common)\/).*/,
+					exclude: /node_modules/,
 					query: {
 						compact: false,
 						presets
