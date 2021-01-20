@@ -102,6 +102,10 @@ module.exports = function( config ) {
 				os_version: '10',
 				browser: 'edge'
 			},
+			BrowserStack_IE11: {
+				browser: 'ie',
+				browser_version: '11.0'
+			},
 			BrowserStack_Safari: {
 				base: 'BrowserStack',
 				os: 'OS X',
@@ -158,6 +162,7 @@ function getBrowsers() {
 			'Chrome',
 			'Firefox',
 			'BrowserStack_Edge',
+			'BrowserStack_IE11',
 			'BrowserStack_Safari'
 		];
 	}
