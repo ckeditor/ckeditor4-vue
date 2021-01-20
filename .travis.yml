@@ -22,7 +22,7 @@ node_js:
 - '12'
 
 cache:
-- node_modules
+  npm: false
 
 before_install:
 - export DISPLAY=:99.0
