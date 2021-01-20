@@ -103,6 +103,9 @@ module.exports = function( config ) {
 				browser: 'edge'
 			},
 			BrowserStack_IE11: {
+				base: 'BrowserStack',
+				os: 'Windows',
+				os_version: '10',
 				browser: 'ie',
 				browser_version: '11.0'
 			},
