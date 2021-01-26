@@ -131,9 +131,9 @@ describe( 'Integration of CKEditor component', () => {
 	}
 
 	function propsToString( props ) {
-		const objectEntries = CKEditor.tools.object.entries( props );
+		const objectEntries = CKEditorNamespace.tools.object.entries( props );
 
-		return CKEditor.tools.array.reduce( objectEntries, ( acc, [ key, value ] ) => {
+		return CKEditorNamespace.tools.array.reduce( objectEntries, ( acc, [ key, value ] ) => {
 			acc += ` ${ key }="${ value }"`;
 			return acc;
 		}, '' );
