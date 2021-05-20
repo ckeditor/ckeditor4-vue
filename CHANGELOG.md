@@ -1,6 +1,14 @@
 # CKEditor 4 WYSIWYG Editor Vue Integration Changelog
 
+## ckeditor4-vue 1.3.1
+
+Other Changes:
+
+* Updated default CDN CKEditor 4 dependency to [4.16.1](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-4161).
+
 ## ckeditor4-vue 1.3.0
+
+Other Changes:
 
 * Updated default CDN CKEditor 4 dependency to [4.16.0](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-416).
 * Updated [`ckeditor4-integrations-common`](https://www.npmjs.com/package/ckeditor4-integrations-common) package to `0.2.0` version.
