@@ -16,7 +16,7 @@ decrease the time needed to reproduce the issue by our team, which means it can 
 
 You can use our sample to create the reproduction sample:
 
-* CodeSandbox: https://codesandbox.io/s/crazy-diffie-ekuyo
+* CodeSandbox: https://codesandbox.io/s/ekuyo
 -->
 
 1. …
