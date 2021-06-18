@@ -10,6 +10,15 @@ Replace this comment with your issue type: Bug / Feature request / Other, please
 
 ## Provide detailed reproduction steps (if any)
 
+<!--
+Including a simple sample reproducing the issue is also a good idea. It can drastically
+decrease the time needed to reproduce the issue by our team, which means it can speed up helping you!
+
+You can use our sample to create the reproduction sample:
+
+* CodeSandbox: https://codesandbox.io/s/ekuyo
+-->
+
 1. …
 2. …
 3. …
