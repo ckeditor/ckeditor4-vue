@@ -66,7 +66,9 @@ export default {
 			const element = this.$el.firstElementChild;
 			const editor = this.instance = CKEDITOR[ method ]( element, config );
 
-			editor.on( 'instanceReady', () => {
+			editor.on( 'instanceReady', async () => {
+				await this.$nextTick();
+
 				const data = this.value;
 
 				editor.fire( 'lockSnapshot' );
