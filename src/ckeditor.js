@@ -66,32 +66,32 @@ export default {
 			const element = this.$el.firstElementChild;
 			const editor = this.instance = CKEDITOR[ method ]( element, config );
 
-			editor.on( 'instanceReady', async () => {
-				await this.$nextTick();
+			editor.on( 'instanceReady', () => {
+				this.$nextTick().then( () => {
+					const data = this.value;
 
-				const data = this.value;
+					editor.fire( 'lockSnapshot' );
 
-				editor.fire( 'lockSnapshot' );
+					editor.setData( data, { callback: () => {
+						this.$_setUpEditorEvents();
 
-				editor.setData( data, { callback: () => {
-					this.$_setUpEditorEvents();
+						const newData = editor.getData();
 
-					const newData = editor.getData();
+						// Locking the snapshot prevents the 'change' event.
+						// Trigger it manually to update the bound data.
+						if ( data !== newData ) {
+							this.$once( 'input', () => {
+								this.$emit( 'ready', editor );
+							} );
 
-					// Locking the snapshot prevents the 'change' event.
-					// Trigger it manually to update the bound data.
-					if ( data !== newData ) {
-						this.$once( 'input', () => {
+							this.$emit( 'input', newData );
+						} else {
 							this.$emit( 'ready', editor );
-						} );
+						}
 
-						this.$emit( 'input', newData );
-					} else {
-						this.$emit( 'ready', editor );
-					}
-
-					editor.fire( 'unlockSnapshot' );
-				} } );
+						editor.fire( 'unlockSnapshot' );
+					} } );
+				} );
 			} );
 		} );
 	},
