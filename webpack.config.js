@@ -27,10 +27,10 @@ module.exports = [
 				}
 			}
 		]
-	] )
+	], [ 'core-js/es/promise' ] )
 ];
 
-function createConfig( filename, presets = [] ) {
+function createConfig( filename, presets = [], polyfills = [] ) {
 	return {
 		mode: 'production',
 		devtool: 'source-map',
@@ -39,7 +39,7 @@ function createConfig( filename, presets = [] ) {
 			hints: false
 		},
 
-		entry: path.join( __dirname, 'src', 'index.js' ),
+		entry: [ ...polyfills, path.join( __dirname, 'src', 'index.js' ) ],
 
 		output: {
 			filename,
