@@ -1,5 +1,17 @@
 # CKEditor 4 WYSIWYG Editor Vue Integration Changelog
 
+## ckeditor4-vue 1.4.0
+
+Highlights:
+
+Updated dependency [`ckeditor4-integrations-common@1.0.0`](https://www.npmjs.com/package/ckeditor4-integrations-common) does not contain Promise polyfill anymore. This is a possible breaking change for any downstream package that relies on it.
+
+Note that `ckeditor4-vue` package already exposes two variants of the library (es6-compatible and a legacy one) and the polyfill will still be used to support the legacy version.
+
+Other Changes:
+
+* Updated [`ckeditor4-integrations-common`](https://www.npmjs.com/package/ckeditor4-integrations-common) package to `1.0.0` version.
+
 ## ckeditor4-vue 1.3.2
 
 * Updated default CDN CKEditor 4 dependency to [4.16.2](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-4162).
