@@ -8,6 +8,10 @@ Updated dependency [`ckeditor4-integrations-common@1.0.0`](https://www.npmjs.com
 
 Note that `ckeditor4-vue` package already exposes two variants of the library (es6-compatible and a legacy one) and the polyfill will still be used to support the legacy version.
 
+Fixed Issues:
+
+* [#121](https://github.com/ckeditor/ckeditor4-vue/issues/121): Fixed: "Permission denied" in IE11. Thanks to [André Brás](https://github.com/whity)!
+
 Other Changes:
 
 * Updated [`ckeditor4-integrations-common`](https://www.npmjs.com/package/ckeditor4-integrations-common) package to `1.0.0` version.
