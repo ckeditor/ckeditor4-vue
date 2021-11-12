@@ -1,5 +1,11 @@
 # CKEditor 4 WYSIWYG Editor Vue Integration Changelog
 
+## ckeditor4-vue 1.3.3
+
+Fixed Issues:
+
+* [#121](https://github.com/ckeditor/ckeditor4-vue/issues/121): Fixed: "Permission denied" in IE11. Thanks to [André Brás](https://github.com/whity)!
+
 ## ckeditor4-vue 1.3.2
 
 * Updated default CDN CKEditor 4 dependency to [4.16.2](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-4162).
