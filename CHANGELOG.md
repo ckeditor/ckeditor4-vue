@@ -15,7 +15,6 @@ Fixed Issues:
 Other Changes:
 
 * Updated [`ckeditor4-integrations-common`](https://www.npmjs.com/package/ckeditor4-integrations-common) package to `1.0.0` version.
-* Updated default CDN CKEditor 4 dependency to [4.17.1](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-4171).
 
 ## ckeditor4-vue 1.3.2
 
