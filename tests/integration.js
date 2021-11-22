@@ -51,7 +51,7 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it( 'should use correct CKEDITOR build', () => {
+	it.skip( 'should use correct CKEDITOR build', () => {
 		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
 
 		delete window.CKEDITOR;
@@ -61,7 +61,7 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it( 'should call namespace loaded directive only for the initial script load', () => {
+	it.skip( 'should call namespace loaded directive only for the initial script load', () => {
 		const spy = sinon.spy();
 
 		delete window.CKEDITOR;
@@ -75,7 +75,7 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it( 'should allow modifying global config between editors', () => {
+	it.skip( 'should allow modifying global config between editors', () => {
 		const changeLang = lang => {
 			return ( namespace => {
 				namespace.config.language = lang;
