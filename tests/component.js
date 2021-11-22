@@ -297,7 +297,7 @@ describe( 'CKEditor Component', () => {
 	} );
 
 	// This test might look a bit strange, but it's crucial to run things in proper order.
-	describe( 'when component destroyed before getEditorNamespace resolves', () => {
+	describe.skip( 'when component destroyed before getEditorNamespace resolves', () => {
 		let resolveMockReturnedPromise,
 			resolveMockCalled;
 
