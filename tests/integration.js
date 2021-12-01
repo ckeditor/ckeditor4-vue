@@ -61,7 +61,7 @@ describe( 'Integration of CKEditor component', () => {
 			createComponent( {}, spy ),
 			createComponent( {}, spy )
 		] ).then( () => {
-			expect( spy.calledOnce ).to.equal( true );
+			expect( spy.callCount ).to.equal( 1 );
 		} );
 	} );
 
