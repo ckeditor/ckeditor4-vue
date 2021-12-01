@@ -54,7 +54,7 @@ describe( 'Integration of CKEditor component', () => {
 	it.skip( 'should call namespace loaded directive only for the initial script load', () => {
 		const spy = sinon.spy();
 
-		delete window.CKEDITOR;
+		deleteCkeditors();
 
 		return Promise.all( [
 			createComponent( {}, spy ),
@@ -74,7 +74,7 @@ describe( 'Integration of CKEditor component', () => {
 
 		const expectedLang = 'fr';
 
-		delete window.CKEDITOR;
+		deleteCkeditors();
 
 		return createComponent( {}, changeLang( expectedLang ) ).then( component1 => {
 			expect( component1.instance.config.language ).to.equal( expectedLang );
@@ -90,10 +90,10 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should use correct CKEDITOR build', () => {
 		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
 
-		delete window.CKEDITOR;
+		deleteCkeditors();
 
 		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( (comp) => {
-			expect( comp.instance.config.basePath ).to.equal( basePath );
+			expect( window.CKEDITOR.basePath ).to.equal( basePath );
 		} );
 	} );
 
@@ -138,5 +138,15 @@ describe( 'Integration of CKEditor component', () => {
 		}
 
 		return propsValue;
+	}
+
+	function deleteCkeditors() {
+		const scripts = Array.from( document.querySelectorAll('script') );
+		const ckeditorScripts = scripts.filter( scriptElement => {
+			return scriptElement.src.endsWith('ckeditor.js')
+		});
+		ckeditorScripts.forEach( x => x.remove());
+
+		delete window.CKEDITOR;
 	}
 } );
