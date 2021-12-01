@@ -51,16 +51,6 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it.skip( 'should use correct CKEDITOR build', () => {
-		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
-
-		delete window.CKEDITOR;
-
-		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( () => {
-			expect( window.CKEDITOR.basePath ).to.equal( basePath );
-		} );
-	} );
-
 	it.skip( 'should call namespace loaded directive only for the initial script load', () => {
 		const spy = sinon.spy();
 
@@ -94,6 +84,16 @@ describe( 'Integration of CKEditor component', () => {
 			return createComponent();
 		} ).then( component3 => {
 			expect( component3.instance.config.language ).to.equal( expectedLang );
+		} );
+	} );
+
+	it( 'should use correct CKEDITOR build', () => {
+		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
+
+		delete window.CKEDITOR;
+
+		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( (comp) => {
+			expect( comp.instance.config.basePath ).to.equal( basePath );
 		} );
 	} );
 
