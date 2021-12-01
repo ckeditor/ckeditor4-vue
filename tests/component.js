@@ -396,8 +396,18 @@ describe( 'CKEditor Component', () => {
 	} );
 
 	function createComponent( props ) {
+		const fakeParent = window.document.createElement( 'span' );
+
+		props = {...props}
+
+		if ( props.config ) {
+			props.config.observableParent = fakeParent;
+		} else {
+			props.config = { observableParent: fakeParent };
+		}
+
 		return mount( CKEditorComponent, {
-			propsData: { ...props },
+			propsData: props,
 			attachToDocument: true
 		} );
 	}

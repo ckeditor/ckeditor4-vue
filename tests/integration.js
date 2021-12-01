@@ -51,7 +51,7 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it.skip( 'should call namespace loaded directive only for the initial script load', () => {
+	it( 'should call namespace loaded directive only for the initial script load', () => {
 		const spy = sinon.spy();
 
 		deleteCkeditors();
@@ -100,12 +100,14 @@ describe( 'Integration of CKEditor component', () => {
 	function createComponent( props = {}, namespaceLoaded = ( () => {} ) ) {
 		return new Promise( resolve => {
 			props = propsToString( props );
+			const fakeParent = window.document.createElement( 'span' );
 
 			const wrapper = mount( {
 				template: `
 				<ckeditor
 					v-model="editorData"
 					@namespaceloaded="namespaceLoaded"
+					v-bind:config="cfg"
 					${ props }
 				></ckeditor>`
 			}, {
@@ -115,7 +117,10 @@ describe( 'Integration of CKEditor component', () => {
 				},
 				data: () => {
 					return {
-						editorData: '<p><b>foo</b></p>'
+						editorData: '<p><b>foo</b></p>',
+						cfg: {
+							observableParent: fakeParent
+						}
 					};
 				}
 			} );
