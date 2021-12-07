@@ -65,7 +65,7 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it.skip( 'should allow modifying global config between editors', () => {
+	it( 'should allow modifying global config between editors', () => {
 		const changeLang = lang => {
 			return ( namespace => {
 				namespace.config.language = lang;
