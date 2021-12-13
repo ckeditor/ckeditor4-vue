@@ -92,7 +92,7 @@ describe( 'Integration of CKEditor component', () => {
 
 		deleteCkeditorScripts();
 
-		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( (comp) => {
+		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( ( comp ) => {
 			expect( window.CKEDITOR.basePath ).to.equal( basePath );
 		} );
 	} );
@@ -149,7 +149,7 @@ describe( 'Integration of CKEditor component', () => {
 		const scripts = Array.from( document.querySelectorAll( 'script' ) );
 		const ckeditorScripts = scripts.filter( scriptElement => {
 			return scriptElement.src.indexOf( 'ckeditor.js' ) > -1;
-		});
+		} );
 		ckeditorScripts.forEach( x => x.parentNode.removeChild( x ) );
 
 		delete window.CKEDITOR;
