@@ -10,7 +10,6 @@ import CKEditor from '../src/index';
 /* global window */
 
 describe( 'Integration of CKEditor component', () => {
-	// const CKEditorNamespace = window.CKEDITOR;
 	const wrappers = [];
 
 	before( () => {
@@ -25,7 +24,6 @@ describe( 'Integration of CKEditor component', () => {
 		}
 
 		deleteCkeditorScripts();
-		// window.CKEDITOR = CKEditorNamespace;
 	} );
 
 	it( 'should initialize classic editor', () => {
@@ -36,6 +34,7 @@ describe( 'Integration of CKEditor component', () => {
 			expect( editor.elementMode ).to.equal( window.CKEDITOR.ELEMENT_MODE_REPLACE );
 		} );
 	} );
+
 
 	it( 'should initialize inline editor', () => {
 		return createComponent( { type: 'inline' } ).then( component => {
@@ -55,8 +54,6 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should call namespace loaded directive only for the initial script load', () => {
 		const spy = sinon.spy();
 
-		// deleteCkeditorScripts();
-
 		return Promise.all( [
 			createComponent( {}, spy ),
 			createComponent( {}, spy ),
@@ -75,8 +72,6 @@ describe( 'Integration of CKEditor component', () => {
 
 		const expectedLang = 'fr';
 
-		// deleteCkeditorScripts();
-
 		return createComponent( {}, changeLang( expectedLang ) ).then( component1 => {
 			expect( component1.instance.config.language ).to.equal( expectedLang );
 			return createComponent( {}, changeLang( 'en' ) );
@@ -91,17 +86,34 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should use correct CKEDITOR build', () => {
 		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
 
-		// deleteCkeditorScripts();
-
 		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( ( comp ) => {
 			expect( window.CKEDITOR.basePath ).to.equal( basePath );
 		} );
 	} );
 
+	// Because of lack of `observableParent` config option - this test needs to be at the end (#124)
+	it( 'should initialize classic editor with default config', () => {
+		return mountComponent( {} ).then( component => {
+			const editor = component.instance;
+
+			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+		} );
+	} );
+
 	function createComponent( props = {}, namespaceLoaded = ( () => {} ) ) {
+		const fakeParent = window.document.createElement( 'span' );
+		return mountComponent(
+			props,
+			{
+				observableParent: fakeParent
+			},
+			namespaceLoaded
+		);
+	}
+
+	function mountComponent( props = {}, config, namespaceLoaded = ( () => {} ) ) {
 		return new Promise( resolve => {
 			props = propsToString( props );
-			const fakeParent = window.document.createElement( 'span' );
 
 			const wrapper = mount( {
 				template: `
@@ -119,9 +131,7 @@ describe( 'Integration of CKEditor component', () => {
 				data: () => {
 					return {
 						editorData: '<p><b>foo</b></p>',
-						cfg: {
-							observableParent: fakeParent
-						}
+						cfg: config
 					};
 				}
 			} );
