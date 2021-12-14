@@ -10,7 +10,7 @@ import CKEditor from '../src/index';
 /* global window */
 
 describe( 'Integration of CKEditor component', () => {
-	const CKEditorNamespace = window.CKEDITOR;
+	// const CKEditorNamespace = window.CKEDITOR;
 	const wrappers = [];
 
 	before( () => {
@@ -24,7 +24,8 @@ describe( 'Integration of CKEditor component', () => {
 			wrapper.destroy();
 		}
 
-		window.CKEDITOR = CKEditorNamespace;
+		deleteCkeditorScripts();
+		// window.CKEDITOR = CKEditorNamespace;
 	} );
 
 	it( 'should initialize classic editor', () => {
@@ -32,7 +33,7 @@ describe( 'Integration of CKEditor component', () => {
 			const editor = component.instance;
 
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
-			expect( editor.elementMode ).to.equal( CKEditorNamespace.ELEMENT_MODE_REPLACE );
+			expect( editor.elementMode ).to.equal( window.CKEDITOR.ELEMENT_MODE_REPLACE );
 		} );
 	} );
 
@@ -41,7 +42,7 @@ describe( 'Integration of CKEditor component', () => {
 			const editor = component.instance;
 
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
-			expect( editor.elementMode ).to.equal( CKEditorNamespace.ELEMENT_MODE_INLINE );
+			expect( editor.elementMode ).to.equal( window.CKEDITOR.ELEMENT_MODE_INLINE );
 		} );
 	} );
 
@@ -54,7 +55,7 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should call namespace loaded directive only for the initial script load', () => {
 		const spy = sinon.spy();
 
-		deleteCkeditorScripts();
+		// deleteCkeditorScripts();
 
 		return Promise.all( [
 			createComponent( {}, spy ),
@@ -74,7 +75,7 @@ describe( 'Integration of CKEditor component', () => {
 
 		const expectedLang = 'fr';
 
-		deleteCkeditorScripts();
+		// deleteCkeditorScripts();
 
 		return createComponent( {}, changeLang( expectedLang ) ).then( component1 => {
 			expect( component1.instance.config.language ).to.equal( expectedLang );
@@ -90,7 +91,7 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should use correct CKEDITOR build', () => {
 		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
 
-		deleteCkeditorScripts();
+		// deleteCkeditorScripts();
 
 		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( ( comp ) => {
 			expect( window.CKEDITOR.basePath ).to.equal( basePath );
