@@ -123,7 +123,7 @@ describe( 'Integration of CKEditor component', () => {
 					${ props }
 				></ckeditor>`
 			}, {
-				attachToDocument: true,
+				attachTo: document.body,
 				methods: {
 					namespaceLoaded
 				},

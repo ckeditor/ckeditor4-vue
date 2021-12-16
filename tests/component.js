@@ -409,7 +409,7 @@ describe( 'CKEditor Component', () => {
 
 		return mount( CKEditorComponent, {
 			propsData: props,
-			attachToDocument: true
+			attachTo: document.body
 		} );
 	}
 
