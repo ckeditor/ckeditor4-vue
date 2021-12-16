@@ -383,6 +383,7 @@ describe( 'CKEditor Component', () => {
 			beforeEach( () => {
 				spy = sandbox.spy( component.instance, method );
 				wrapper.setProps( { [ property ]: value } );
+				return Vue.nextTick();
 			} );
 
 			it( `${ spyCalled ? 'should' : 'shouldn\'t' } call "instance.${ method }"`, () => {
