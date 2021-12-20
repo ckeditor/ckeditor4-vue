@@ -415,11 +415,12 @@ describe( 'comp on detach elem', () => {
 	sandbox.spy( cken, 'replace' );
 
 	afterEach( () => {
-		// wrapper.destroy();
+		wrapper.destroy();
 		sandbox.restore();
 	} );
 	it( 'tries to mount component on detached element and use default interval strategy before creates', () => {
 		const parent = document.createElement( 'div' );
+		// Vue will replace mount target, so we have extra parent to manipulate it.
 		const mountTarget = document.createElement( 'div' );
 		parent.appendChild( mountTarget );
 
