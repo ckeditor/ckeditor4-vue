@@ -11,7 +11,7 @@ import { getEditorNamespace } from 'ckeditor4-integrations-common';
 
 /* global window, document */
 
-describe.skip( 'CKEditor Component', () => {
+describe( 'CKEditor Component', () => {
 	const CKEditorNamespace = window.CKEDITOR;
 
 	let skipReady = false;
@@ -410,13 +410,9 @@ describe.skip( 'CKEditor Component', () => {
 
 describe( 'comp on detach elem', () => {
 	let wrapper;
-	// const cken = window.CKEDITOR;
-	// const sandbox = sinon.createSandbox();
-	// sandbox.spy( cken, 'replace' );
 
 	afterEach( () => {
 		wrapper.destroy();
-		// sandbox.restore();
 	} );
 
 	it( 'tries to mount component on detached element and use default interval strategy before creates', () => {
@@ -429,7 +425,6 @@ describe( 'comp on detach elem', () => {
 			propsData: {},
 			attachTo: mountTarget
 		} );
-		// const component = wrapper.vm.$children[ 0 ];
 
 		return delay( 100, () => {
 			// Editor is created after namespace loads
@@ -449,18 +444,18 @@ describe( 'comp on detach elem', () => {
 		// Vue will replace mount target, so we have extra parent to manipulate it.
 		const mountTarget = document.createElement( 'div' );
 		parent.appendChild( mountTarget );
-		let fcreat;
+		let createEditor;
+
 		wrapper = mount( CKEditorComponent, {
 			propsData: {
 				config: {
 					delayIfDetached_callback: finishCreation => {
-						fcreat = finishCreation;
+						createEditor = finishCreation;
 					}
 				}
 			},
 			attachTo: mountTarget
 		} );
-		// const component = wrapper.vm.$children[ 0 ];
 
 		return delay( 100, () => {
 			// Editor is created after namespace loads
@@ -468,7 +463,7 @@ describe( 'comp on detach elem', () => {
 			expect( wrapper.vm.instance ).to.be.null;
 		} ).then( () => {
 			document.body.appendChild( parent );
-			fcreat();
+			createEditor();
 		} ).then( () => {
 			return delay( 1000, () => {
 				expect( wrapper.vm.instance ).to.be.not.null;
@@ -485,6 +480,7 @@ function delay( time, func = () => {} ) {
 		}, time );
 	} );
 }
+
 function createComponent( props ) {
 	const fakeParent = window.document.createElement( 'span' );
 
