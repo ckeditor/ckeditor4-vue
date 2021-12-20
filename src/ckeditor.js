@@ -55,44 +55,48 @@ export default {
 			if ( this.$_destroyed ) {
 				return;
 			}
-
 			const config = this.config || {};
-
+			if ( config.delayIfDetached === undefined ) {
+				config.delayIfDetached = true;
+			}
 			if ( this.readOnly !== null ) {
 				config.readOnly = this.readOnly;
 			}
 
 			const method = this.type === 'inline' ? 'inline' : 'replace';
 			const element = this.$el.firstElementChild;
-			const editor = this.instance = CKEDITOR[ method ]( element, config );
+			config.on = {
+				instanceReady: evt => {
+					const createdEditor = evt.editor;
+					this.instance = createdEditor;
+					this.$nextTick().then( () => {
+						const data = this.value;
 
-			editor.on( 'instanceReady', () => {
-				this.$nextTick().then( () => {
-					const data = this.value;
+						createdEditor.fire( 'lockSnapshot' );
 
-					editor.fire( 'lockSnapshot' );
+						createdEditor.setData( data, { callback: () => {
+							this.$_setUpEditorEvents();
 
-					editor.setData( data, { callback: () => {
-						this.$_setUpEditorEvents();
+							const newData = createdEditor.getData();
 
-						const newData = editor.getData();
+							// Locking the snapshot prevents the 'change' event.
+							// Trigger it manually to update the bound data.
+							if ( data !== newData ) {
+								this.$once( 'input', () => {
+									this.$emit( 'ready', createdEditor );
+								} );
 
-						// Locking the snapshot prevents the 'change' event.
-						// Trigger it manually to update the bound data.
-						if ( data !== newData ) {
-							this.$once( 'input', () => {
-								this.$emit( 'ready', editor );
-							} );
+								this.$emit( 'input', newData );
+							} else {
+								this.$emit( 'ready', createdEditor );
+							}
 
-							this.$emit( 'input', newData );
-						} else {
-							this.$emit( 'ready', editor );
-						}
-
-						editor.fire( 'unlockSnapshot' );
-					} } );
-				} );
-			} );
+							createdEditor.fire( 'unlockSnapshot' );
+						} } );
+					} );
+				}
+			};
+			this.instance = CKEDITOR[ method ]( element, config );
 		} );
 	},
 

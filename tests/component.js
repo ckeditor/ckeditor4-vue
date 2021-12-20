@@ -9,9 +9,9 @@ import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
 import { getEditorNamespace } from 'ckeditor4-integrations-common';
 
-/* global window */
+/* global window, document */
 
-describe( 'CKEditor Component', () => {
+describe.skip( 'CKEditor Component', () => {
 	const CKEditorNamespace = window.CKEDITOR;
 
 	let skipReady = false;
@@ -60,7 +60,7 @@ describe( 'CKEditor Component', () => {
 				defaultValue: ''
 			}, {
 				property: 'type',
-				defaultValue: 'classic',
+				defaultValue: 'classic'
 			}, {
 				property: 'editorUrl',
 				defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
@@ -396,23 +396,6 @@ describe( 'CKEditor Component', () => {
 		} );
 	} );
 
-	function createComponent( props ) {
-		const fakeParent = window.document.createElement( 'span' );
-
-		props = { ...props }
-
-		if ( props.config ) {
-			props.config.observableParent = fakeParent;
-		} else {
-			props.config = { observableParent: fakeParent };
-		}
-
-		return mount( CKEditorComponent, {
-			propsData: props,
-			attachTo: document.body
-		} );
-	}
-
 	function setPropsForTestGroup( newProps ) {
 		// "before" is executed before "beforeEach", so we can setup props now.
 		before( () => {
@@ -424,3 +407,69 @@ describe( 'CKEditor Component', () => {
 		} );
 	}
 } );
+
+describe( 'comp on detach elem', () => {
+	let wrapper;
+	const cken = window.CKEDITOR;
+	const sandbox = sinon.createSandbox();
+	sandbox.spy( cken, 'replace' );
+
+	afterEach( () => {
+		// wrapper.destroy();
+		sandbox.restore();
+	} );
+	it( 'tries to mount component on detached element and use default interval strategy before creates', () => {
+		const parent = document.createElement( 'div' );
+		const mountTarget = document.createElement( 'div' );
+		parent.appendChild( mountTarget );
+
+		wrapper = mount( CKEditorComponent, {
+			propsData: {
+				// 		config: {
+				// 			// delayIfDetached: tre
+				// 		}
+			},
+			attachTo: mountTarget
+		} );
+		// const component = wrapper.vm.$children[ 0 ];
+
+		return delay( 100, () => {
+			// Editor is created after namespace loads
+			// so we need to wait for the real results
+			expect( wrapper.vm.instance ).to.be.null;
+		} ).then( () => {
+			document.body.appendChild( parent );
+		} ).then( () => {
+			return delay( 1000 );
+		} ).then( () => {
+			return delay( 1000, () => {
+				expect( wrapper.vm.instance ).to.be.not.null;
+			} );
+		} );
+	} );
+} );
+
+function delay( time, func = () => {} ) {
+	return new Promise( res => {
+		setTimeout( () => {
+			func();
+			res();
+		}, time );
+	} );
+}
+function createComponent( props ) {
+	const fakeParent = window.document.createElement( 'span' );
+
+	props = { ...props };
+
+	if ( props.config ) {
+		props.config.observableParent = fakeParent;
+	} else {
+		props.config = { observableParent: fakeParent };
+	}
+
+	return mount( CKEditorComponent, {
+		propsData: props,
+		attachTo: document.body
+	} );
+}
