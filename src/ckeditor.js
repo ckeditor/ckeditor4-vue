@@ -65,8 +65,19 @@ export default {
 
 			const method = this.type === 'inline' ? 'inline' : 'replace';
 			const element = this.$el.firstElementChild;
+			// console.log( '#'.repeat( 999 ) );
+			// console.log( config.on );
+			// console.log( config.on.instanceReady );
+			let instanceReadyCallback;
+			if ( config.on && config.on.instanceReady ) {
+				instanceReadyCallback = config.on.instanceReady;
+			}
 			config.on = {
+				// TODO cache somewhere oninstance ready?
 				instanceReady: evt => {
+					if ( instanceReadyCallback ) {
+						instanceReadyCallback( evt );
+					}
 					const createdEditor = evt.editor;
 					this.instance = createdEditor;
 					this.$nextTick().then( () => {

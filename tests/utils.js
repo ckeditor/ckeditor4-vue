@@ -9,7 +9,6 @@ export function deleteCkeditorScripts() {
 			ckeditorScripts.forEach( x => x.parentNode.removeChild( x ) );
 
 			delete window.CKEDITOR;
-			console.log( '3 AFTER NAMESPACE deleted' );
 			res();
 		}, 1000 );
 	} );
