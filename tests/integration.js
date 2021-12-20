@@ -3,9 +3,11 @@
  * For licensing, see LICENSE.md.
  */
 
+import 'core-js/es/object/entries';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/index';
+import { deleteCkeditorScripts } from './utils';
 
 /* global window, document */
 
@@ -23,7 +25,7 @@ describe( 'Integration of CKEditor component', () => {
 			wrapper.destroy();
 		}
 
-		deleteCkeditorScripts();
+		return deleteCkeditorScripts();
 	} );
 
 	it( 'should initialize classic editor', () => {
@@ -85,19 +87,19 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should use correct CKEDITOR build', () => {
 		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
 
-		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( ( comp ) => {
+		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( comp => {
 			expect( window.CKEDITOR.basePath ).to.equal( basePath );
 		} );
 	} );
 
 	// Because of lack of `observableParent` config option - this test needs to be at the end (#124)
-	it( 'should initialize classic editor with default config', () => {
-		return mountComponent( {} ).then( component => {
-			const editor = component.instance;
+	// it( 'should initialize classic editor with default config', () => {
+	// 	return mountComponent( {} ).then( component => {
+	// 		const editor = component.instance;
 
-			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
-		} );
-	} );
+	// 		expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+	// 	} );
+	// } );
 
 	function createComponent( props = {}, namespaceLoaded = ( () => {} ) ) {
 		const fakeParent = window.document.createElement( 'span' );
@@ -153,15 +155,5 @@ describe( 'Integration of CKEditor component', () => {
 		}
 
 		return propsValue;
-	}
-
-	function deleteCkeditorScripts() {
-		const scripts = Array.from( document.querySelectorAll( 'script' ) );
-		const ckeditorScripts = scripts.filter( scriptElement => {
-			return scriptElement.src.indexOf( 'ckeditor.js' ) > -1;
-		} );
-		ckeditorScripts.forEach( x => x.parentNode.removeChild( x ) );
-
-		delete window.CKEDITOR;
 	}
 } );

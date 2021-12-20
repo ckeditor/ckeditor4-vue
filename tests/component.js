@@ -3,11 +3,14 @@
  * For licensing, see LICENSE.md.
  */
 
+import 'core-js/es/object/entries';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
 import { getEditorNamespace } from 'ckeditor4-integrations-common';
+
+import { deleteCkeditorScripts } from './utils';
 
 /* global window, document */
 
@@ -409,10 +412,14 @@ describe( 'CKEditor Component', () => {
 } );
 
 describe( 'comp on detach elem', () => {
-	let wrapper;
+	let wrapperr;
 
 	afterEach( () => {
-		wrapper.destroy();
+		wrapperr.destroy();
+	} );
+
+	after( () => {
+		return deleteCkeditorScripts();
 	} );
 
 	it( 'tries to mount component on detached element and use default interval strategy before creates', () => {
@@ -421,20 +428,17 @@ describe( 'comp on detach elem', () => {
 		const mountTarget = document.createElement( 'div' );
 		parent.appendChild( mountTarget );
 
-		wrapper = mount( CKEditorComponent, {
-			propsData: {},
-			attachTo: mountTarget
-		} );
+		wrapperr = createComponent( {}, mountTarget );
 
 		return delay( 100, () => {
 			// Editor is created after namespace loads
 			// so we need to wait for the real results
-			expect( wrapper.vm.instance ).to.be.null;
+			expect( wrapperr.vm.instance ).to.be.null;
 		} ).then( () => {
 			document.body.appendChild( parent );
 		} ).then( () => {
 			return delay( 1000, () => {
-				expect( wrapper.vm.instance ).to.be.not.null;
+				expect( wrapperr.vm.instance ).to.be.not.null;
 			} );
 		} );
 	} );
@@ -446,27 +450,27 @@ describe( 'comp on detach elem', () => {
 		parent.appendChild( mountTarget );
 		let createEditor;
 
-		wrapper = mount( CKEditorComponent, {
-			propsData: {
+		wrapperr = createComponent(
+			{
 				config: {
 					delayIfDetached_callback: finishCreation => {
 						createEditor = finishCreation;
 					}
 				}
 			},
-			attachTo: mountTarget
-		} );
+			mountTarget
+		);
 
 		return delay( 100, () => {
 			// Editor is created after namespace loads
 			// so we need to wait for the real results
-			expect( wrapper.vm.instance ).to.be.null;
+			expect( wrapperr.vm.instance ).to.be.null;
 		} ).then( () => {
 			document.body.appendChild( parent );
 			createEditor();
 		} ).then( () => {
 			return delay( 1000, () => {
-				expect( wrapper.vm.instance ).to.be.not.null;
+				expect( wrapperr.vm.instance ).to.be.not.null;
 			} );
 		} );
 	} );
@@ -481,7 +485,7 @@ function delay( time, func = () => {} ) {
 	} );
 }
 
-function createComponent( props ) {
+function createComponent( props, mountTarget = document.body ) {
 	const fakeParent = window.document.createElement( 'span' );
 
 	props = { ...props };
@@ -494,6 +498,6 @@ function createComponent( props ) {
 
 	return mount( CKEditorComponent, {
 		propsData: props,
-		attachTo: document.body
+		attachTo: mountTarget
 	} );
 }
