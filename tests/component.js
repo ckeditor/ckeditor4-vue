@@ -3,13 +3,13 @@
  * For licensing, see LICENSE.md.
  */
 
+// VTU use entries, which fails for IE11
 import 'core-js/es/object/entries';
+import sinon from 'sinon';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import CKEditorComponent from '../src/ckeditor';
-import sinon from 'sinon';
 import { getEditorNamespace } from 'ckeditor4-integrations-common';
-
+import CKEditorComponent from '../src/ckeditor';
 import { delay, deleteCkeditorScripts } from './utils';
 
 /* global window, document */
@@ -318,12 +318,12 @@ describe( 'CKEditor Component', () => {
 		before( () => {
 			skipReady = true;
 
-			delete window.CKEDITOR;
-
 			getEditorNamespace.scriptLoader = () => {
 				resolveMockCalled();
 				return mockReturnedPromise;
 			};
+
+			return deleteCkeditorScripts();
 		} );
 
 		// When component is created.

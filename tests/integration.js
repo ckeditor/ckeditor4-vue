@@ -3,6 +3,7 @@
  * For licensing, see LICENSE.md.
  */
 
+// VTU use entries, which fails for IE11
 import 'core-js/es/object/entries';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
