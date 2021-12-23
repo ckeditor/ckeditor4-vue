@@ -10,7 +10,7 @@ import CKEditorComponent from '../src/ckeditor';
 import sinon from 'sinon';
 import { getEditorNamespace } from 'ckeditor4-integrations-common';
 
-import { deleteCkeditorScripts } from './utils';
+import { delay, deleteCkeditorScripts } from './utils';
 
 /* global window, document */
 
@@ -475,15 +475,6 @@ describe( 'comp on detach elem', () => {
 		} );
 	} );
 } );
-
-function delay( time, func = () => {} ) {
-	return new Promise( res => {
-		setTimeout( () => {
-			func();
-			res();
-		}, time );
-	} );
-}
 
 function createComponent( props, mountTarget = document.body ) {
 	const fakeParent = window.document.createElement( 'span' );

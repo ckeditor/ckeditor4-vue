@@ -7,7 +7,7 @@ import 'core-js/es/object/entries';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/index';
-import { deleteCkeditorScripts } from './utils';
+import { delay, deleteCkeditorScripts } from './utils';
 
 /* global window, document */
 
@@ -93,26 +93,30 @@ describe( 'Integration of CKEditor component', () => {
 	} );
 
 	// Because of lack of `observableParent` config option - this test needs to be at the end (#124)
-	// it( 'should initialize classic editor with default config', () => {
-	// 	return mountComponent( {} ).then( component => {
-	// 		const editor = component.instance;
+	it( 'should initialize classic editor with default config', () => {
+		return mountComponent( {} ).then( component => {
+			const editor = component.instance;
 
-	// 		expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
-	// 	} );
-	// } );
+			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+			// Let's disconnect the observer in the CKE4 instance
+			return delay( 100, () => {
+				editor.setMode( 'source' );
+			} );
+		} );
+	} );
 
 	function createComponent( props = {}, namespaceLoaded = ( () => {} ) ) {
 		const fakeParent = window.document.createElement( 'span' );
 		return mountComponent(
 			props,
+			namespaceLoaded,
 			{
 				observableParent: fakeParent
-			},
-			namespaceLoaded
+			}
 		);
 	}
 
-	function mountComponent( props = {}, config, namespaceLoaded = ( () => {} ) ) {
+	function mountComponent( props = {}, namespaceLoaded = ( () => {} ), config ) {
 		return new Promise( resolve => {
 			props = propsToString( props );
 

@@ -13,3 +13,12 @@ export function deleteCkeditorScripts() {
 		}, 1000 );
 	} );
 }
+
+export function delay( time, func = () => {} ) {
+	return new Promise( res => {
+		setTimeout( () => {
+			func();
+			res();
+		}, time );
+	} );
+}
