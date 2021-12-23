@@ -98,10 +98,11 @@ describe( 'Integration of CKEditor component', () => {
 			const editor = component.instance;
 
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+
 			// Let's disconnect the observer in the CKE4 instance
-			return delay( 100, () => {
-				editor.setMode( 'source' );
-			} );
+			editor.setMode( 'source' );
+			// And wait for the effects before test case ends
+			return delay( 500 );
 		} );
 	} );
 
