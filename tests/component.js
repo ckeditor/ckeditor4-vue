@@ -293,7 +293,9 @@ describe( 'CKEditor Component', () => {
 						[ property ]: value
 					} );
 
-					sinon.assert.pass();
+					return Vue.nextTick().then( () => {
+						sinon.assert.pass();
+					} );
 				} );
 			} );
 		} );
