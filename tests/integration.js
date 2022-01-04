@@ -7,7 +7,7 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/index';
 
-/* global window */
+/* global window, document */
 
 describe( 'Integration of CKEditor component', () => {
 	const wrappers = [];
@@ -34,7 +34,6 @@ describe( 'Integration of CKEditor component', () => {
 			expect( editor.elementMode ).to.equal( window.CKEDITOR.ELEMENT_MODE_REPLACE );
 		} );
 	} );
-
 
 	it( 'should initialize inline editor', () => {
 		return createComponent( { type: 'inline' } ).then( component => {
