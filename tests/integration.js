@@ -7,10 +7,9 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/index';
 
-/* global window */
+/* global window, document */
 
 describe( 'Integration of CKEditor component', () => {
-	const CKEditorNamespace = window.CKEDITOR;
 	const wrappers = [];
 
 	before( () => {
@@ -24,7 +23,7 @@ describe( 'Integration of CKEditor component', () => {
 			wrapper.destroy();
 		}
 
-		window.CKEDITOR = CKEditorNamespace;
+		deleteCkeditorScripts();
 	} );
 
 	it( 'should initialize classic editor', () => {
@@ -32,7 +31,7 @@ describe( 'Integration of CKEditor component', () => {
 			const editor = component.instance;
 
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
-			expect( editor.elementMode ).to.equal( CKEditorNamespace.ELEMENT_MODE_REPLACE );
+			expect( editor.elementMode ).to.equal( window.CKEDITOR.ELEMENT_MODE_REPLACE );
 		} );
 	} );
 
@@ -41,7 +40,7 @@ describe( 'Integration of CKEditor component', () => {
 			const editor = component.instance;
 
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
-			expect( editor.elementMode ).to.equal( CKEditorNamespace.ELEMENT_MODE_INLINE );
+			expect( editor.elementMode ).to.equal( window.CKEDITOR.ELEMENT_MODE_INLINE );
 		} );
 	} );
 
@@ -51,31 +50,19 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
-	it.skip( 'should use correct CKEDITOR build', () => {
-		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
-
-		delete window.CKEDITOR;
-
-		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( () => {
-			expect( window.CKEDITOR.basePath ).to.equal( basePath );
-		} );
-	} );
-
-	it.skip( 'should call namespace loaded directive only for the initial script load', () => {
+	it( 'should call namespace loaded directive only for the initial script load', () => {
 		const spy = sinon.spy();
-
-		delete window.CKEDITOR;
 
 		return Promise.all( [
 			createComponent( {}, spy ),
 			createComponent( {}, spy ),
 			createComponent( {}, spy )
 		] ).then( () => {
-			expect( spy.calledOnce ).to.equal( true );
+			expect( spy.callCount ).to.equal( 1 );
 		} );
 	} );
 
-	it.skip( 'should allow modifying global config between editors', () => {
+	it( 'should allow modifying global config between editors', () => {
 		const changeLang = lang => {
 			return ( namespace => {
 				namespace.config.language = lang;
@@ -83,8 +70,6 @@ describe( 'Integration of CKEditor component', () => {
 		};
 
 		const expectedLang = 'fr';
-
-		delete window.CKEDITOR;
 
 		return createComponent( {}, changeLang( expectedLang ) ).then( component1 => {
 			expect( component1.instance.config.language ).to.equal( expectedLang );
@@ -97,7 +82,35 @@ describe( 'Integration of CKEditor component', () => {
 		} );
 	} );
 
+	it( 'should use correct CKEDITOR build', () => {
+		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
+
+		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( ( comp ) => {
+			expect( window.CKEDITOR.basePath ).to.equal( basePath );
+		} );
+	} );
+
+	// Because of lack of `observableParent` config option - this test needs to be at the end (#124)
+	it( 'should initialize classic editor with default config', () => {
+		return mountComponent( {} ).then( component => {
+			const editor = component.instance;
+
+			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+		} );
+	} );
+
 	function createComponent( props = {}, namespaceLoaded = ( () => {} ) ) {
+		const fakeParent = window.document.createElement( 'span' );
+		return mountComponent(
+			props,
+			{
+				observableParent: fakeParent
+			},
+			namespaceLoaded
+		);
+	}
+
+	function mountComponent( props = {}, config, namespaceLoaded = ( () => {} ) ) {
 		return new Promise( resolve => {
 			props = propsToString( props );
 
@@ -106,6 +119,7 @@ describe( 'Integration of CKEditor component', () => {
 				<ckeditor
 					v-model="editorData"
 					@namespaceloaded="namespaceLoaded"
+					v-bind:config="cfg"
 					${ props }
 				></ckeditor>`
 			}, {
@@ -115,7 +129,8 @@ describe( 'Integration of CKEditor component', () => {
 				},
 				data: () => {
 					return {
-						editorData: '<p><b>foo</b></p>'
+						editorData: '<p><b>foo</b></p>',
+						cfg: config
 					};
 				}
 			} );
@@ -138,5 +153,15 @@ describe( 'Integration of CKEditor component', () => {
 		}
 
 		return propsValue;
+	}
+
+	function deleteCkeditorScripts() {
+		const scripts = Array.from( document.querySelectorAll( 'script' ) );
+		const ckeditorScripts = scripts.filter( scriptElement => {
+			return scriptElement.src.indexOf( 'ckeditor.js' ) > -1;
+		} );
+		ckeditorScripts.forEach( x => x.parentNode.removeChild( x ) );
+
+		delete window.CKEDITOR;
 	}
 } );
