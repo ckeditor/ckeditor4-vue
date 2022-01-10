@@ -98,10 +98,7 @@ export default {
 				config.readOnly = this.readOnly;
 			}
 
-			let userInstanceReadyCallback;
-			if ( config.on && config.on.instanceReady ) {
-				userInstanceReadyCallback = config.on.instanceReady;
-			}
+			const userInstanceReadyCallback = config.on.instanceReady;
 
 			config.on.instanceReady = evt => {
 				this.instance = evt.editor;
