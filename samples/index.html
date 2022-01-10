@@ -39,6 +39,7 @@
 		<li class="route__list-item"><router-link to="/types">Editor types</router-link></li>
 		<li class="route__list-item"><router-link to="/events">Component events</router-link></li>
 		<li class="route__list-item"><router-link to="/binding">Two-way binding</router-link></li>
+		<li class="route__list-item"><router-link to="/delayed">Delayed creation</router-link></li>
 		</ul>
 
 		<router-view></router-view>
@@ -134,6 +135,11 @@
 				Note that the <code class="highlight">textarea</code> element is synced after the <code class="highlight">change</code> event. Blur to see content updates.
 			</p>
 			<textarea rows="15" cols="50" v-model.lazy="editorData"></textarea>
+		</main>
+	</script>
+	<script type="text/x-template" id="delayed-creation">
+		<main>
+			<h2>Editor delayed creation</h2>
 		</main>
 	</script>
 

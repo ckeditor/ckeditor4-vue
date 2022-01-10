@@ -80,6 +80,17 @@ var TwoWayBindingComponent = {
 	}
 };
 
+var DelayedCreationComponent = {
+	name:'delayed-creation',
+	template: '#delayed-creation',
+	mixins: [ defaultMixin ],
+	data: function() {
+		return {
+			editorData: 'Check out how two-way data binding works.'
+		};
+	}
+}
+
 var routes = [
 	{
 		path: '/types',
@@ -90,6 +101,9 @@ var routes = [
 	}, {
 		path: '/binding',
 		component: TwoWayBindingComponent
+	}, {
+		path: '/delayed',
+		component: DelayedCreationComponent
 	},
 	{
 		path: '*',
