@@ -413,11 +413,11 @@ describe( 'CKEditor Component', () => {
 	}
 } );
 
-describe( 'comp on detach elem', () => {
-	let wrapperr;
+describe( 'component on detached element', () => {
+	let wrapper;
 
 	afterEach( () => {
-		wrapperr.destroy();
+		wrapper.destroy();
 	} );
 
 	after( () => {
@@ -430,17 +430,17 @@ describe( 'comp on detach elem', () => {
 		const mountTarget = document.createElement( 'div' );
 		parent.appendChild( mountTarget );
 
-		wrapperr = createComponent( {}, mountTarget );
+		wrapper = createComponent( {}, mountTarget );
 
 		return delay( 100, () => {
 			// Editor is created after namespace loads
 			// so we need to wait for the real results
-			expect( wrapperr.vm.instance ).to.be.undefined;
+			expect( wrapper.vm.instance ).to.be.undefined;
 		} ).then( () => {
 			document.body.appendChild( parent );
 		} ).then( () => {
 			return delay( 1000, () => {
-				expect( wrapperr.vm.instance ).to.be.not.null;
+				expect( wrapper.vm.instance ).to.be.not.null;
 			} );
 		} );
 	} );
@@ -452,7 +452,7 @@ describe( 'comp on detach elem', () => {
 		parent.appendChild( mountTarget );
 		let createEditor;
 
-		wrapperr = createComponent(
+		wrapper = createComponent(
 			{
 				config: {
 					delayIfDetached_callback: finishCreation => {
@@ -466,13 +466,13 @@ describe( 'comp on detach elem', () => {
 		return delay( 100, () => {
 			// Editor is created after namespace loads
 			// so we need to wait for the real results
-			expect( wrapperr.vm.instance ).to.be.undefined;
+			expect( wrapper.vm.instance ).to.be.undefined;
 		} ).then( () => {
 			document.body.appendChild( parent );
 			createEditor();
 		} ).then( () => {
 			return delay( 1000, () => {
-				expect( wrapperr.vm.instance ).to.be.not.null;
+				expect( wrapper.vm.instance ).to.be.not.null;
 			} );
 		} );
 	} );
