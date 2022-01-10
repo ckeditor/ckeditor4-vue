@@ -140,6 +140,18 @@
 	<script type="text/x-template" id="delayed-creation">
 		<main>
 			<h2>Editor delayed creation</h2>
+			<p>
+				Please take a look at developers console. It shows `editor-delayed-creation.` since the editor component is mounted, but on detached element.
+			</p>
+			<button @click="attachAgain">ATTACH</button>
+			<p v-if="attached">
+				And now the `editor-delayed-creation-success` appears. It tells that the editor was created with the delayed creation logic.
+			</p>
+			<div id="delayed-editor-container">
+				<div id="delayed-editor-target">
+					<ckeditor></ckeditor>
+				</div>
+			</div>
 		</main>
 	</script>
 

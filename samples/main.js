@@ -86,8 +86,21 @@ var DelayedCreationComponent = {
 	mixins: [ defaultMixin ],
 	data: function() {
 		return {
-			editorData: 'Check out how two-way data binding works.'
+			editorContainer: null,
+			editorTarget: null,
+			attached: false
 		};
+	},
+	mounted(){
+		this.editorContainer = document.getElementById( 'delayed-editor-container' );
+		this.editorTarget = document.getElementById( 'delayed-editor-target' );
+		this.editorContainer.removeChild( this.editorTarget );
+	},
+	methods: {
+		attachAgain() {
+			this.editorContainer.appendChild( this.editorTarget );
+			this.attached = true;
+		}
 	}
 }
 
