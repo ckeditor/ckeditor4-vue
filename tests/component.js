@@ -479,7 +479,7 @@ describe( 'component on detached element', () => {
 } );
 
 function createComponent( props, mountTarget = document.body ) {
-	const fakeParent = window.document.createElement( 'span' );
+	const fakeParent = document.createElement( 'span' );
 
 	props = { ...props };
 
