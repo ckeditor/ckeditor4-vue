@@ -435,7 +435,7 @@ describe( 'comp on detach elem', () => {
 		return delay( 100, () => {
 			// Editor is created after namespace loads
 			// so we need to wait for the real results
-			expect( wrapperr.vm.instance ).to.be.null;
+			expect( wrapperr.vm.instance ).to.be.undefined;
 		} ).then( () => {
 			document.body.appendChild( parent );
 		} ).then( () => {
@@ -466,7 +466,7 @@ describe( 'comp on detach elem', () => {
 		return delay( 100, () => {
 			// Editor is created after namespace loads
 			// so we need to wait for the real results
-			expect( wrapperr.vm.instance ).to.be.null;
+			expect( wrapperr.vm.instance ).to.be.undefined;
 		} ).then( () => {
 			document.body.appendChild( parent );
 			createEditor();

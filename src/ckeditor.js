@@ -60,7 +60,7 @@ export default {
 			const method = this.type === 'inline' ? 'inline' : 'replace';
 			const element = this.$el.firstElementChild;
 
-			this.instance = CKEDITOR[ method ]( element, config );
+			CKEDITOR[ method ]( element, config );
 		} );
 	},
 
