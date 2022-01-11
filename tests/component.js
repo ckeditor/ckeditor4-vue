@@ -3,13 +3,16 @@
  * For licensing, see LICENSE.md.
  */
 
+// VTU use entries, which fails for IE11
+import 'core-js/es/object/entries';
+import sinon from 'sinon';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
-import CKEditorComponent from '../src/ckeditor';
-import sinon from 'sinon';
 import { getEditorNamespace } from 'ckeditor4-integrations-common';
+import CKEditorComponent from '../src/ckeditor';
+import { delay, deleteCkeditorScripts } from './utils';
 
-/* global window */
+/* global window, document */
 
 describe( 'CKEditor Component', () => {
 	const CKEditorNamespace = window.CKEDITOR;
@@ -60,7 +63,7 @@ describe( 'CKEditor Component', () => {
 				defaultValue: ''
 			}, {
 				property: 'type',
-				defaultValue: 'classic',
+				defaultValue: 'classic'
 			}, {
 				property: 'editorUrl',
 				defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
@@ -290,7 +293,9 @@ describe( 'CKEditor Component', () => {
 						[ property ]: value
 					} );
 
-					sinon.assert.pass();
+					return Vue.nextTick().then( () => {
+						sinon.assert.pass();
+					} );
 				} );
 			} );
 		} );
@@ -315,12 +320,12 @@ describe( 'CKEditor Component', () => {
 		before( () => {
 			skipReady = true;
 
-			delete window.CKEDITOR;
-
 			getEditorNamespace.scriptLoader = () => {
 				resolveMockCalled();
 				return mockReturnedPromise;
 			};
+
+			return deleteCkeditorScripts();
 		} );
 
 		// When component is created.
@@ -383,6 +388,7 @@ describe( 'CKEditor Component', () => {
 			beforeEach( () => {
 				spy = sandbox.spy( component.instance, method );
 				wrapper.setProps( { [ property ]: value } );
+				return Vue.nextTick();
 			} );
 
 			it( `${ spyCalled ? 'should' : 'shouldn\'t' } call "instance.${ method }"`, () => {
@@ -395,23 +401,6 @@ describe( 'CKEditor Component', () => {
 		} );
 	} );
 
-	function createComponent( props ) {
-		const fakeParent = window.document.createElement( 'span' );
-
-		props = { ...props }
-
-		if ( props.config ) {
-			props.config.observableParent = fakeParent;
-		} else {
-			props.config = { observableParent: fakeParent };
-		}
-
-		return mount( CKEditorComponent, {
-			propsData: props,
-			attachToDocument: true
-		} );
-	}
-
 	function setPropsForTestGroup( newProps ) {
 		// "before" is executed before "beforeEach", so we can setup props now.
 		before( () => {
@@ -423,3 +412,85 @@ describe( 'CKEditor Component', () => {
 		} );
 	}
 } );
+
+describe( 'component on detached element', () => {
+	let wrapper;
+
+	afterEach( () => {
+		wrapper.destroy();
+	} );
+
+	after( () => {
+		return deleteCkeditorScripts();
+	} );
+
+	it( 'tries to mount component on detached element and use default interval strategy before creates', () => {
+		const parent = document.createElement( 'div' );
+		// Vue will replace mount target, so we have extra parent to manipulate it.
+		const mountTarget = document.createElement( 'div' );
+		parent.appendChild( mountTarget );
+
+		wrapper = createComponent( {}, mountTarget );
+
+		return delay( 100, () => {
+			// Editor is created after namespace loads
+			// so we need to wait for the real results
+			expect( wrapper.vm.instance ).to.be.undefined;
+		} ).then( () => {
+			document.body.appendChild( parent );
+		} ).then( () => {
+			return delay( 1000, () => {
+				expect( wrapper.vm.instance ).to.be.not.null;
+			} );
+		} );
+	} );
+
+	it( 'tries to mount component on detached element and use callback strategy', () => {
+		const parent = document.createElement( 'div' );
+		// Vue will replace mount target, so we have extra parent to manipulate it.
+		const mountTarget = document.createElement( 'div' );
+		parent.appendChild( mountTarget );
+		let createEditor;
+
+		wrapper = createComponent(
+			{
+				config: {
+					delayIfDetached_callback: finishCreation => {
+						createEditor = finishCreation;
+					}
+				}
+			},
+			mountTarget
+		);
+
+		return delay( 100, () => {
+			// Editor is created after namespace loads
+			// so we need to wait for the real results
+			expect( wrapper.vm.instance ).to.be.undefined;
+		} ).then( () => {
+			document.body.appendChild( parent );
+			createEditor();
+		} ).then( () => {
+			return delay( 1000, () => {
+				expect( wrapper.vm.instance ).to.be.not.null;
+			} );
+		} );
+	} );
+} );
+
+function createComponent( props, mountTarget = document.body ) {
+	const fakeParent = document.createElement( 'span' );
+
+	props = { ...props };
+
+	if ( props.config ) {
+		props.config.observableParent = fakeParent;
+	} else {
+		props.config = { observableParent: fakeParent };
+	}
+
+	return mount( CKEditorComponent, {
+		propsData: props,
+		attachTo: mountTarget
+	} );
+}

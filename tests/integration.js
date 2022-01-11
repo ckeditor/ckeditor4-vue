@@ -3,9 +3,12 @@
  * For licensing, see LICENSE.md.
  */
 
+// VTU use entries, which fails for IE11
+import 'core-js/es/object/entries';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/index';
+import { delay, deleteCkeditorScripts } from './utils';
 
 /* global window, document */
 
@@ -23,7 +26,7 @@ describe( 'Integration of CKEditor component', () => {
 			wrapper.destroy();
 		}
 
-		deleteCkeditorScripts();
+		return deleteCkeditorScripts();
 	} );
 
 	it( 'should initialize classic editor', () => {
@@ -85,7 +88,7 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should use correct CKEDITOR build', () => {
 		const basePath = 'https://cdn.ckeditor.com/4.13.0/standard-all/';
 
-		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( ( comp ) => {
+		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( comp => {
 			expect( window.CKEDITOR.basePath ).to.equal( basePath );
 		} );
 	} );
@@ -96,6 +99,11 @@ describe( 'Integration of CKEditor component', () => {
 			const editor = component.instance;
 
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
+
+			// Let's disconnect the observer in the CKE4 instance
+			editor.setMode( 'source' );
+			// And wait for the effects before test case ends
+			return delay( 500 );
 		} );
 	} );
 
@@ -103,14 +111,14 @@ describe( 'Integration of CKEditor component', () => {
 		const fakeParent = window.document.createElement( 'span' );
 		return mountComponent(
 			props,
+			namespaceLoaded,
 			{
 				observableParent: fakeParent
-			},
-			namespaceLoaded
+			}
 		);
 	}
 
-	function mountComponent( props = {}, config, namespaceLoaded = ( () => {} ) ) {
+	function mountComponent( props = {}, namespaceLoaded = ( () => {} ), config ) {
 		return new Promise( resolve => {
 			props = propsToString( props );
 
@@ -123,7 +131,7 @@ describe( 'Integration of CKEditor component', () => {
 					${ props }
 				></ckeditor>`
 			}, {
-				attachToDocument: true,
+				attachTo: document.body,
 				methods: {
 					namespaceLoaded
 				},
@@ -153,15 +161,5 @@ describe( 'Integration of CKEditor component', () => {
 		}
 
 		return propsValue;
-	}
-
-	function deleteCkeditorScripts() {
-		const scripts = Array.from( document.querySelectorAll( 'script' ) );
-		const ckeditorScripts = scripts.filter( scriptElement => {
-			return scriptElement.src.indexOf( 'ckeditor.js' ) > -1;
-		} );
-		ckeditorScripts.forEach( x => x.parentNode.removeChild( x ) );
-
-		delete window.CKEDITOR;
 	}
 } );

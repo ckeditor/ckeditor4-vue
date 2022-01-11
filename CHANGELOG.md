@@ -1,5 +1,11 @@
 # CKEditor 4 WYSIWYG Editor Vue Integration Changelog
 
+## ckeditor4-vue 1.5.0
+
+New Features:
+
+* [#102](https://github.com/ckeditor/ckeditor4-vue/issues/102): Use `config.delayIfDetached = true` for editor to support delayed editor's creation upon detached DOM elements.
+
 ## ckeditor4-vue 1.4.0
 
 Highlights:

@@ -56,43 +56,11 @@ export default {
 				return;
 			}
 
-			const config = this.config || {};
-
-			if ( this.readOnly !== null ) {
-				config.readOnly = this.readOnly;
-			}
-
+			const config = this.prepareConfig();
 			const method = this.type === 'inline' ? 'inline' : 'replace';
 			const element = this.$el.firstElementChild;
-			const editor = this.instance = CKEDITOR[ method ]( element, config );
 
-			editor.on( 'instanceReady', () => {
-				this.$nextTick().then( () => {
-					const data = this.value;
-
-					editor.fire( 'lockSnapshot' );
-
-					editor.setData( data, { callback: () => {
-						this.$_setUpEditorEvents();
-
-						const newData = editor.getData();
-
-						// Locking the snapshot prevents the 'change' event.
-						// Trigger it manually to update the bound data.
-						if ( data !== newData ) {
-							this.$once( 'input', () => {
-								this.$emit( 'ready', editor );
-							} );
-
-							this.$emit( 'input', newData );
-						} else {
-							this.$emit( 'ready', editor );
-						}
-
-						editor.fire( 'unlockSnapshot' );
-					} } );
-				} );
-			} );
+			CKEDITOR[ method ]( element, config );
 		} );
 	},
 
@@ -119,6 +87,58 @@ export default {
 	},
 
 	methods: {
+		prepareConfig() {
+			const config = this.config || {};
+			config.on = config.on || {};
+
+			if ( config.delayIfDetached === undefined ) {
+				config.delayIfDetached = true;
+			}
+			if ( this.readOnly !== null ) {
+				config.readOnly = this.readOnly;
+			}
+
+			const userInstanceReadyCallback = config.on.instanceReady;
+
+			config.on.instanceReady = evt => {
+				this.instance = evt.editor;
+
+				this.$nextTick().then( () => {
+					this.prepareComponentData();
+
+					if ( userInstanceReadyCallback ) {
+						userInstanceReadyCallback( evt );
+					}
+				} );
+			};
+
+			return config;
+		},
+		prepareComponentData() {
+			const data = this.value;
+
+			this.instance.fire( 'lockSnapshot' );
+
+			this.instance.setData( data, { callback: () => {
+				this.$_setUpEditorEvents();
+
+				const newData = this.instance.getData();
+
+				// Locking the snapshot prevents the 'change' event.
+				// Trigger it manually to update the bound data.
+				if ( data !== newData ) {
+					this.$once( 'input', () => {
+						this.$emit( 'ready', this.instance );
+					} );
+
+					this.$emit( 'input', newData );
+				} else {
+					this.$emit( 'ready', this.instance );
+				}
+
+				this.instance.fire( 'unlockSnapshot' );
+			} } );
+		},
 		$_setUpEditorEvents() {
 			const editor = this.instance;
 

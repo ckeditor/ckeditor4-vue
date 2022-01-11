@@ -80,6 +80,30 @@ var TwoWayBindingComponent = {
 	}
 };
 
+var DelayedCreationComponent = {
+	name:'delayed-creation',
+	template: '#delayed-creation',
+	mixins: [ defaultMixin ],
+	data: function() {
+		return {
+			editorContainer: null,
+			editorTarget: null,
+			attached: false
+		};
+	},
+	mounted(){
+		this.editorContainer = document.getElementById( 'delayed-editor-container' );
+		this.editorTarget = document.getElementById( 'delayed-editor-target' );
+		this.editorContainer.removeChild( this.editorTarget );
+	},
+	methods: {
+		attachAgain() {
+			this.editorContainer.appendChild( this.editorTarget );
+			this.attached = true;
+		}
+	}
+}
+
 var routes = [
 	{
 		path: '/types',
@@ -90,6 +114,9 @@ var routes = [
 	}, {
 		path: '/binding',
 		component: TwoWayBindingComponent
+	}, {
+		path: '/delayed',
+		component: DelayedCreationComponent
 	},
 	{
 		path: '*',
