@@ -1,3 +1,8 @@
+/**
+ * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md.
+ */
+
 export function deleteCkeditorScripts() {
 	// Give CKE4 some time for destroy actions
 	return delay( 1000, () => {
