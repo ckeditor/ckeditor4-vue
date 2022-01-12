@@ -4,7 +4,7 @@
 
 New Features:
 
-* [#102](https://github.com/ckeditor/ckeditor4-vue/issues/102): Use `config.delayIfDetached = true` for editor to support delayed editor's creation upon detached DOM elements.
+* [#102](https://github.com/ckeditor/ckeditor4-vue/issues/102): Added support for CKEditor 4 [Delayed Editor Creation](https://ckeditor.com/docs/ckeditor4/latest/features/delayed_creation.html) feature.
 
 ## ckeditor4-vue 1.4.0
 
