@@ -107,7 +107,7 @@ npm run build
 
 ## License
 
-Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
 
 Licensed under the terms of any of the following licenses at your
 choice:
