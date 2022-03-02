@@ -48,14 +48,16 @@ module.exports = function( config ) {
 					},
 					{
 						test: /\.js$/,
-						loader: 'istanbul-instrumenter-loader',
+						use: {
+							loader: 'babel-loader',
+							options: {
+								plugins: [ 'babel-plugin-istanbul' ]
+							}
+						},
 						include: /src/,
 						exclude: [
 							/node_modules/
-						],
-						options: {
-							esModules: true
-						}
+						]
 					}
 				]
 			}
