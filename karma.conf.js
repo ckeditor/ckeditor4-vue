@@ -41,7 +41,7 @@ module.exports = function( config ) {
 						test: /\.js$/,
 						loader: 'babel-loader',
 						exclude: /node_modules/,
-						query: {
+						options: {
 							compact: false,
 							presets: [ '@babel/preset-env' ]
 						}
@@ -53,7 +53,7 @@ module.exports = function( config ) {
 						exclude: [
 							/node_modules/
 						],
-						query: {
+						options: {
 							esModules: true
 						}
 					}
