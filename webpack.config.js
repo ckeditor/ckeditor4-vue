@@ -19,11 +19,8 @@ module.exports = [
 				useBuiltIns: 'usage',
 				corejs: 3,
 				targets: {
-					browsers: [
-						'last 2 versions',
-						'ie 11'
-					],
-					node: 10
+					'node': '10',
+					'ie': '11'
 				}
 			}
 		]
