@@ -38,6 +38,8 @@ function createConfig( filename, presets = [], polyfills = [] ) {
 
 		entry: [ ...polyfills, path.join( __dirname, 'src', 'index.js' ) ],
 
+		target: [ 'browserslist:last 2 versions' ],
+
 		output: {
 			filename,
 			library: 'CKEditor',
