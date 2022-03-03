@@ -31,7 +31,7 @@
 		"live-server": "^1.2.1",
 		"minimist": "^1.2.5",
 		"mocha": "^9.2.1",
-		"sinon": "^13.0.1",
+		"sinon": "^9.2.4",
 		"terser-webpack-plugin": "^5.3.1",
 		"vue": "^2.6.14",
 		"vue-router": "^3.4.9",

@@ -19,7 +19,6 @@ delete legacyCfg.entry;
 module.exports = function( config ) {
 	config.set( {
 		basePath,
-		browser: 'IE 11',
 
 		frameworks: [ 'webpack', 'mocha', 'chai', 'sinon' ],
 
