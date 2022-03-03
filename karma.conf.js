@@ -10,11 +10,18 @@ const { join: joinPath } = require( 'path' );
 const basePath = process.cwd();
 const coverageDir = joinPath( basePath, 'coverage' );
 
+const webpackCfg = require( './webpack.config' );
+const legacyCfg = webpackCfg[ 1 ]; // legacy
+// don't need / not supported by karma
+delete legacyCfg.output;
+delete legacyCfg.entry;
+
 module.exports = function( config ) {
 	config.set( {
 		basePath,
+		browser: 'IE 11',
 
-		frameworks: [ 'mocha', 'chai', 'sinon' ],
+		frameworks: [ 'webpack', 'mocha', 'chai', 'sinon' ],
 
 		files: [
 			'https://cdn.ckeditor.com/4.17.2/standard-all/ckeditor.js',
@@ -24,44 +31,13 @@ module.exports = function( config ) {
 		preprocessors: {
 			'tests/**/*.js': [ 'webpack' ]
 		},
-
 		client: {
 			mocha: {
 				timeout: 3000
 			}
 		},
 
-		webpack: {
-			mode: 'development',
-			devtool: 'inline-source-map',
-
-			module: {
-				rules: [
-					{
-						test: /\.js$/,
-						loader: 'babel-loader',
-						exclude: /node_modules/,
-						options: {
-							compact: false,
-							presets: [ '@babel/preset-env' ]
-						}
-					},
-					{
-						test: /\.js$/,
-						use: {
-							loader: 'babel-loader',
-							options: {
-								plugins: [ 'babel-plugin-istanbul' ]
-							}
-						},
-						include: /src/,
-						exclude: [
-							/node_modules/
-						]
-					}
-				]
-			}
-		},
+		webpack: legacyCfg,
 
 		webpackMiddleware: {
 			noInfo: true,
