@@ -19,8 +19,11 @@ module.exports = [
 				useBuiltIns: 'usage',
 				corejs: 3,
 				targets: {
-					'node': '10',
-					'ie': '11'
+					browsers: [
+						'last 2 versions',
+						'ie 11'
+					],
+					node: 10
 				}
 			}
 		]
@@ -38,8 +41,6 @@ function createConfig( filename, presets = [], polyfills = [] ) {
 
 		entry: [ ...polyfills, path.join( __dirname, 'src', 'index.js' ) ],
 
-		target: [ 'browserslist:last 2 versions' ],
-
 		output: {
 			filename,
 			library: 'CKEditor',
@@ -51,6 +52,7 @@ function createConfig( filename, presets = [], polyfills = [] ) {
 		optimization: {
 			minimizer: [
 				new TerserWebpackPlugin( {
+					sourceMap: true,
 					terserOptions: {
 						output: {
 							// Preserve license comments.
@@ -64,9 +66,9 @@ function createConfig( filename, presets = [], polyfills = [] ) {
 		plugins: [
 			new webpack.BannerPlugin( {
 				banner: `/*!*
-* @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
-* For licensing, see LICENSE.md.
-*/`,
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md.
+ */`,
 				raw: true
 			} )
 		],
@@ -77,7 +79,7 @@ function createConfig( filename, presets = [], polyfills = [] ) {
 					test: /\.js$/,
 					loader: 'babel-loader',
 					exclude: /node_modules/,
-					options: {
+					query: {
 						compact: false,
 						presets
 					}
