@@ -91,13 +91,13 @@ var DelayedCreationComponent = {
 			attached: false
 		};
 	},
-	mounted(){
+	mounted: function(){
 		this.editorContainer = document.getElementById( 'delayed-editor-container' );
 		this.editorTarget = document.getElementById( 'delayed-editor-target' );
 		this.editorContainer.removeChild( this.editorTarget );
 	},
 	methods: {
-		attachAgain() {
+		attachAgain: function() {
 			this.editorContainer.appendChild( this.editorTarget );
 			this.attached = true;
 		}

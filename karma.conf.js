@@ -24,7 +24,6 @@ module.exports = function( config ) {
 		preprocessors: {
 			'tests/**/*.js': [ 'webpack' ]
 		},
-
 		client: {
 			mocha: {
 				timeout: 3000
