@@ -2,10 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/ckeditor4-vue.svg)](https://www.npmjs.com/package/ckeditor4-vue)
 [![GitHub tag](https://img.shields.io/github/tag/ckeditor/ckeditor4-vue.svg)](https://github.com/ckeditor/ckeditor4-vue)
-
-[![Build Status](https://travis-ci.org/ckeditor/ckeditor4-vue.svg?branch=master)](https://travis-ci.org/ckeditor/ckeditor4-vue)
-[![Dependency Status](https://david-dm.org/ckeditor/ckeditor4-vue/status.svg)](https://david-dm.org/ckeditor/ckeditor4-vue)
-[![devDependency Status](https://david-dm.org/ckeditor/ckeditor4-vue/dev-status.svg)](https://david-dm.org/ckeditor/ckeditor4-vue?type=dev)
+[![Build Status](https://app.travis-ci.com/ckeditor/ckeditor4-vue.svg?branch=master)](https://app.travis-ci.com/ckeditor/ckeditor4-vue)
 
 [![Join newsletter](https://img.shields.io/badge/join-newsletter-00cc99.svg)](http://eepurl.com/c3zRPr)
 [![Follow Twitter](https://img.shields.io/badge/follow-twitter-00cc99.svg)](https://twitter.com/ckeditor)
