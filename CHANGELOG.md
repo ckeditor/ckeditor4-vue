@@ -69,6 +69,8 @@ Other Changes:
 
 ## ckeditor4-vue 1.3.2
 
+Other Changes:
+
 * Updated default CDN CKEditor 4 dependency to [4.16.2](https://github.com/ckeditor/ckeditor4/blob/master/CHANGES.md#ckeditor-4162).
 
 ## ckeditor4-vue 1.3.1
