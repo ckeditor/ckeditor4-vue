@@ -2,7 +2,7 @@ Software License Agreement
 ==========================
 
 **CKEditor 4 component for Vue.js** – https://github.com/ckeditor/ckeditor4-vue <br>
-Copyright (c) 2003-2022, [CKSource](http://cksource.com) Holding sp. z o.o. All rights reserved.
+Copyright (c) 2003-2023, [CKSource](http://cksource.com) Holding sp. z o.o. All rights reserved.
 
 Licensed under the terms of any of the following licenses at your
 choice:
