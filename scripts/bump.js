@@ -1,4 +1,4 @@
-/* global process, require, __dirname */
+/* global console, process, require, __dirname */
 
 const fs = require( 'fs' );
 const path = require( 'path' );
@@ -21,7 +21,7 @@ updateCdnLink( path.resolve( __dirname, '..', 'karma.conf.js' ) );
 
 function updateCdnLink( path ) {
 	const file = fs.readFileSync( path, 'utf8' );
-	const cdnLinkRegex = /https:\/\/cdn\.ckeditor\.com\/\d\.\d+\.\d+/g;
+	const cdnLinkRegex = /https:\/\/cdn\.ckeditor\.com\/\d\.\d+\.\d+(?:-lts)?/g;
 
 	fs.writeFileSync( path,
 		file.replace( cdnLinkRegex, `https://cdn.ckeditor.com/${ cdnVersion }` ), 'utf8' );
