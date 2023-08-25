@@ -11,6 +11,7 @@ if ( !( args && args[ 2 ] && args[ 2 ].length > 2 ) ) {
 }
 
 const version = args[ 2 ];
+const cdnVersion = `${ version }-lts`;
 
 // Update the CDN link in the 'src/ckeditor.js' file.
 updateCdnLink( path.resolve( __dirname, '..', 'src', 'ckeditor.js' ) );
@@ -23,5 +24,5 @@ function updateCdnLink( path ) {
 	const cdnLinkRegex = /https:\/\/cdn\.ckeditor\.com\/\d\.\d+\.\d+/g;
 
 	fs.writeFileSync( path,
-		file.replace( cdnLinkRegex, `https://cdn.ckeditor.com/${ version }` ), 'utf8' );
+		file.replace( cdnLinkRegex, `https://cdn.ckeditor.com/${ cdnVersion }` ), 'utf8' );
 }
