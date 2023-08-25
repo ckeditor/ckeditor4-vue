@@ -21,7 +21,7 @@ With CKEditor 4 LTS, security updates and critical bug fixes are guaranteed unti
 
 After June 30, 2023 the `master` version of the [LICENSE.md](https://github.com/ckeditor/ckeditor4/blob/master/LICENSE.md) file changed to reflect the license of CKEditor 4 LTS available under the Extended Support Model.
 
-This repository now contains the source code of CKEditor 4 LTS Vue Component that is protected by copyrigh law.
+This repository now contains the source code of CKEditor 4 LTS Vue Component that is protected by copyright law.
 
 ### Getting CKEditor 4 (Open Source)
 
