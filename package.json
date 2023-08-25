@@ -1,6 +1,6 @@
 {
 	"name": "ckeditor4-vue",
-	"version": "2.4.0",
+	"version": "3.0.0",
 	"main": "dist/ckeditor.js",
 	"files": [
 		"dist/",
