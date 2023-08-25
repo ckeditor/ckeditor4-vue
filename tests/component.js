@@ -10,12 +10,14 @@ import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import { getEditorNamespace } from 'ckeditor4-integrations-common';
 import CKEditorComponent from '../src/ckeditor';
-import { delay, deleteCkeditorScripts } from './utils';
+import { delay, deleteCkeditorScripts, activate } from './utils';
 
 /* global window, document */
 
 describe( 'CKEditor Component', () => {
 	const CKEditorNamespace = window.CKEDITOR;
+
+	activate( CKEditorNamespace );
 
 	let skipReady = false;
 	let sandbox, wrapper, component, props;
@@ -66,7 +68,7 @@ describe( 'CKEditor Component', () => {
 				defaultValue: 'classic'
 			}, {
 				property: 'editorUrl',
-				defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}\/(standard|basic|full)(-all)?\/ckeditor\.js/
+				defaultValueRegex: /https:\/\/cdn\.ckeditor\.com\/4\.\d{1,2}\.\d{1,2}(-lts)?\/(standard|basic|full)(-all)?\/ckeditor\.js/
 			}, {
 				property: 'config',
 				defaultValue: undefined
@@ -415,6 +417,8 @@ describe( 'CKEditor Component', () => {
 
 describe( 'component on detached element', () => {
 	let wrapper;
+
+	activate( window.CKEDITOR );
 
 	afterEach( () => {
 		wrapper.destroy();

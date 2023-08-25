@@ -5,8 +5,11 @@ Vue.use( CKEditor );
 
 var defaultMixin = {
 	methods: {
-		namespaceLoaded: function( namespace ) {
-			console.log( 'CKEDITOR version: ', namespace.version );
+		namespaceLoaded: function( ckeditorNamespace ) {
+			// Provide license key to enable the LTS version of the editor.
+			ckeditorNamespace.config.licenseKey = 'your-license-key';
+
+			console.log( 'CKEDITOR version: ', ckeditorNamespace.version );
 		}
 	}
 };

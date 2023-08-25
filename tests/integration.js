@@ -8,7 +8,7 @@ import 'core-js/es/object/entries';
 import Vue from 'vue';
 import { mount } from '@vue/test-utils';
 import CKEditor from '../src/index';
-import { delay, deleteCkeditorScripts } from './utils';
+import { delay, deleteCkeditorScripts, activate } from './utils';
 
 /* global window, document */
 
@@ -133,7 +133,10 @@ describe( 'Integration of CKEditor component', () => {
 			}, {
 				attachTo: document.body,
 				methods: {
-					namespaceLoaded
+					namespaceLoaded: CKEditorNamespace => {
+						activate( CKEditorNamespace );
+						namespaceLoaded( CKEditorNamespace );
+					}
 				},
 				data: () => {
 					return {

@@ -3,6 +3,8 @@
  * For licensing, see LICENSE.md.
  */
 
+/* global window, document, setTimeout, __karma__ */
+
 export function deleteCkeditorScripts() {
 	// Give CKE4 some time for destroy actions
 	return delay( 1000, () => {
@@ -24,4 +26,8 @@ export function delay( time, func = () => {} ) {
 			resolve();
 		}, time );
 	} );
+}
+
+export function activate( CKEditorNamespace ) {
+	CKEditorNamespace.config.licenseKey = __karma__.config.args[ 0 ];
 }
