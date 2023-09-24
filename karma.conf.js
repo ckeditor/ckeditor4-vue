@@ -143,13 +143,13 @@ module.exports = function( config ) {
 //
 // @returns {String|undefined}
 function getBuildName() {
-	const repoSlug = process.env.CIRCLE_PROJECT_REPONAME;
+	const repoName = process.env.CIRCLE_PROJECT_REPONAME;
 
-	if ( !repoSlug ) {
+	if ( !repoName ) {
 		return;
 	}
 
-	const repositoryName = repoSlug.split( '/' )[ 1 ].replace( /-/g, '_' );
+	const repositoryName = repoName.replace( /-/g, '_' );
 	const date = new Date().getTime();
 
 	return `${ repositoryName } ${ date }`;
