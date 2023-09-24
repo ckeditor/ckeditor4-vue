@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/ckeditor4-vue.svg)](https://www.npmjs.com/package/ckeditor4-vue)
 [![GitHub tag](https://img.shields.io/github/tag/ckeditor/ckeditor4-vue.svg)](https://github.com/ckeditor/ckeditor4-vue)
-[![Build Status](https://app.travis-ci.com/ckeditor/ckeditor4-vue.svg?branch=master)](https://app.travis-ci.com/ckeditor/ckeditor4-vue)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/ckeditor/ckeditor4-vue/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/ckeditor/ckeditor4-vue/tree/master)
 
 [![Join newsletter](https://img.shields.io/badge/join-newsletter-00cc99.svg)](http://eepurl.com/c3zRPr)
 [![Follow Twitter](https://img.shields.io/badge/follow-twitter-00cc99.svg)](https://twitter.com/ckeditor)
