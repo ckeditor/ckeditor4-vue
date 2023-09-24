@@ -200,5 +200,5 @@ function shouldEnableBrowserStack() {
 
 	// If the CIRCLE_PR_REPONAME variable is set, it indicates that the PR comes from the forked repo.
 	// For such builds, BrowserStack will be disabled. Read more: https://github.com/ckeditor/ckeditor5-dev/issues/358.
-	return ( 'CIRCLE_PR_REPONAME' in process.env && process.env.CIRCLE_PR_REPONAME !== '' );
+	return !( 'CIRCLE_PR_REPONAME' in process.env );
 }
