@@ -1,0 +1,25 @@
+version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.4.6
+
+workflows:
+  test:
+    jobs:
+      - test
+
+jobs:
+  test:
+    docker:
+      - image: cimg/node:12.22.11-browsers
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - run:
+          name: Install npm
+          command: npm install --prefix=$HOME/.local install npm@7 -g
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Run tests
+          command: npm run test
