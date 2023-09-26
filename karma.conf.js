@@ -139,17 +139,17 @@ module.exports = function( config ) {
 };
 
 // Formats name of the build for BrowserStack. It merges a repository name and current timestamp.
-// If env variable `TRAVIS_REPO_SLUG` is not available, the function returns `undefined`.
+// If env variable `CIRCLE_PROJECT_REPONAME` is not available, the function returns `undefined`.
 //
 // @returns {String|undefined}
 function getBuildName() {
-	const repoSlug = process.env.TRAVIS_REPO_SLUG;
+	const repoName = process.env.CIRCLE_PROJECT_REPONAME;
 
-	if ( !repoSlug ) {
+	if ( !repoName ) {
 		return;
 	}
 
-	const repositoryName = repoSlug.split( '/' )[ 1 ].replace( /-/g, '_' );
+	const repositoryName = repoName.replace( /-/g, '_' );
 	const date = new Date().getTime();
 
 	return `${ repositoryName } ${ date }`;
@@ -198,7 +198,7 @@ function shouldEnableBrowserStack() {
 		return false;
 	}
 
-	// If the repository slugs are different, the pull request comes from the community (forked repository).
+	// If the CIRCLE_PR_REPONAME variable is set, it indicates that the PR comes from the forked repo.
 	// For such builds, BrowserStack will be disabled. Read more: https://github.com/ckeditor/ckeditor5-dev/issues/358.
-	return ( process.env.TRAVIS_EVENT_TYPE !== 'pull_request' || process.env.TRAVIS_PULL_REQUEST_SLUG === process.env.TRAVIS_REPO_SLUG );
+	return !( 'CIRCLE_PR_REPONAME' in process.env );
 }
