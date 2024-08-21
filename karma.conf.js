@@ -173,8 +173,8 @@ function getBrowsers() {
 	}
 
 	return [
-		'Chrome',
-		'Firefox'
+		'Chrome'
+		// 'Firefox'
 	];
 }
 
