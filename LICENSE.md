@@ -4,14 +4,14 @@ Software License Agreement
 ## Software License Agreement for CKEditor 4 LTS Vue component (3.0 and above)
 
 **CKEditor 4 component for Vue.js** – https://github.com/ckeditor/ckeditor4-vue <br>
-Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
+Copyright (c) 2003-2025, CKSource Holding sp. z o.o. All rights reserved.
 
 CKEditor 4 LTS ("Long Term Support") is available under exclusive terms of the [Extended Support Model](https://ckeditor.com/ckeditor-4-support/). [Contact us](https://ckeditor.com/contact/) to obtain a commercial license.
 
 ## Software License Agreement for CKEditor 4 Vue component 2.4.* and below
 
 **CKEditor 4 component for Vue.js** – https://github.com/ckeditor/ckeditor4-vue <br>
-Copyright (c) 2003-2024, [CKSource](http://cksource.com) Holding sp. z o.o. All rights reserved.
+Copyright (c) 2003-2025, [CKSource](http://cksource.com) Holding sp. z o.o. All rights reserved.
 
 Licensed under the terms of any of the following licenses at your
 choice:
