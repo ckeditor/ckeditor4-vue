@@ -95,7 +95,12 @@ describe( 'Integration of CKEditor component', () => {
 
 	// Because of lack of `observableParent` config option - this test needs to be at the end (#124)
 	it( 'should initialize classic editor with default config', () => {
-		return mountComponent( {} ).then( component => {
+		const fakeParent = window.document.createElement( 'span' );
+		return mountComponent(
+			{},
+			( () => {} ),
+			{ observableParent: fakeParent }
+		).then( component => {
 			const editor = component.instance;
 
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
