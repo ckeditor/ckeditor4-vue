@@ -97,7 +97,7 @@ describe( 'Integration of CKEditor component', () => {
 	it( 'should initialize classic editor with default config', () => {
 		return mountComponent( {} ).then( component => {
 			const editor = component.instance;
-			console.log( editor.getData() );
+
 			expect( editor.getData() ).to.equal( '<p><strong>foo</strong></p>\n' );
 
 			// Let's disconnect the observer in the CKE4 instance
