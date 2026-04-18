@@ -86,7 +86,7 @@ describe( 'Integration of CKEditor component', () => {
 	} );
 
 	it( 'should use correct CKEDITOR build', () => {
-		const basePath = 'https://cdn.ckeditor.com/4.23.0-lts/standard-all/';
+		const basePath = 'https://cdn.ckeditor.com/4.25.1-lts/standard-all/';
 
 		return createComponent( { editorUrl: basePath + 'ckeditor.js' } ).then( comp => {
 			expect( window.CKEDITOR.basePath ).to.equal( basePath );
